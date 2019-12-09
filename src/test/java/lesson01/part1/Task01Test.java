@@ -32,6 +32,6 @@ public class Task01Test {
         Task01.main(null);
         ByteArrayOutputStream s = SystemOutGatewayUtil.getOutputArray();
         String s2 = s.toString();
-        Assert.assertEquals("Hello world!", s2);
+        Assert.assertEquals("Hello World!\n", s2);
     }
 }

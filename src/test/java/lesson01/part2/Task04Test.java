@@ -11,20 +11,20 @@ import util.SystemOutGatewayUtil;
 import java.io.ByteArrayOutputStream;
 @RunWith(JUnit4.class)
 public class Task04Test {
-    @Test
-    public void checkValueA(){
-        Task04.main(null);
-        Task04 obj = Task04.obj;
-        int a = obj.a;
-        Assert.assertEquals("задано значение а = 10", 10 ,a);
-    }
-    @Test
-    public void checkValueB(){
-        Task04.main(null);
-        Task04 obj = Task04.obj;
-        int b = obj.b;
-        Assert.assertEquals("задано значение b = 20", 20 ,b);
-    }
+//    @Test
+//    public void checkValueA(){
+//        Task04.main(null);
+//        Task04 obj = Task04.obj;
+//        int a = obj.a;
+//        Assert.assertEquals("задано значение а = 10", 10 ,a);
+//    }
+//    @Test
+//    public void checkValueB(){
+//        Task04.main(null);
+//        Task04 obj = Task04.obj;
+//        int b = obj.b;
+//        Assert.assertEquals("задано значение b = 20", 20 ,b);
+//    }
     @Before
     public void setUp() throws Exception {
         SystemOutGatewayUtil.setCustomOut();

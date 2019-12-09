@@ -91,14 +91,14 @@ public class Task11Test {
         );
     }
 
-    @Test
-    public void checkConvertToSecOutput() {
-        Task11.convertToSeconds(1);
-
-        ByteArrayOutputStream output = SystemOutGatewayUtil.getOutputArray();
-
-        Assert.assertTrue("Method convertToSeconds shouldn't display anything",
-                output.toString().length() == 0
-        );
-    }
+//    @Test
+//    public void checkConvertToSecOutput() {
+//        Task11.convertToSeconds(1);
+//
+//        ByteArrayOutputStream output = SystemOutGatewayUtil.getOutputArray();
+//
+//        Assert.assertTrue("Method convertToSeconds shouldn't display anything",
+//                output.toString().length() == 0
+//        );
+//    }
 }

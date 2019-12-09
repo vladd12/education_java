@@ -1,6 +1,5 @@
 package lesson02.part02;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

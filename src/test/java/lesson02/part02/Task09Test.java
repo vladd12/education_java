@@ -1,6 +1,5 @@
 package lesson02.part02;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,8 +11,6 @@ import util.SystemOutGatewayUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
 public class Task09Test {

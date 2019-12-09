@@ -1,6 +1,5 @@
 package lesson02.part02;
 
-import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,8 +10,6 @@ import util.SystemOutGatewayUtil;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class Task02Test {
     @Before
