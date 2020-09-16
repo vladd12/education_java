@@ -4,7 +4,7 @@ public class Task04 {
 
     /**
      * Раскомментируй одну строчку, чтобы программа вывела на экран числа 26 и 25.
-     * <p>
+     *
      * Требования:
      * 1. Программа должна выводить на экран числа 12 и 2.
      * 2. Нужно раскомментировать одну строку.
@@ -12,11 +12,10 @@ public class Task04 {
      */
 
     public static void main(String[] args) {
-
         int x = 27;
         int y = 15;
 
-        // y = x - y;
+        // y = x - y; // не эта строка
         // y = y - x;
         // y = y + x;
         // y = y + x;
@@ -26,7 +25,6 @@ public class Task04 {
 
         x = x - y;
         y = y - x;
-
         System.out.println(Math.abs(x));
         System.out.println(Math.abs(y));
     }
