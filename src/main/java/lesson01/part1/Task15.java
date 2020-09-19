@@ -6,8 +6,7 @@ public class Task15 {
      * Выводим квадрат числа
      * Дана переменная number.
      * Напиши программу, которая выводит на экран квадрат этой переменной (number * number).
-     * <p>
-     * <p>
+     *
      * Требования:
      * 1. У переменной number можно менять только значение.
      * 2. Программа должна выводить текст.
@@ -19,7 +18,6 @@ public class Task15 {
     public static int number = 25;
 
     public static void main(String[] args) {
-        //Измените код
-        System.out.println(Math.cos(number));
+        System.out.println(Math.pow(number, 2));
     }
 }
