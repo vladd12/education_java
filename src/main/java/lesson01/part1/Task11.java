@@ -6,14 +6,13 @@ public class Task11 {
      * Нужно посчитать, сколько литров воды нужно для заполнения бассейна до бортов.
      * Известно, что бассейн имеет линейные размеры a × b × c, заданные в метрах.
      * Эти размеры передаются в метод getVolume. Метод должен вернуть количество литров воды, которое нужно для наполнения бассейна.
-     * <p>
+     *
      * Пример:
      * Метод getVolume вызывается с параметрами 25, 5, 2.
-     * <p>
+     *
      * Пример вывода:
      * 250000
-     * <p>
-     * <p>
+     *
      * Требования:
      * 1. Метод getVolume(int, int, int) должен быть публичным и статическим.
      * 2. Метод getVolume(int, int, int) должен возвращать значение типа long.
@@ -26,11 +25,9 @@ public class Task11 {
         final protected int b = 25;
         final private int c = 2;
 
-        public long getVolume(int a, int b, int c) {
-            //напишите тут ваш код
-            return 0;
+        public static long getVolume(int a, int b, int c) {
+            return (a*b*c*1000);
         }
-
     }
 
     public static void main(String[] args) {
@@ -38,6 +35,4 @@ public class Task11 {
         long poolVolume = pool.getVolume(25, 5, 2);
         System.out.println(poolVolume);
     }
-
-
 }
