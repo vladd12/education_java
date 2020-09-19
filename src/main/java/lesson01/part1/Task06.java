@@ -6,8 +6,7 @@ public class Task06 {
      * Выведи на экран длину окружности, рассчитанную по формуле: L = 2 * Pi * radius.
      * Результат - дробное число (тип double).
      * В качестве значения Pi используй значение 3.14.
-     * <p>
-     * <p>
+     *
      * Требования:
      * 1. В методе printCircleLength нужно вывести длину окружности, рассчитанную по формуле: 2 * Pi * radius.
      * 2. Метод main должен вызывать метод printCircleLength с параметром 5.
@@ -20,6 +19,7 @@ public class Task06 {
     }
 
     public static void printCircleLength(int radius) {
-        //напишите тут ваш код
+        double Pi = 3.14;
+        System.out.println(2 * Pi * radius);
     }
 }
