@@ -6,14 +6,13 @@ public class Task08 {
      * Реализуй метод getMetreFromCentimetre(int centimetre).
      * Метод на вход принимает количество сантиметров.
      * Нужно сделать так, чтобы метод возвращал число полных метров в centimetre. (1 метр = 100 см).
-     * <p>
+     *
      * Пример:
      * Метод getMetreFromCentimetre вызывается с параметром 243.
-     * <p>
+     *
      * Пример вывода:
      * 2
-     * <p>
-     * <p>
+     *
      * Требования:
      * 1. Программа не должна считывать данные с клавиатуры.
      * 2. Метод getMetreFromCentimetre(int) должен быть публичным и статическим.
@@ -27,8 +26,6 @@ public class Task08 {
     }
 
     public static int getMetreFromCentimetre(int centimetre) {
-        //напишите тут ваш код
-
-        return 0;
+        return centimetre/100;
     }
 }
