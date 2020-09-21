@@ -1,3 +1,5 @@
+package modules;
+
 // Практическое занятие №1 (Модуль №1)
 // Модуль 1/6
 
@@ -10,7 +12,6 @@ public class Module1 {
      * Главная функция программы
      * @param argc аргументы командной строки
      * @author vladd12
-     * @version 1.0
      */
     public static void main(String[] argc) {
         // Тестовый вывод
