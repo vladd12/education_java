@@ -15,67 +15,62 @@ public class Module1 {
      */
     public static void main(String[] argc) {
         // Тестовый вывод
-        System.out.println("Test!");
-        System.out.println();
+        System.out.println("Test!\n");
 
         // Первая задача
         System.out.println(remainder(1,3));
         System.out.println(remainder(3,4));
         System.out.println(remainder(-9,45));
-        System.out.println(remainder(5,5));
-        System.out.println();
+        System.out.println(remainder(5,5) + "\n");
 
         // Вторая задача
         System.out.println(triArea(3,2));
         System.out.println(triArea(7,4));
-        System.out.println(triArea(10,10));
-        System.out.println();
+        System.out.println(triArea(10,10) + "\n");
 
         // Третья задача
         System.out.println(animals(2, 3, 5));
         System.out.println(animals(1, 2, 3));
-        System.out.println(animals(5, 2, 8));
-        System.out.println();
+        System.out.println(animals(5, 2, 8) + "\n");
 
         // Четвёртая задача
         System.out.println(profitableGamble(0.2, 50, 9));
         System.out.println(profitableGamble(0.9, 1, 2));
-        System.out.println(profitableGamble(0.9, 3, 2));
-        System.out.println();
+        System.out.println(profitableGamble(0.9, 3, 2) + "\n");
 
         // Пятая задача
         System.out.println(Operation(24, 15, 9));
         System.out.println(Operation(24, 26, 2));
         System.out.println(Operation(22, 11, 2));
         System.out.println(Operation(7, 49, 7));
-        System.out.println(Operation(15, 11, 11));
-        System.out.println();
+        System.out.println(Operation(15, 11, 11) + "\n");
 
         //Шестая задача
         System.out.println(ctoa('A'));
         System.out.println(ctoa('m'));
         System.out.println(ctoa('['));
-        System.out.println(ctoa('/'));
-        System.out.println();
+        System.out.println(ctoa('/') + "\n");
 
         // Седьмая задача
         System.out.println(addUpTo(3));
         System.out.println(addUpTo(10));
-        System.out.println(addUpTo(7));
-        System.out.println();
+        System.out.println(addUpTo(7) + "\n");
 
         // Восьмая задача
         System.out.println(nextEdge(8, 10));
         System.out.println(nextEdge(5, 7));
-        System.out.println(nextEdge(9, 2));
-        System.out.println();
+        System.out.println(nextEdge(9, 2) + "\n");
 
         // Девятая задача
+        System.out.println(sumOfCubes(new int[]{1, 5, 9}));
+        System.out.println(sumOfCubes(new int[]{3, 4, 5}));
+        System.out.println(sumOfCubes(new int[]{2}));
+        System.out.println(sumOfCubes(new int[]{}) + "\n");
 
         // Десятая задача
         System.out.println(abcMath(42, 5, 10));
         System.out.println(abcMath(5, 2, 1));
-        System.out.println(abcMath(1, 2, 3));
+        System.out.println(abcMath(1, 2, 3) + "\n");
     }
 
     // Задача 1
@@ -184,6 +179,20 @@ public class Module1 {
      */
     public static int nextEdge(int a, int b) {
         return (a+b-1);
+    }
+
+    // Задача 9
+    /**
+     * Функция возвращает сумму чисел массива, возведённых в куб
+     * @param array входной массив
+     * @return сумма элементов массива, возведённого в куб
+     */
+    public static int sumOfCubes(int[] array) {
+        int sum =0;
+        for (int j : array) { // Для каждого элемента j массива array
+            sum = sum + j * j * j;
+        }
+        return sum;
     }
 
     // Задача 10
