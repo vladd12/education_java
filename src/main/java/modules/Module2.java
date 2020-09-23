@@ -55,16 +55,25 @@ public class Module2 {
         System.out.println(isStrangePair("ratio", "orator"));
         System.out.println(isStrangePair("sparkling", "groups"));
         System.out.println(isStrangePair("bush", "hubris"));
-        System.out.println(isStrangePair("", ""));
+        System.out.println(isStrangePair("", "") + "\n");
 
         // Задача 9
         System.out.println("Задача 9.");
+        System.out.println(isPrefix("automation", "auto-"));
+        System.out.println(isSuffix("arachnophobia", "-phobia"));
+        System.out.println(isPrefix("retrospect", "sub-"));
+        System.out.println(isSuffix("vocation", "-logy") + "\n");
 
+        // Задача 10
+        System.out.println("Задача 10.");
+        System.out.println(boxSeq(0));
+        System.out.println(boxSeq(1));
+        System.out.println(boxSeq(2) + "\n");
     }
 
     // Задача 1
     public static String repeat(String str, int num) {
-        String repStr = new String("");
+        String repStr = "";
         for (int i = 0; i < str.length(); i++) {
             int n = num;
             while(n > 0) {
@@ -130,12 +139,31 @@ public class Module2 {
 
     // Задача 9
     public static boolean isPrefix(String str1, String str2) {
-        //
-        return false;
+        String prefix = str2.substring(0, str2.length() - 1);
+        StringBuilder sb = new StringBuilder(str1);
+        int index = sb.indexOf(prefix);
+        return (index == 0);
     }
 
     public static boolean isSuffix(String str1, String str2) {
-        //
-        return false;
+        str1 = new StringBuilder(str1).reverse().toString();
+        str2 = new StringBuilder(str2).reverse().toString();
+        return (isPrefix(str1, str2));
+    }
+
+    //Задача 10
+    public static long boxSeq(int num) {
+        long sum = 0;
+        if (num == 0) return sum;
+        else {
+            if (num % 2 == 1) {
+                sum = (num/2) * (3 - 1) + 3;
+                return sum;
+            }
+            else {
+                sum = (num/2) * (3 - 1);
+                return sum;
+            }
+        }
     }
 }
