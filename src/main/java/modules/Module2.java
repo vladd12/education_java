@@ -49,6 +49,17 @@ public class Module2 {
         System.out.println(isValid("853a7"));
         System.out.println(isValid("732 32"));
         System.out.println(isValid("393939") + "\n");
+
+        // Задача 8
+        System.out.println("Задача 8.");
+        System.out.println(isStrangePair("ratio", "orator"));
+        System.out.println(isStrangePair("sparkling", "groups"));
+        System.out.println(isStrangePair("bush", "hubris"));
+        System.out.println(isStrangePair("", ""));
+
+        // Задача 9
+        System.out.println("Задача 9.");
+
     }
 
     // Задача 1
@@ -109,5 +120,22 @@ public class Module2 {
     public static boolean isValid(String str) {
         if (str.length() != 5) return false;
         else return str.matches("[-+]?\\d+");
+    }
+
+    // Задача 8
+    public static boolean isStrangePair(String str1, String str2) {
+        if (str1.length() == 0 && str2.length() == 0) return true;
+        else return (str1.charAt(0) == str2.charAt(str2.length()-1) && str1.charAt(str1.length()-1) == str2.charAt(0));
+    }
+
+    // Задача 9
+    public static boolean isPrefix(String str1, String str2) {
+        //
+        return false;
+    }
+
+    public static boolean isSuffix(String str1, String str2) {
+        //
+        return false;
     }
 }
