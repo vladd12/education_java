@@ -64,10 +64,15 @@ public class Module3 {
 
         // Задача 9
         System.out.println("Задача 9.");
+        System.out.println(nextPrime(12));
+        System.out.println(nextPrime(24));
+        System.out.println(nextPrime(11) + "\n");
 
         // Задача 10
         System.out.println("Задача 10.");
-
+        System.out.println(rightTriangle(3, 4, 5));
+        System.out.println(rightTriangle(145, 105, 100));
+        System.out.println(rightTriangle(70, 130, 110) + "\n");
     }
 
     // Задача 1
@@ -175,12 +180,42 @@ public class Module3 {
     }
 
     // Задача 9
-    /*
     public static int nextPrime(int num) {
-        return 0;
-    }*/
+        int s = 0, next;
+        for (int i = 1; i <= num; i++) {
+            if (num % i == 0) ++s;
+            if (s > 2) break;
+        }
+        if (s == 2) return num;
+        for (next = ++num;  ; next++) {
+            s = 0;
+            for (int i = 1; i <= next; i++) {
+                if (next % i == 0) ++s;
+                if (s > 2) break;
+            }
+            if (s == 2) return next;
+        }
+    }
 
     // Задача 10
-
-
+    public static boolean rightTriangle(int a, int b, int c) {
+        int max, side1, side2;
+        if (a > b && a > c) {
+            max = a;
+            side1 = b;
+            side2 = c;
+        }
+        else if (b > a && b > c) {
+            max = b;
+            side1 = a;
+            side2 = c;
+        }
+        else if (c > a && c > b) {
+            max = c;
+            side1 = a;
+            side2 = b;
+        }
+        else return false;
+        return (max * max == (side1 * side1 + side2 * side2));
+    }
 }
