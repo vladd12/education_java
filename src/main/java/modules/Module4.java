@@ -2,15 +2,24 @@ package modules;
 
 // Модуль 4/6
 
+import java.util.Arrays;
+
 public class Module4 {
     public static void main(String[] args) {
 
         // Задача 1
         System.out.println("Задача 1.");
-        System.out.println(bessie(10, 7, "hello my name is Bessie and this is my essay"));
+        System.out.println(bessie(10, 7, "hello my name is Bessie and this is my essay") + "\n");
 
         // Задача 2
         System.out.println("Задача 2.");
+        System.out.println(Arrays.toString(split("()()()")));
+        System.out.println(Arrays.toString(split("((()))")));
+        System.out.println(Arrays.toString(split("((()))(())()()(()())")));
+        System.out.println(Arrays.toString(split("((())())(()(()()))")));
+
+        // Задача 3
+
 
     }
 
@@ -45,6 +54,41 @@ public class Module4 {
     }
 
     // Задача 2
+    public static String[] split (String str) {
+        int left = 0, right = 0, k = 0, groups = 0;
+        for (int i = 0; i < str.length(); i++)
+        {
+            if (str.charAt(i) == '(') left++;
+            if (str.charAt(i) == ')') right++;
+            if (left == right) {
+                groups++;
+                left = right = 0;
+            }
+        }
+        int iter = str.length() - (left + right);
+        left = right = 0;
+        String[] res = new String[groups];
+        String temp = "";
+        for (int i = 0; i < iter; i++)
+        {
+            if (str.charAt(i) == '(') {
+                left++;
+                temp+="(";
+            }
+            if (str.charAt(i) ==')') {
+                right++;
+                temp+=")";
+            }
+            if (left == right) {
+                res[k] = temp;
+                temp = "";
+                k++;
+            }
+        }
+        return res;
+    }
+
+    // Задача 3
 
 
 }
