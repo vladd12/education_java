@@ -92,6 +92,7 @@ public class Point3D {
      * @return расстояние между текущей и входной точкой
      */
     public double distanceTo(Point3D point) {
-        return Math.sqrt((this.x - point.getX()) * (this.x - point.getX()) + (this.y - point.getY()) * (this.y - point.getY()) + (this.z - point.getZ()) * (this.z - point.getZ()));
+        return Math.sqrt((this.x - point.getX()) * (this.x - point.getX()) +
+        (this.y - point.getY()) * (this.y - point.getY()) + (this.z - point.getZ()) * (this.z - point.getZ()));
     }
 }
