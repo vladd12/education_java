@@ -19,7 +19,7 @@ public class Module4 {
         System.out.println(Arrays.toString(split("((())())(()(()()))")));
 
         // Задача 3
-
+        System.out.println(toSnakeCase("strStrStr"));
 
     }
 
@@ -89,6 +89,43 @@ public class Module4 {
     }
 
     // Задача 3
+    public static String toCamelCase(String str) {
+
+        return "";
+    }
+
+    public static String toSnakeCase(String str) {
+        int n = 0;
+        int index = 0;
+        int start_index = 0;
+        for (int i = 0; i < str.length(); i++) { // считаем количество больших букв
+            if ((int)str.charAt(i) > 64 && (int)str.charAt(i) < 91) {
+                n = n + 1;
+            }
+        }
+        int[] arr_indexes = new int[n];
+        String[] subs_str = new String[n+1];
+        for (int i = 0; i < str.length(); i++) { // находим индекс каждой большой буквы
+            if ((int)str.charAt(i) > 64 && (int)str.charAt(i) < 91) {
+                arr_indexes[index] = i;
+                index = index + 1;
+            }
+        }
+        for (int i = 0; i < n+1; i++) { // разделяем строку на подстроки по индексу
+            if (i == n) subs_str[i] = str.substring(start_index);
+            else {
+                subs_str[i] = str.substring(start_index, arr_indexes[i]);
+                start_index = arr_indexes[i];
+            }
+        }
+        String result = "";
+        for (int i = 0; i < n+1; i++) { // разделяем строку на подстроки по индексу
+            if (i == n) result = result + subs_str[i].toLowerCase();
+            else result = result + subs_str[i].toLowerCase() + "_";
+        }
+        return result;
+    }
+
 
 
 }

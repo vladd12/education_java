@@ -6,21 +6,21 @@ public class Lab2 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println("Введите значения координат первой точки: ");
-        int x = in.nextInt();
-        int y = in.nextInt();
-        int z = in.nextInt();
+        double x = in.nextDouble();
+        double y = in.nextDouble();
+        double z = in.nextDouble();
         Point3D point1 = new Point3D(x, y, z);
 
         System.out.println("Введите значения координат второй точки: ");
-        x = in.nextInt();
-        y = in.nextInt();
-        z = in.nextInt();
+        x = in.nextDouble();
+        y = in.nextDouble();
+        z = in.nextDouble();
         Point3D point2 = new Point3D(x, y, z);
 
         System.out.println("Введите значения координат третьей точки: ");
-        x = in.nextInt();
-        y = in.nextInt();
-        z = in.nextInt();
+        x = in.nextDouble();
+        y = in.nextDouble();
+        z = in.nextDouble();
         Point3D point3 = new Point3D(x, y, z);
 
         if (point1.equals(point2) || point2.equals(point3) || point3.equals(point1)) {
