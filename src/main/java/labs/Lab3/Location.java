@@ -4,8 +4,7 @@ package labs.Lab3;
  * This class represents a specific location in a 2D map.  Coordinates are
  * integer values.
  **/
-public class Location
-{
+public class Location {
     /** X coordinate of this location. **/
     public int xCoord;
 
@@ -13,15 +12,13 @@ public class Location
     public int yCoord;
 
     /** Creates a new location with the specified integer coordinates. **/
-    public Location(int x, int y)
-    {
+    public Location(int x, int y) {
         xCoord = x;
         yCoord = y;
     }
 
     /** Creates a new location with coordinates (0, 0). **/
-    public Location()
-    {
+    public Location() {
         this(0, 0);
     }
 }

@@ -10,15 +10,13 @@ import java.util.HashSet;
  * really doesn't need to maintain any state between invocations of the
  * algorithm.
  */
-public class AStarPathfinder
-{
+public class AStarPathfinder {
     /**
      * This constant holds a maximum cutoff limit for the cost of paths.  If a
      * particular waypoint happens to exceed this cost limit, the waypoint is
      * discarded.
      **/
     public static final float COST_LIMIT = 1e6f;
-
 
     /**
      * Attempts to compute a path that navigates between the start and end
@@ -27,8 +25,7 @@ public class AStarPathfinder
      * used to walk backwards to the starting point.  If no path can be found,
      * <code>null</code> is returned.
      **/
-    public static Waypoint computePath(Map2D map)
-    {
+    public static Waypoint computePath(Map2D map) {
         // Variables necessary for the A* search.
         AStarState state = new AStarState(map);
         Location finishLoc = map.getFinish();
@@ -41,14 +38,12 @@ public class AStarPathfinder
         Waypoint finalWaypoint = null;
         boolean foundPath = false;
 
-        while (!foundPath && state.numOpenWaypoints() > 0)
-        {
+        while (!foundPath && state.numOpenWaypoints() > 0) {
             // Find the "best" (i.e. lowest-cost) waypoint so far.
             Waypoint best = state.getMinOpenWaypoint();
 
             // If the best location is the finish location then we're done!
-            if (best.getLocation().equals(finishLoc))
-            {
+            if (best.getLocation().equals(finishLoc)) {
                 finalWaypoint = best;
                 foundPath = true;
             }
@@ -70,29 +65,23 @@ public class AStarPathfinder
      * steps" from that waypoint.  The new waypoints are added to the "open
      * waypoints" collection of the passed-in A* state object.
      **/
-    private static void takeNextStep(Waypoint currWP, AStarState state)
-    {
+    private static void takeNextStep(Waypoint currWP, AStarState state) {
         Location loc = currWP.getLocation();
         Map2D map = state.getMap();
 
-        for (int y = loc.yCoord - 1; y <= loc.yCoord + 1; y++)
-        {
-            for (int x = loc.xCoord - 1; x <= loc.xCoord + 1; x++)
-            {
+        for (int y = loc.yCoord - 1; y <= loc.yCoord + 1; y++) {
+            for (int x = loc.xCoord - 1; x <= loc.xCoord + 1; x++) {
                 Location nextLoc = new Location(x, y);
 
                 // If "next location" is outside the map, skip it.
-                if (!map.contains(nextLoc))
-                    continue;
+                if (!map.contains(nextLoc)) continue;
 
                 // If "next location" is this location, skip it.
-                if (nextLoc == loc)
-                    continue;
+                if (nextLoc == loc) continue;
 
                 // If this location happens to already be in the "closed" set
                 // then continue on with the next location.
-                if (state.isLocationClosed(nextLoc))
-                    continue;
+                if (state.isLocationClosed(nextLoc)) continue;
 
                 // Make a waypoint for this "next location."
 
@@ -109,11 +98,9 @@ public class AStarPathfinder
                 prevCost += map.getCellValue(nextLoc);
 
                 // Skip this "next location" if it is too costly.
-                if (prevCost >= COST_LIMIT)
-                    continue;
+                if (prevCost >= COST_LIMIT) continue;
 
-                nextWP.setCosts(prevCost,
-                        estimateTravelCost(nextLoc, map.getFinish()));
+                nextWP.setCosts(prevCost, estimateTravelCost(nextLoc, map.getFinish()));
 
                 // Add the waypoint to the set of open waypoints.  If there
                 // happens to already be a waypoint for this location, the new
@@ -129,11 +116,9 @@ public class AStarPathfinder
      * The actual cost computed is just the straight-line distance between the
      * two locations.
      **/
-    private static float estimateTravelCost(Location currLoc, Location destLoc)
-    {
+    private static float estimateTravelCost(Location currLoc, Location destLoc) {
         int dx = destLoc.xCoord - currLoc.xCoord;
         int dy = destLoc.yCoord - currLoc.yCoord;
-
         return (float) Math.sqrt(dx * dx + dy * dy);
     }
 }
