@@ -57,7 +57,8 @@ public class Point3D extends Point2D {
      * @return расстояние между текущей и входной точкой
      */
     public double distanceTo(Point3D point) {
-        return Math.sqrt((this.getX() - point.getX()) * (this.getX() - point.getX()) +
+        double result = Math.sqrt((this.getX() - point.getX()) * (this.getX() - point.getX()) +
         (this.getY() - point.getY()) * (this.getY() - point.getY()) + (this.z - point.getZ()) * (this.z - point.getZ()));
+        return Math.round(result * 100.0) / 100.0; // Округление до 2 знаков после запятой
     }
 }

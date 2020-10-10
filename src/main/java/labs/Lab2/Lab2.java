@@ -34,6 +34,7 @@ public class Lab2 {
     public static double computeArea(Point3D p1, Point3D p2, Point3D p3) {
         double a = p1.distanceTo(p2), b = p2.distanceTo(p3), c = p3.distanceTo(p1);
         double p = (a + b + c) / 2.0;
-        return Math.sqrt(p * (p - a) * (p - b) * (p - c));
+        double result = Math.sqrt(p * (p - a) * (p - b) * (p - c));
+        return Math.round(result * 100.0) / 100.0; // Округление до 2 знаков после запятой
     }
 }
