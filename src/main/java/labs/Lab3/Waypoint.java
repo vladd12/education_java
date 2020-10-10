@@ -9,10 +9,7 @@ public class Waypoint {
     /** The location of this waypoint. **/
     Location loc;
 
-    /**
-     * The previous waypoint in this path, or <code>null</code> if this is
-     * the root of the A* search.
-     **/
+    /** The previous waypoint in this path, or <code>null</code> if this is the root of the A* search. **/
     Waypoint prevWaypoint;
 
     /**
@@ -22,10 +19,7 @@ public class Waypoint {
      **/
     private float prevCost;
 
-    /**
-     * This field stores an estimate of the remaining cost of traveling from
-     * this waypoint to the final destination.
-     **/
+    /** This field stores an estimate of the remaining cost of traveling from this waypoint to the final destination. **/
     private float remainingCost;
 
 
@@ -44,18 +38,14 @@ public class Waypoint {
         return loc;
     }
 
-    /**
-     * Returns the previous waypoint in the path, or <code>null</code> if this
-     * is the start of the path.
-     **/
+    /** Returns the previous waypoint in the path, or <code>null</code> if this is the start of the path. **/
     public Waypoint getPrevious() {
         return prevWaypoint;
     }
 
     /**
      * This mutator allows both the previous cost and the remaining cost to be
-     * set in one method call.  Normally these values will be set at the same
-     * time anyway.
+     * set in one method call.  Normally these values will be set at the same time anyway.
      **/
     public void setCosts(float prevCost, float remainingCost) {
         this.prevCost = prevCost;
@@ -70,10 +60,7 @@ public class Waypoint {
         return prevCost;
     }
 
-    /**
-     * Returns an estimate of the remaining cost of traveling from this
-     * point to the final destination.
-     **/
+    /** Returns an estimate of the remaining cost of traveling from this point to the final destination. **/
     public float getRemainingCost() {
         return remainingCost;
     }

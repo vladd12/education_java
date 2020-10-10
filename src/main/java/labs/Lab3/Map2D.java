@@ -11,9 +11,7 @@ public class Map2D {
     /** The height of the map. **/
     private int height;
 
-    /**
-     * The actual map data that the pathfinding algorithm needs to navigate.
-     **/
+    /** The actual map data that the pathfinding algorithm needs to navigate. **/
     private int[][] cells;
 
     /** The starting location for performing the A* pathfinding. **/
@@ -21,7 +19,6 @@ public class Map2D {
 
     /** The ending location for performing the A* pathfinding. **/
     private Location finish;
-
 
     /** Creates a new 2D map, with the specified width and height. **/
     public Map2D(int width, int height) {
@@ -38,7 +35,6 @@ public class Map2D {
         start = new Location(0, height / 2);
         finish = new Location(width - 1, height / 2);
     }
-
 
     /**
      * This helper method checks the specified coordinates to see if they are
@@ -64,14 +60,10 @@ public class Map2D {
         return height;
     }
 
-    /**
-     * Returns true if the specified coordinates are contained within the map
-     * area.
-     **/
+    /** Returns true if the specified coordinates are contained within the map area. **/
     public boolean contains(int x, int y) {
         return (x >= 0 && x < width && y >= 0 && y < height);
     }
-
 
     /** Returns true if the location is contained within the map area. **/
     public boolean contains(Location loc) {
@@ -95,35 +87,23 @@ public class Map2D {
         cells[x][y] = value;
     }
 
-    /**
-     * Returns the starting location for the map.  This is where the generated
-     * path will begin from.
-     **/
+    /** Returns the starting location for the map.  This is where the generated path will begin from. **/
     public Location getStart() {
         return start;
     }
 
-    /**
-     * Sets the starting location for the map.  This is where the generated path
-     * will begin from.
-     **/
+    /** Sets the starting location for the map.  This is where the generated path will begin from. **/
     public void setStart(Location loc) {
         if (loc == null) throw new NullPointerException("loc cannot be null");
         start = loc;
     }
 
-    /**
-     * Returns the ending location for the map.  This is where the generated
-     * path will terminate.
-     **/
+    /** Returns the ending location for the map.  This is where the generated path will terminate. **/
     public Location getFinish() {
         return finish;
     }
 
-    /**
-     * Sets the ending location for the map.  This is where the generated path
-     * will terminate.
-     **/
+    /** Sets the ending location for the map.  This is where the generated path will terminate. **/
     public void setFinish(Location loc) {
         if (loc == null) throw new NullPointerException("loc cannot be null");
         finish = loc;

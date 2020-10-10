@@ -20,10 +20,7 @@ public class JMapCell extends JComponent {
     /** True indicates that this cell is part of the path between start and end. **/
     boolean path = false;
 
-    /**
-     * Construct a new map cell with the specified "passability."  An input of
-     * true means the cell is passable.
-     **/
+    /** Construct a new map cell with the specified "passability."  An input of true means the cell is passable. **/
     public JMapCell(boolean pass) {
         // Set the preferred cell size, to drive the initial window size.
         setPreferredSize(CELL_SIZE);
@@ -67,10 +64,7 @@ public class JMapCell extends JComponent {
         updateAppearance();
     }
 
-    /**
-     * This helper method updates the background color to match the current
-     * internal state of the cell.
-     **/
+    /** This helper method updates the background color to match the current internal state of the cell. **/
     private void updateAppearance() {
         if (passable) {
             // Passable cell.  Indicate its state with a border.
@@ -84,10 +78,7 @@ public class JMapCell extends JComponent {
         }
     }
 
-    /**
-     * Implementation of the paint method to draw the background color into the
-     * map cell.
-     **/
+    /** Implementation of the paint method to draw the background color into the map cell. **/
     protected void paintComponent(Graphics g) {
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());

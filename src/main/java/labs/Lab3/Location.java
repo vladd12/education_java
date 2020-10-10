@@ -1,9 +1,6 @@
 package labs.Lab3;
 
-/**
- * This class represents a specific location in a 2D map.  Coordinates are
- * integer values.
- **/
+/** This class represents a specific location in a 2D map.  Coordinates are integer values. **/
 public class Location {
     /** X coordinate of this location. **/
     public int xCoord;
