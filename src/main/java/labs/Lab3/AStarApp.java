@@ -187,8 +187,7 @@ public class AStarApp {
             }
         }
 
-        // Try to compute a path.  If one can be computed, mark all cells in the
-        // path.
+        // Try to compute a path.  If one can be computed, mark all cells in the path.
 
         Waypoint wp = AStarPathfinder.computePath(map);
         while (wp != null) {
@@ -198,10 +197,7 @@ public class AStarApp {
         }
     }
 
-    /**
-     * Entry-point for the application.  No command-line arguments are
-     * recognized at this time.
-     **/
+    /** Entry-point for the application.  No command-line arguments are recognized at this time. **/
     public static void main(String[] args) {
         AStarApp app = new AStarApp(40, 30);
         app.start();

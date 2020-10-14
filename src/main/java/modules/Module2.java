@@ -66,9 +66,9 @@ public class Module2 {
 
         // Задача 10
         System.out.println("Задача 10.");
-        System.out.println(boxSeq(0));
-        System.out.println(boxSeq(1));
-        System.out.println(boxSeq(2) + "\n");
+        System.out.println(boxSeq(4));
+        System.out.println(boxSeq(5));
+        System.out.println(boxSeq(6) + "\n");
     }
 
     // Задача 1

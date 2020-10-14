@@ -18,4 +18,15 @@ public class Location {
     public Location() {
         this(0, 0);
     }
+
+    /** Equals function. **/
+    public boolean equals(Location loc) {
+        return (this.xCoord == loc.xCoord && this.yCoord == loc.yCoord);
+    }
+
+    /** HashCode Function **/
+    @Override
+    public int hashCode() {
+        return (xCoord * 100 + yCoord);
+    }
 }

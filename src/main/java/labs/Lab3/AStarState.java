@@ -1,5 +1,7 @@
 package labs.Lab3;
 
+import java.util.HashMap;
+
 /**
  * This class stores the basic state necessary for the A* algorithm to compute a
  * path across a map.  This state includes a collection of "open waypoints" and
@@ -10,11 +12,10 @@ package labs.Lab3;
 public class AStarState {
     /** This is a reference to the map that the A* algorithm is navigating. **/
     private Map2D map;
+    private HashMap<Location, Waypoint> openWaypoints = new HashMap<>();
+    private HashMap<Location, Waypoint> closeWaypoints = new HashMap<>();
 
-
-    /**
-     * Initialize a new state object for the A* pathfinding algorithm to use.
-     **/
+    /** Initialize a new state object for the A* pathfinding algorithm to use. **/
     public AStarState(Map2D map) {
         if (map == null) throw new NullPointerException("map cannot be null");
         this.map = map;
