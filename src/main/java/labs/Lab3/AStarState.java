@@ -33,7 +33,7 @@ public class AStarState {
      **/
     public Waypoint getMinOpenWaypoint() {
         // Почему-то требует создания массива
-        Waypoint[] MinOpenWaypoint = new Waypoint[1];
+        final Waypoint[] MinOpenWaypoint = new Waypoint[1];
         final float[] j = new float[1];
         j[0] = Float.MAX_VALUE;
         openWaypoints.forEach((k,v) -> {
@@ -54,11 +54,14 @@ public class AStarState {
      * if</em> the new waypoint's "previous cost" value is less than the current
      * waypoint's "previous cost" value.
      **/
-    public void addOpenWaypoint(Waypoint newWP) {
-        if (openWaypoints.get(newWP.getLocation()) == null) openWaypoints.put(newWP.getLocation(), newWP);
+    public boolean  addOpenWaypoint(Waypoint newWP) {
+        if (openWaypoints.get(newWP.getLocation()) == null) {
+            openWaypoints.put(newWP.getLocation(), newWP);
+        }
         else if (newWP.getPreviousCost() < openWaypoints.get(newWP.getLocation()).getPreviousCost()) {
             openWaypoints.replace(newWP.getLocation(), newWP);
         }
+        return false;
     }
 
     /** Returns the current number of open waypoints. **/

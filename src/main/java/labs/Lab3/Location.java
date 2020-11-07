@@ -22,8 +22,12 @@ public class Location {
     }
 
     /** Equals function. **/
-    public boolean equals(Location loc) {
-        return (this.xCoord == loc.xCoord && this.yCoord == loc.yCoord);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Location location = (Location) obj;
+        return (xCoord == location.xCoord && yCoord == location.yCoord);
     }
 
     /** HashCode Function **/
