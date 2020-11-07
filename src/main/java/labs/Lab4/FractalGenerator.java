@@ -39,7 +39,7 @@ public abstract class FractalGenerator {
      * Updates the current range to be centered at the specified coordinates,
      * and to be zoomed in or out by the specified scaling factor.
      */
-    public void recenterAndZoomRange(Rectangle2D.Double range, double centerX, double centerY, double scale) {
+    public static void recenterAndZoomRange(Rectangle2D.Double range, double centerX, double centerY, double scale) {
         double newWidth = range.width * scale;
         double newHeight = range.height * scale;
         range.x = centerX - newWidth / 2;
