@@ -86,10 +86,17 @@ public class FractalExplorer {
         imageDisplay.repaint();
     }
 
+    /**
+     * Класс для обработки нажатий мыши по дисплею
+     */
     class MyMouseListener extends MouseAdapter {
 
         public MouseListener mouseListener = new MouseListener() {
 
+            /**
+             * Переопределение события при нажатии левой кнопки мышки по фракталу
+             * @param e MouseEvent, стандартный элемент управления
+             */
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (size >= 0) {
@@ -101,6 +108,8 @@ public class FractalExplorer {
                     drawFractal();
                 }
             }
+
+            // Эти методы также переопределены, но ничего не делают
 
             @Override
             public void mousePressed(MouseEvent e) { }
@@ -127,6 +136,3 @@ public class FractalExplorer {
         fractalExplorer.drawFractal();
     }
 }
-
-
-
