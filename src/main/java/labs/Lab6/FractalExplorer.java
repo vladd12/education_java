@@ -135,7 +135,7 @@ public class FractalExplorer {
     /**
      * Класс для обработки нажатий мыши по дисплею
      */
-    class MyMouseListener extends MouseAdapter {
+    private class MyMouseListener extends MouseAdapter {
 
         public MouseListener mouseListener = new MouseListener() {
 
@@ -171,6 +171,14 @@ public class FractalExplorer {
 
         };
 
+    }
+
+    private class FractalWorker extends SwingWorker {
+
+        @Override
+        protected Object doInBackground() throws Exception {
+            return null;
+        }
     }
 
     /**
