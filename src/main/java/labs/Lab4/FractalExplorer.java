@@ -51,13 +51,6 @@ public class FractalExplorer {
         );
         contentPane.add(resetButton, BorderLayout.SOUTH);
 
-        /*
-        JComboBox<FractalGenerator> jComboBox = new JComboBox<>();
-        jComboBox.addItem(new Mandelbrot());
-        jComboBox.addActionListener(e -> { fractalGenerator = (FractalGenerator) jComboBox.getSelectedItem(); });
-        contentPane.add(jComboBox, BorderLayout.NORTH);
-         */
-
         frame.pack();
         frame.setVisible(true);
         frame.setResizable(false);

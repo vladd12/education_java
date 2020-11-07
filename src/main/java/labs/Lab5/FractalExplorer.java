@@ -14,7 +14,7 @@ public class FractalExplorer {
 
     // Приватные поля класса
     private final Rectangle2D.Double aDouble;
-    private final FractalGenerator fractalGenerator;
+    private FractalGenerator fractalGenerator;
     private JImageDisplay imageDisplay;
     private final int size;
 
@@ -53,12 +53,10 @@ public class FractalExplorer {
         );
         contentPane.add(resetButton, BorderLayout.SOUTH);
 
-        /*
         JComboBox<FractalGenerator> jComboBox = new JComboBox<>();
         jComboBox.addItem(new Mandelbrot());
         jComboBox.addActionListener(e -> { fractalGenerator = (FractalGenerator) jComboBox.getSelectedItem(); });
         contentPane.add(jComboBox, BorderLayout.NORTH);
-         */
 
         frame.pack();
         frame.setVisible(true);
