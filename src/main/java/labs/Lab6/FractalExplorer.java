@@ -21,6 +21,12 @@ public class FractalExplorer {
     private FractalGenerator fractalGenerator;
     private JImageDisplay imageDisplay;
     private final int size;
+    private  int rows;
+
+    // Отключаемые элементы
+    private JComboBox<FractalGenerator> jComboBox;
+    private JButton resetButton;
+    private JButton saveButton;
 
     /**
      * Конструктор класса
@@ -51,7 +57,7 @@ public class FractalExplorer {
         contentPane.add(imageDisplay, BorderLayout.CENTER);
 
         // Кнопка сброса изображения
-        JButton resetButton = new JButton("Reset Display");
+        resetButton = new JButton("Reset Display");
         resetButton.addActionListener(e -> {
             imageDisplay.clearImage();
             fractalGenerator.getInitialRange(aDouble);
@@ -60,7 +66,7 @@ public class FractalExplorer {
         );
 
         // Кнопка сохранения изображения
-        JButton saveButton = new JButton("Save Image");
+        saveButton = new JButton("Save Image");
         saveButton.addActionListener(e -> {
             JFileChooser jFileChooser = new JFileChooser();
             FileFilter fileFilter = new FileNameExtensionFilter("PNG Images", "png");
@@ -83,7 +89,7 @@ public class FractalExplorer {
         contentPane.add(jPanelForButtons, BorderLayout.SOUTH);
 
         // Выбор фрактала
-        JComboBox<FractalGenerator> jComboBox = new JComboBox<>();
+        jComboBox = new JComboBox<>();
         jComboBox.addItem(new Mandelbrot());
         jComboBox.addItem(new Tricorn());
         jComboBox.addItem(new BurningShip());
@@ -113,21 +119,11 @@ public class FractalExplorer {
      * Вспомогательный метод для вывода фрактала на экран
      */
     private void drawFractal() {
-        double xCoord;
-        double yCoord;
-        int numIters;
+        rows = size;
+        enableUI(false);
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                xCoord = FractalGenerator.getCoord(aDouble.x, aDouble.x + aDouble.width, size, i);
-                yCoord = FractalGenerator.getCoord(aDouble.y, aDouble.y + aDouble.height, size, j);
-                numIters = fractalGenerator.numIterations(xCoord, yCoord);
-                if (numIters == -1) imageDisplay.drawPixel(i, j, 0);
-                else {
-                    float hue = 0.7f + (float) numIters / 200f;
-                    int rgbColor = Color.HSBtoRGB(hue, 1f, 1f);
-                    imageDisplay.drawPixel(i, j, rgbColor);
-                }
-            }
+            FractalWorker fractalWorker = new FractalWorker(i);
+            fractalWorker.execute();
         }
         imageDisplay.repaint();
     }
@@ -145,7 +141,7 @@ public class FractalExplorer {
              */
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (size >= 0) {
+                if (rows <= 0) {
                     double xCord;
                     double yCord;
                     xCord = FractalGenerator.getCoord(aDouble.x, aDouble.x + aDouble.width, size, e.getX());
@@ -173,11 +169,74 @@ public class FractalExplorer {
 
     }
 
-    private class FractalWorker extends SwingWorker {
+    /**
+     * Функция отключения элементов интерфейса во время вычисления
+     * @param flag при true элементы включены, при false элементы отключены
+     */
+    private void enableUI (boolean flag){
+        if (flag) {
+            resetButton.setEnabled(true);
+            saveButton.setEnabled(true);
+            jComboBox.setEnabled(true);
+        }
+        else {
+            resetButton.setEnabled(false);
+            saveButton.setEnabled(false);
+            jComboBox.setEnabled(false);
+        }
+    }
 
+    /**
+     * Класс для фонового вычисления значений пикселей изображения фрактала
+     */
+    private class FractalWorker extends SwingWorker <Object, Object> {
+        // Поля класса
+        private final int yCoord;
+        private int[] rgbPoints;
+
+        /**
+         * Конструктор класса
+         * @param y целочисленная координата вычисляемой строки
+         */
+        FractalWorker(int y) {
+            this.yCoord = y;
+        }
+
+        /**
+         * Функция выполняет в фоне вычисления цветов пикселей факториалов
+         * @return всегда возвращает null
+         */
         @Override
-        protected Object doInBackground() throws Exception {
+        protected Object doInBackground() {
+            rgbPoints = new int[size + 1];
+            double xCoord;
+            double yCoord;
+            int numIters;
+            yCoord = FractalGenerator.getCoord(aDouble.y, aDouble.y + aDouble.height, size, this.yCoord);
+            for (int i = 0; i < size; i++) {
+                xCoord = FractalGenerator.getCoord(aDouble.x, aDouble.x + aDouble.width, size, i);
+                numIters = fractalGenerator.numIterations(xCoord, yCoord);
+                if (numIters == -1) rgbPoints[i] = 0;
+                else {
+                    float hue = 0.7f + (float) numIters / 200f;
+                    rgbPoints[i] = Color.HSBtoRGB(hue, 1f, 1f);
+                }
+            }
             return null;
+        }
+
+        /**
+         * Функция заполняет строки пикселями при готовности строки
+         */
+        @Override
+        protected void done() {
+            super.done();
+            for (int x = 0; x < size; x++){
+                imageDisplay.drawPixel(x, this.yCoord, rgbPoints[x]);
+            }
+            imageDisplay.repaint(1, yCoord, size, 1);
+            rows--;
+            if (rows <= 0) enableUI(true);
         }
     }
 
