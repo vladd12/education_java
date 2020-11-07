@@ -24,7 +24,7 @@ public class BurningShip extends FractalGenerator {
     }
 
     /**
-     * Переопределение функции нахождения количества итерация для фрактала Мандельброта
+     * Переопределение функции нахождения количества итерация для фрактала
      * @param x действительная часть комплексного числа
      * @param y мнимая часть комплексного числа
      * @return количество итераций, не превышающее максимальное (2000), или -1, если превышает
@@ -34,8 +34,14 @@ public class BurningShip extends FractalGenerator {
         ComplexNumber cn1 = new ComplexNumber(x, y);
         ComplexNumber cn2 = new ComplexNumber();
         int iterations = 0;
-
-        return 0;
+        while (cn2.getX() * cn2.getX() + cn2.getY() * cn2.getY() <= 4 && iterations < MAX_ITERATIONS) {
+            double tempX = cn2.getX();
+            cn2.setX(cn2.getX() * cn2.getX() + cn1.getX() - cn2.getY() * cn2.getY()); // cn2.x^2 + cn1.x - cn2.y^2
+            cn2.setY(Math.abs(2 * cn2.getY() * tempX) + cn1.getY()); // |2 * cn2.y * cn2.x| + cn1.y
+            iterations++;
+        }
+        if (iterations >= MAX_ITERATIONS) return -1;
+        else return iterations;
     }
 
     /**
@@ -44,6 +50,6 @@ public class BurningShip extends FractalGenerator {
      */
     @Override
     public String toString() {
-        return "Tricorn";
+        return "Burning Ship";
     }
 }
