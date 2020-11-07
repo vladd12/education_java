@@ -1,5 +1,7 @@
 package labs.Lab3;
 
+import java.util.Objects;
+
 /** This class represents a specific location in a 2D map.  Coordinates are integer values. **/
 public class Location {
     /** X coordinate of this location. **/
@@ -27,6 +29,6 @@ public class Location {
     /** HashCode Function **/
     @Override
     public int hashCode() {
-        return (xCoord * 100 + yCoord);
+        return Objects.hash(xCoord, yCoord);
     }
 }
