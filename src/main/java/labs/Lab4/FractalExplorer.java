@@ -11,10 +11,10 @@ import java.awt.geom.Rectangle2D;
 public class FractalExplorer {
 
     // Приватные поля класса
-    private Rectangle2D.Double aDouble;
-    private FractalGenerator fractalGenerator;
+    private final Rectangle2D.Double aDouble;
+    private final FractalGenerator fractalGenerator;
     private JImageDisplay imageDisplay;
-    private int size;
+    private final int size;
 
     /**
      * Конструктор класса
@@ -35,36 +35,41 @@ public class FractalExplorer {
         JFrame frame = new JFrame("Fractal Explorer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container contentPane = frame.getContentPane();
+        fractalGenerator.getInitialRange(aDouble);
 
         contentPane.setLayout(new BorderLayout());
         imageDisplay = new JImageDisplay(size, size);
+        imageDisplay.addMouseListener(new MyMouseListener().mouseListener);
         contentPane.add(imageDisplay, BorderLayout.CENTER);
 
         JButton resetButton = new JButton("Reset Display");
         resetButton.addActionListener(e -> {
             imageDisplay.clearImage();
+            fractalGenerator.getInitialRange(aDouble);
             drawFractal();
             }
         );
         contentPane.add(resetButton, BorderLayout.SOUTH);
 
-        /**
+        /*
         JComboBox<FractalGenerator> jComboBox = new JComboBox<>();
         jComboBox.addItem(new Mandelbrot());
         jComboBox.addActionListener(e -> { fractalGenerator = (FractalGenerator) jComboBox.getSelectedItem(); });
         contentPane.add(jComboBox, BorderLayout.NORTH);
-         **/
+         */
 
         frame.pack();
         frame.setVisible(true);
         frame.setResizable(false);
     }
 
+    /**
+     * Вспомогательный метод для вывода фрактала на экран
+     */
     private void drawFractal() {
         double xCoord;
         double yCoord;
         int numIters;
-        fractalGenerator.getInitialRange(aDouble);
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 xCoord = FractalGenerator.getCoord(aDouble.x, aDouble.x + aDouble.width, size, i);
@@ -87,7 +92,7 @@ public class FractalExplorer {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (size <= 0) {
+                if (size >= 0) {
                     double xCord;
                     double yCord;
                     xCord = FractalGenerator.getCoord(aDouble.x, aDouble.x + aDouble.width, size, e.getX());
@@ -110,6 +115,16 @@ public class FractalExplorer {
             public void mouseExited(MouseEvent e) { }
         };
 
+    }
+
+    /**
+     * Главный метод (точка входа)
+     * @param args аргументы командной строки (не используются)
+     */
+    public static void main(String[] args) {
+        FractalExplorer fractalExplorer = new FractalExplorer(600);
+        fractalExplorer.createAndShowGUI();
+        fractalExplorer.drawFractal();
     }
 }
 
