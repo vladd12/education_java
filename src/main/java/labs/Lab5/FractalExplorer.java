@@ -1,11 +1,15 @@
 package labs.Lab5;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+import java.awt.geom.Rectangle2D;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Класс пользовательского интерфейса для отображения фракталов
@@ -54,7 +58,29 @@ public class FractalExplorer {
             drawFractal();
             }
         );
-        contentPane.add(resetButton, BorderLayout.SOUTH);
+
+        // Кнопка сохранения изображения
+        JButton saveButton = new JButton("Save Image");
+        saveButton.addActionListener(e -> {
+            JFileChooser jFileChooser = new JFileChooser();
+            FileFilter fileFilter = new FileNameExtensionFilter("PNG Images", "png");
+            jFileChooser.setFileFilter(fileFilter);
+            jFileChooser.setAcceptAllFileFilterUsed(false);
+            if (jFileChooser.showDialog(frame, "Save") == JFileChooser.APPROVE_OPTION) {
+                try {
+                    ImageIO.write(imageDisplay.getBufferedImage(), "png", jFileChooser.getSelectedFile());
+                } catch (IOException ioException) {
+                    JOptionPane.showMessageDialog(frame, ioException.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+        );
+
+        // Надстройки для вывода на окне кнопок сброса и сохранения
+        JPanel jPanelForButtons = new JPanel();
+        jPanelForButtons.add(resetButton);
+        jPanelForButtons.add(saveButton);
+        contentPane.add(jPanelForButtons, BorderLayout.SOUTH);
 
         // Выбор фрактала
         JComboBox<FractalGenerator> jComboBox = new JComboBox<>();
@@ -70,7 +96,12 @@ public class FractalExplorer {
                 imageDisplay.repaint();
             }
         });
-        contentPane.add(jComboBox, BorderLayout.NORTH);
+
+        // Надстройки для вывода на окне выбора фракталов
+        JPanel jPanelForComboBox = new JPanel();
+        jPanelForComboBox.add(new JLabel("Fractal"));
+        jPanelForComboBox.add(jComboBox);
+        contentPane.add(jPanelForComboBox, BorderLayout.NORTH);
 
         // Свойства окна
         frame.pack();
@@ -137,6 +168,7 @@ public class FractalExplorer {
 
             @Override
             public void mouseExited(MouseEvent e) { }
+
         };
 
     }

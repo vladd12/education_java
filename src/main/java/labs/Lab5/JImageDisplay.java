@@ -52,4 +52,12 @@ public class JImageDisplay extends JComponent {
     public void drawPixel(int x, int y, int rgbColor) {
         image.setRGB(x, y, rgbColor);
     }
+
+    /**
+     * Стандартный getter для получения приватного поля BufferedImage класса
+     * @return возвращает BufferedImage класса
+     */
+    public BufferedImage getBufferedImage () {
+        return image;
+    }
 }
