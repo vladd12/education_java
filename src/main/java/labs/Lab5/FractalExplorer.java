@@ -34,16 +34,19 @@ public class FractalExplorer {
      * Метод для создания пользовательского интерфейса
      */
     private void createAndShowGUI() {
+        // Первоначальные установки для окна
         JFrame frame = new JFrame("Fractal Explorer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container contentPane = frame.getContentPane();
         fractalGenerator.getInitialRange(aDouble);
 
+        // Установки настройки изображения
         contentPane.setLayout(new BorderLayout());
         imageDisplay = new JImageDisplay(size, size);
         imageDisplay.addMouseListener(new MyMouseListener().mouseListener);
         contentPane.add(imageDisplay, BorderLayout.CENTER);
 
+        // Кнопка сброса изображения
         JButton resetButton = new JButton("Reset Display");
         resetButton.addActionListener(e -> {
             imageDisplay.clearImage();
@@ -53,11 +56,23 @@ public class FractalExplorer {
         );
         contentPane.add(resetButton, BorderLayout.SOUTH);
 
+        // Выбор фрактала
         JComboBox<FractalGenerator> jComboBox = new JComboBox<>();
         jComboBox.addItem(new Mandelbrot());
-        jComboBox.addActionListener(e -> { fractalGenerator = (FractalGenerator) jComboBox.getSelectedItem(); });
+        jComboBox.addItem(new Tricorn());
+        jComboBox.addItem(new BurningShip());
+        jComboBox.addActionListener(e -> {
+            fractalGenerator = (FractalGenerator) jComboBox.getSelectedItem();
+            if (fractalGenerator == null) throw new NullPointerException("Select type of fractal.");
+            else {
+                fractalGenerator.getInitialRange(aDouble);
+                drawFractal();
+                imageDisplay.repaint();
+            }
+        });
         contentPane.add(jComboBox, BorderLayout.NORTH);
 
+        // Свойства окна
         frame.pack();
         frame.setVisible(true);
         frame.setResizable(false);
