@@ -56,6 +56,4 @@ public abstract class FractalGenerator {
      * with a result of -1.
      */
     public abstract int numIterations(double x, double y);
-
-
 }
