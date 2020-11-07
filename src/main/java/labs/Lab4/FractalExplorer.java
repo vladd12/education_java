@@ -82,7 +82,7 @@ public class FractalExplorer {
     /**
      * Класс для обработки нажатий мыши по дисплею
      */
-    class MyMouseListener extends MouseAdapter {
+    private class MyMouseListener extends MouseAdapter {
 
         public MouseListener mouseListener = new MouseListener() {
 
