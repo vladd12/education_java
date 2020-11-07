@@ -56,26 +56,6 @@ public abstract class FractalGenerator {
      * with a result of -1.
      */
     public abstract int numIterations(double x, double y);
-}
 
-/**
- * Подкласс для фракталов Мандельброта
- */
-class Mandelbrot extends FractalGenerator {
 
-    // Константа с максимальным количеством итераций
-    public static final int MAX_ITERATIONS = 2000;
-
-    @Override
-    public void getInitialRange(Rectangle2D.Double range) {
-        range.x = -2;
-        range.y = -1.5;
-        range.height = 3;
-        range.width = 3;
-    }
-
-    @Override
-    public int numIterations(double x, double y) {
-        return 0;
-    }
 }
