@@ -279,7 +279,7 @@ public class Module4 {
 
     // Задача 10
     public static int countUniqueBooks(String str, char end) {
-        int unic = 0, res = 0, chars = 0;
+        int unic = 0, res = 0, chars;
         char temp;
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == end) {
@@ -289,9 +289,8 @@ public class Module4 {
                     chars++;
                     k++;
                 }
-                k = i + 1;
                 for (int j = 0; j < chars; j++) {
-                    k = i + 1+ j;
+                    k = i + 1 + j;
                     temp = str.charAt(k);
                     while (str.charAt(k) != end) {
                         if (temp == str.charAt(k + 1)) unic++;
