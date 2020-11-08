@@ -16,6 +16,9 @@ public class Module5 {
         System.out.println(canMove("Слон", "A7", "G1"));
         System.out.println(canMove("Ферзь", "C4", "D6"));
 
+        // Задача 3
+        System.out.println(canComplete());
+
     }
 
     // Задача 1
@@ -69,7 +72,7 @@ public class Module5 {
         return flag;
     }
 
-
+    // Задача 3
     public static boolean canComplete() {
 
         return false;
