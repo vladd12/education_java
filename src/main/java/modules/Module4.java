@@ -40,6 +40,12 @@ public class Module4 {
         System.out.println(bugger(4) + "\n");
 
         // Задача 7
+        System.out.println(toStarShorthand("abbccc"));
+        System.out.println(toStarShorthand("77777geff"));
+        System.out.println(toStarShorthand("abc"));
+        System.out.println(toStarShorthand("") + "\n");
+
+        // Задача 8
 
 
 
@@ -201,6 +207,26 @@ public class Module4 {
     }
 
     // Задача 7
+    public static String toStarShorthand(String str) {
+        int count = 1;
+        String result = "";
+        for (int i = 0; i < str.length() - 1; i++) {
+            if (str.charAt(i) == str.charAt(i + 1)) count++; // Если совпадают, то счётчик увеличивается
+            else { // Если не совпадают, то выводим буквы
+                if (count == 1) result = result + str.charAt(i);
+                else result = result + str.charAt(i) + "*" + count;
+                count = 1;
+            }
+            if (i == str.length() - 2) { // Если предпоследний символ строки
+                if (count != 1) result = result + str.charAt(i) + "*" + count;
+                if (str.charAt(i) != str.charAt(i + 1)) result = result + str.charAt(i + 1);
+            }
+        }
+        return result;
+    }
+
+    // Задача 8
+
 
 
 
