@@ -32,9 +32,15 @@ public class Module4 {
         // Задача 5
         System.out.println(BMI("205 pounds", "73 inches"));
         System.out.println(BMI("55 kilos", "1.65 meters"));
-        System.out.println(BMI("154 pounds", "2 meters"));
+        System.out.println(BMI("154 pounds", "2 meters") + "\n");
 
         // Задача 6
+        System.out.println(bugger(39));
+        System.out.println(bugger(999));
+        System.out.println(bugger(4) + "\n");
+
+        // Задача 7
+
 
 
     }
@@ -178,5 +184,24 @@ public class Module4 {
     }
 
     // Задача 6
+    public static int bugger(int num) {
+        int count = 0;
+        int temp;
+        while (num > 0) {
+            if (num < 10) break; // Выход из цикла при < 10
+            temp = num;
+            num = 1;
+            while (temp > 0) { // Разложение числа на цифры
+                num = num * (temp % 10); // Умножение
+                temp = temp / 10;
+            }
+            count++; // Счётчик умножения
+        }
+        return count;
+    }
+
+    // Задача 7
+
+
 
 }
