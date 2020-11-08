@@ -25,7 +25,14 @@ public class Module4 {
         System.out.println(toSnakeCase("getColor") + "\n");
 
         // Задача 4
-        System.out.println();
+        System.out.println(overTime(new double[] {9, 17, 30, 1.5}));
+        System.out.println(overTime(new double[] {16, 18, 30, 1.8}));
+        System.out.println(overTime(new double[] {13.25, 15, 30, 1.5}) + "\n");
+
+        // Задача 5
+        System.out.println(BMI("два один", "1111"));
+
+
 
     }
 
@@ -117,8 +124,32 @@ public class Module4 {
     }
 
     // Задача 4
+    public static String overTime(double[] arr) {
+        double result;
+        if (arr[1] >= 17) result = (17 - arr[0]) * arr[2] + (arr[1] - 17) * arr[2] * arr[3];
+        else result = (arr[1] - arr[0]) * arr[2];
+        result = Math.round(result * 100.0) / 100.0; // округление до сотых
+        return "$" + result + "0";
+    }
 
+    // Задача 5
+    public static String BMI(String weight, String height) {
+        int index = 0;
+        String[] first, second;
+        double weightDouble, heightDouble;
 
+        // поиск индекса пробела в строке
+        for (int i = 0; i < weight.length(); i++) {
+            if (weight.charAt(i) == ' ') {
+                index = i;
+                break;
+            }
+        }
 
+        // Разделение строки на массив подстрок (2 подстроки)
+        first = new String[] { weight.substring(0, index), weight.substring(index + 1) };
+        weightDouble = Double.parseDouble(first[0]);
+        return "";
+    }
 
 }
