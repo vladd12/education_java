@@ -46,8 +46,16 @@ public class Module4 {
         System.out.println(toStarShorthand("") + "\n");
 
         // Задача 8
+        System.out.println(doesRhyme("Sam I am!", "Green eggs and ham."));
+        System.out.println(doesRhyme("Sam I am!", "Green eggs and HAM."));
+        System.out.println(doesRhyme("You are off to the races", "a splendid day."));
+        System.out.println(doesRhyme("and frequently do?", "you gotta move."));
 
-
+        // Задача 9
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
 
     }
 
@@ -226,8 +234,30 @@ public class Module4 {
     }
 
     // Задача 8
+    public static boolean doesRhyme(String str1, String str2) {
+        // Индексы с которых будет происходить проверка
+        int index1 = str1.length() - 4;
+        int index2 = str2.length() - 4;
+        int counter = 0; // Счётчик совпадений
+
+        // Все строки в нижний регистр символов
+        str1 = str1.toLowerCase();
+        str2 = str2.toLowerCase();
+
+        for (int i = 0; i < 4; i++) { // Считаем количество совпадений
+            if (str1.charAt(index1 + i) == str2.charAt(index2 + i)) counter++;
+        }
+
+        return (counter >= 2); // Возвращаем значение в зависимости от количества совпадений
+    }
+
+    // Задача 9
+    public static boolean trouble(int num1, int num2) {
 
 
 
+
+        return false;
+    }
 
 }
