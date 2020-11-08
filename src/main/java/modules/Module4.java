@@ -49,13 +49,15 @@ public class Module4 {
         System.out.println(doesRhyme("Sam I am!", "Green eggs and ham."));
         System.out.println(doesRhyme("Sam I am!", "Green eggs and HAM."));
         System.out.println(doesRhyme("You are off to the races", "a splendid day."));
-        System.out.println(doesRhyme("and frequently do?", "you gotta move."));
+        System.out.println(doesRhyme("and frequently do?", "you gotta move.") + "\n");
 
         // Задача 9
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        System.out.println(trouble(451999277, 411777899));
+        System.out.println(trouble(1222345, 12345));
+        System.out.println(trouble(666789, 12345667));
+        System.out.println(trouble(33789, 12345337) + "\n");
+
+        // Задача 10
 
     }
 
@@ -219,7 +221,7 @@ public class Module4 {
         int count = 1;
         String result = "";
         for (int i = 0; i < str.length() - 1; i++) {
-            if (str.charAt(i) == str.charAt(i + 1)) count++; // Если совпадают, то счётчик увеличивается
+            if (str.charAt(i) == str.charAt(i + 1)) count++; // Если символы совпадают, то счётчик увеличивается
             else { // Если не совпадают, то выводим буквы
                 if (count == 1) result = result + str.charAt(i);
                 else result = result + str.charAt(i) + "*" + count;
@@ -253,11 +255,28 @@ public class Module4 {
 
     // Задача 9
     public static boolean trouble(int num1, int num2) {
+        // Переводим числа в строки
+        String str1 = String.valueOf(num1);
+        String str2 = String.valueOf(num2);
+        int count1, count2;
+        boolean flag = false; // Переменная, которая будет возвращаться
 
-
-
-
-        return false;
+        // Поиск совпадающих символов
+        for (int i = 0; i < str1.length(); i++) {
+            if (str2.indexOf(str1.charAt(i)) != -1) {
+                count1 = str1.length() - str1.replace(String.valueOf(str1.charAt(i)), "").length();
+                count2 = str2.length() - str2.replace(String.valueOf(str1.charAt(i)), "").length();
+                if (count1 == 3 && count2 == 2) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
+
+    // Задача 10
+
+
 
 }
