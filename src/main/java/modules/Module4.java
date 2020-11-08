@@ -58,7 +58,9 @@ public class Module4 {
         System.out.println(trouble(33789, 12345337) + "\n");
 
         // Задача 10
-
+        System.out.println(countUniqueBooks("AZYWABBCATTTA", 'A'));
+        System.out.println(countUniqueBooks("$AA$BBCATT$C$$B$", '$'));
+        System.out.println(countUniqueBooks("ZZABCDEF", 'Z'));
     }
 
     // Задача 1
@@ -276,7 +278,31 @@ public class Module4 {
     }
 
     // Задача 10
-
-
-
+    public static int countUniqueBooks(String str, char end) {
+        int unic = 0, res = 0, chars = 0;
+        char temp;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == end) {
+                chars = 0;
+                int k = i + 1;
+                while (str.charAt(k) != end) {
+                    chars++;
+                    k++;
+                }
+                k = i + 1;
+                for (int j = 0; j < chars; j++) {
+                    k = i + 1+ j;
+                    temp = str.charAt(k);
+                    while (str.charAt(k) != end) {
+                        if (temp == str.charAt(k + 1)) unic++;
+                        k++;
+                    }
+                    if (unic == 0) res++;
+                    unic=0;
+                }
+                i+=chars+1;
+            }
+        }
+        return res;
+    }
 }
