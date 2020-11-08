@@ -30,8 +30,11 @@ public class Module4 {
         System.out.println(overTime(new double[] {13.25, 15, 30, 1.5}) + "\n");
 
         // Задача 5
-        System.out.println(BMI("два один", "1111"));
+        System.out.println(BMI("205 pounds", "73 inches"));
+        System.out.println(BMI("55 kilos", "1.65 meters"));
+        System.out.println(BMI("154 pounds", "2 meters"));
 
+        // Задача 6
 
 
     }
@@ -128,7 +131,7 @@ public class Module4 {
         double result;
         if (arr[1] >= 17) result = (17 - arr[0]) * arr[2] + (arr[1] - 17) * arr[2] * arr[3];
         else result = (arr[1] - arr[0]) * arr[2];
-        result = Math.round(result * 100.0) / 100.0; // округление до сотых
+        result = Math.round(result * 100.0) / 100.0; // Округление до сотых
         return "$" + result + "0";
     }
 
@@ -137,8 +140,9 @@ public class Module4 {
         int index = 0;
         String[] first, second;
         double weightDouble, heightDouble;
+        double BMI;
 
-        // поиск индекса пробела в строке
+        // Поиск индекса пробела в первой строке
         for (int i = 0; i < weight.length(); i++) {
             if (weight.charAt(i) == ' ') {
                 index = i;
@@ -148,8 +152,31 @@ public class Module4 {
 
         // Разделение строки на массив подстрок (2 подстроки)
         first = new String[] { weight.substring(0, index), weight.substring(index + 1) };
-        weightDouble = Double.parseDouble(first[0]);
-        return "";
+        weightDouble = Double.parseDouble(first[0]); // Парсим первую подстроку в double
+        if (first[1].equals("pounds")) weightDouble = weightDouble * 0.45359237; // Если фунты, то переводим в килограммы
+
+        // Поиск индекса пробела во второй строке
+        for (int i = 0; i < height.length(); i++) {
+            if (height.charAt(i) == ' ') {
+                index = i;
+                break;
+            }
+        }
+
+        // Разделение строки на массив подстрок (2 подстроки)
+        second = new String[] { height.substring(0, index), height.substring(index + 1) };
+        heightDouble = Double.parseDouble(second[0]); // Парсим первую подстроку в double
+        if (second[1].equals("inches")) heightDouble = heightDouble * 0.0254; // Если дюймы, то переводим в метры
+
+        BMI = weightDouble / (heightDouble * heightDouble); // Вычисление индекса массы тела
+        BMI = Math.round(BMI * 10.0) / 10.0; // Округление до десятых
+
+        // Возвращаем соответствующую строку
+        if (BMI < 18.5) return BMI + " Underweight";
+        else if (BMI >= 18.5 && BMI <= 24.9) return BMI + " Normal weight";
+        else return BMI + " Overweight";
     }
+
+    // Задача 6
 
 }
