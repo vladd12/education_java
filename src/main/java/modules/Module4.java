@@ -16,10 +16,16 @@ public class Module4 {
         System.out.println(Arrays.toString(split("()()()")));
         System.out.println(Arrays.toString(split("((()))")));
         System.out.println(Arrays.toString(split("((()))(())()()(()())")));
-        System.out.println(Arrays.toString(split("((())())(()(()()))")));
+        System.out.println(Arrays.toString(split("((())())(()(()()))")) + "\n");
 
         // Задача 3
-        System.out.println(toSnakeCase("strStrStr"));
+        System.out.println(toCamelCase("hello_edabit"));
+        System.out.println(toSnakeCase("helloEdabit"));
+        System.out.println(toCamelCase("is_modal_open"));
+        System.out.println(toSnakeCase("getColor") + "\n");
+
+        // Задача 4
+        System.out.println();
 
     }
 
@@ -90,41 +96,28 @@ public class Module4 {
 
     // Задача 3
     public static String toCamelCase(String str) {
-
-        return "";
-    }
-
-    public static String toSnakeCase(String str) {
-        int n = 0;
-        int index = 0;
-        int start_index = 0;
-        for (int i = 0; i < str.length(); i++) { // считаем количество больших букв
-            if ((int)str.charAt(i) > 64 && (int)str.charAt(i) < 91) {
-                n = n + 1;
-            }
-        }
-        int[] arr_indexes = new int[n];
-        String[] subs_str = new String[n+1];
-        for (int i = 0; i < str.length(); i++) { // находим индекс каждой большой буквы
-            if ((int)str.charAt(i) > 64 && (int)str.charAt(i) < 91) {
-                arr_indexes[index] = i;
-                index = index + 1;
-            }
-        }
-        for (int i = 0; i < n+1; i++) { // разделяем строку на подстроки по индексу
-            if (i == n) subs_str[i] = str.substring(start_index);
-            else {
-                subs_str[i] = str.substring(start_index, arr_indexes[i]);
-                start_index = arr_indexes[i];
-            }
-        }
         String result = "";
-        for (int i = 0; i < n+1; i++) { // разделяем строку на подстроки по индексу
-            if (i == n) result = result + subs_str[i].toLowerCase();
-            else result = result + subs_str[i].toLowerCase() + "_";
+        for(int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '_') {
+                result = result + Character.toUpperCase(str.charAt(i+1));
+                i++;
+            }
+            else result = result + str.charAt(i);
         }
         return result;
     }
+
+    public static String toSnakeCase(String str) {
+        String result = "";
+        for(int i = 0; i < str.length(); i++) {
+            if (Character.isUpperCase(str.charAt(i))) result = result + "_" + Character.toLowerCase(str.charAt(i));
+            else result = result + str.charAt(i);
+        }
+        return result;
+    }
+
+    // Задача 4
+
 
 
 
