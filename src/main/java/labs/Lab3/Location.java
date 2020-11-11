@@ -25,7 +25,7 @@ public class Location {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
         Location location = (Location) obj;
         return (xCoord == location.xCoord && yCoord == location.yCoord);
     }

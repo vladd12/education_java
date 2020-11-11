@@ -237,7 +237,7 @@ public class Module4 {
         return result;
     }
 
-    // Задача 8
+    // Задача 8 (переделать)
     public static boolean doesRhyme(String str1, String str2) {
         // Индексы с которых будет происходить проверка
         int index1 = str1.length() - 4;
