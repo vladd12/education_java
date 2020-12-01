@@ -1,6 +1,6 @@
 package labs.Lab7;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.net. *;
 
@@ -14,7 +14,8 @@ public class Crawler {
     public static final int MAXThreads = 16;
     public static final int activeThreads = 0;
 
-    public static final int port = 80;
+    public static final int port = 80; // номер порта сайтов
+    public static final int timeout = 1000; // время ожидания сокета в мс
 
     public static LinkedList<URLDepthPair> CheckedURL = new LinkedList<>();
     public static LinkedList<URLDepthPair> UncheckedURL = new LinkedList<>();
@@ -33,7 +34,15 @@ public class Crawler {
 
         UncheckedURL.add(new URLDepthPair(URL, depth));
 
-        Socket socket = new Socket(UncheckedURL.get(1).getURL(), port);
+        // Создание сокета, задание его параметров
+        Socket socket = new Socket(UncheckedURL.get(0).getURL(), port);
+        socket.setSoTimeout(timeout);
+
+        // Работа с потоками данных сокета
+        InputStream stream_in = socket.getInputStream();
+        OutputStream stream_out = socket.getOutputStream();
+        BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
+        PrintWriter output = new PrintWriter(stream_out, true);
     }
 
 
