@@ -9,14 +9,16 @@ public class FIFO {
 
     private final int maxSize; // Максимальное количество элементов в буфере
     private final LinkedList<URLDepthPair> items; // Поле класса для хранения списка объектов URLDepthPair
+    private final LinkedList<URLDepthPair> checkedItems; // Поле класса для хранения списка просмотренных URLDepthPair
 
     /**
      * Конструктор класса
-     * @param size максимальное количество элементов в буфере
+     * @param maxSize максимальное количество элементов в буфере
      */
-    public FIFO(int size) {
-        this.maxSize = size;
+    public FIFO(int maxSize) {
+        this.maxSize = maxSize;
         this.items = new LinkedList<>();
+        this.checkedItems = new LinkedList<>();
     }
 
     /**
@@ -44,6 +46,8 @@ public class FIFO {
         URLDepthPair item = null;
         while (items.size() == 0) items.wait(); // Ожидаем, если нет объектов
         if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
+        else throw new IndexOutOfBoundsException("Index out of range list!");
+        checkedItems.add(item); // Добавляем объект в список просмотренных
         return item;
     }
 

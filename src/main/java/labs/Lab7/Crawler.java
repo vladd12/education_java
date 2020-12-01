@@ -12,10 +12,7 @@ public class Crawler {
 
     public static final int MAXDepth = 4;
     public static final int MAXThreads = 4;
-    public static int activeThreads = 0;
 
-    public static LinkedList<URLDepthPair> CheckedURL = new LinkedList<>();
-    public static LinkedList<URLDepthPair> UncheckedURL = new LinkedList<>();
     public static final FIFO URLPool = new FIFO(100);
 
     /**
@@ -32,7 +29,7 @@ public class Crawler {
         int numThreads = in.nextInt();
         in.close(); // закрываем поток ввода
 
-        // Проверяем значения переменных, выбрасываем исключения
+        // Проверяем значения переменных, выбрасываем исключения если не подходит по условию
         if (depth > MAXDepth) throw new IllegalArgumentException("depth must be <" + MAXDepth);
         if (numThreads > MAXThreads) throw new IllegalArgumentException("num of threads must be < " + MAXThreads);
         if (depth <= 0) throw new IllegalArgumentException("Incorrect input data: depth must be > 0");
@@ -42,7 +39,7 @@ public class Crawler {
         URLPool.put(new URLDepthPair(URL, 0));
 
         // 1111
-        while(!URLPool.isEmpty() || activeThreads != 0) {
+        while(!URLPool.isEmpty()) {
 
 
 
@@ -58,22 +55,32 @@ public class Crawler {
     /**
      * Класс, содержащий код для выполнения в каждом потоке
      */
-    public static class pool implements Runnable {
+    public class CrawlerTask implements Runnable {
+
+        private FIFO pool; // Поле класса FIFO
+
+        /**
+         * Конструктор класса без параметров
+         */
+        public CrawlerTask() {
+            this.pool = null;
+        }
+
+        /**
+         * Конструктор класса с параметром
+         * @param pool передача буфера очереди FIFO в конструктор класса
+         */
+        public CrawlerTask(FIFO pool) {
+            this.pool = pool;
+        }
+
         /**
          * Переопределение метода run
          */
         @Override
         public void run() {
-            try {
-                func();
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
-            }
-            activeThreads--;
-            synchronized (URLPool) {
-                if (activeThreads <= MAXThreads) {
-                    URLPool.notify();
-                }
+            while(!pool.isEmpty()) {
+                // TODO
             }
         }
     }
@@ -83,9 +90,9 @@ public class Crawler {
         // Временная переменная для хранения пары URLDepthPair
         URLDepthPair temp = URLPool.get();
 
-        //
-        URLConnection urlConnection = new URL(temp.getURL()).openConnection();
-        urlConnection.setConnectTimeout(10_1000);
+        // Опеределяем URL соединение
+        URLConnection urlSocket = new URL(temp.getURL()).openConnection();
+        urlSocket.setConnectTimeout(10_1000);
 
         /*
         // Работа с потоками данных URL-соединения
