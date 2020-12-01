@@ -97,8 +97,7 @@ public class Crawler {
             }
 
             // Опеределяем URL соединение
-            URLConnection urlSocket = null;
-            urlSocket = new URL(temp.getURL()).openConnection();
+            URLConnection urlSocket = new URL(temp.getURL()).openConnection();
             urlSocket.setConnectTimeout(10_1000);
 
             // Работа с потоками данных URL-соединения
