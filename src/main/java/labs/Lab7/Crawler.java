@@ -38,18 +38,28 @@ public class Crawler {
         // Стартовые значения для пула ссылок
         URLPool.put(new URLDepthPair(URL, 0));
 
+        // Создаём и запускаем потоки
+        for (int i = 0; i < numThreads; i++) {
+            Thread thread = createThread(URLPool);
+            thread.start();
+        }
 
 
     }
 
-    private Thread createThread (FIFO pool){
+    /**
+     * Функция для создания потоков
+     * @param pool буфер ссылок
+     * @return возвращает поток, созданный для работы с данным буфером
+     */
+    private static Thread createThread(FIFO pool){
         return new Thread(new CrawlerTask(pool));
     }
 
     /**
      * Класс, содержащий код для выполнения в каждом потоке
      */
-    public class CrawlerTask implements Runnable {
+    public static class CrawlerTask implements Runnable {
 
         private final FIFO pool; // Поле класса FIFO
 
@@ -66,35 +76,48 @@ public class Crawler {
          */
         @Override
         public void run() {
-            while(!pool.isEmpty()) {
-                // TODO
+            try {
+                calculate(this.pool);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    public static void func() throws InterruptedException, IOException {
+    public static void calculate(FIFO pool) throws IOException {
 
-        // Временная переменная для хранения пары URLDepthPair
-        URLDepthPair temp = URLPool.get();
+        while(!pool.isEmpty()) {
 
-        // Опеределяем URL соединение
-        URLConnection urlSocket = new URL(temp.getURL()).openConnection();
-        urlSocket.setConnectTimeout(10_1000);
+            // Временная переменная для хранения пары URLDepthPair
+            URLDepthPair temp = null;
+            try {
+                temp = URLPool.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        /*
-        // Работа с потоками данных URL-соединения
-        // InputStream stream_in = socket.getInputStream();
-        // OutputStream stream_out = socket.getOutputStream();
-        // BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
-        // PrintWriter output = new PrintWriter(stream_out, true);
+            // Опеределяем URL соединение
+            URLConnection urlSocket = null;
+            urlSocket = new URL(temp.getURL()).openConnection();
+            urlSocket.setConnectTimeout(10_1000);
 
-        // Получение страницы
-        while (true) {
-            String line = input.readLine();
-            if (line == null) break; // Чтение документа завершено
-            System.out.println(line);
+            // Работа с потоками данных URL-соединения
+            InputStream stream_in = urlSocket.getInputStream();
+            OutputStream stream_out = urlSocket.getOutputStream();
+            BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
+            PrintWriter output = new PrintWriter(stream_out, true);
+
+            // Получение страницы
+            while (true) {
+                String line = input.readLine();
+                if (line == null) break; // Чтение документа завершено
+                System.out.println(line);
+            }
+
+
+
+
         }
-         */
 
 
     }
