@@ -47,4 +47,11 @@ public class FIFO {
         return item;
     }
 
+    /**
+     * Функция проверяет, пустой ли буфер
+     * @return возвращает true, если буфер пустой, false в противном случае
+     */
+    public boolean isEmpty() {
+        return this.items.isEmpty();
+    }
 }
