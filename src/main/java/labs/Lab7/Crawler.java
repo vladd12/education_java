@@ -14,8 +14,8 @@ public class Crawler {
     public static final int MAXThreads = 16;
     public static final int activeThreads = 0;
 
-    public static final int port = 80; // номер порта сайтов
-    public static final int timeout = 1000; // время ожидания сокета в мс
+    public static final int port = 80; // Номер порта сайтов
+    public static final int timeout = 1000; // Время ожидания сокета в мс
 
     public static LinkedList<URLDepthPair> CheckedURL = new LinkedList<>();
     public static LinkedList<URLDepthPair> UncheckedURL = new LinkedList<>();
@@ -25,7 +25,7 @@ public class Crawler {
      * @param args аргументы командной строки
      */
     public static void main(String[] args) throws IOException {
-        Scanner in = new Scanner(System.in); // сканер для ввода URL и глубины поиска
+        Scanner in = new Scanner(System.in); // Сканер для ввода URL и глубины поиска
         System.out.print("Input a URL: ");
         String URL = in.nextLine();
         System.out.print("Input a depth: ");

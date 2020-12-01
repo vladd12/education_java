@@ -2,8 +2,8 @@ package labs.Lab7;
 
 public class URLDepthPair {
 
-    private String URL; // поле класса со строкой URL
-    private int depth; // поле класса с глубиной поиска
+    private String URL; // Поле класса со строкой URL
+    private int depth; // Поле класса с глубиной поиска
 
     /**
      * Конструктор класса по умолчанию
