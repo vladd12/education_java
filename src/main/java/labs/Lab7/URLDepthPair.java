@@ -24,6 +24,15 @@ public class URLDepthPair {
     }
 
     /**
+     * Переопределение метода toString
+     * @return строковое представление объекта
+     */
+    @Override
+    public String toString() {
+        return "URL = " + URL + ", depth = " + depth;
+    }
+
+    /**
      * Getter для строки URL
      * @return текущая строка URL объекта
      */

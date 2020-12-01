@@ -2,8 +2,10 @@ package labs.Lab7;
 
 import java.util.*;
 
-public class Scan {
+public class Crawler {
 
+    public static final String HTTP = "http://";
+    public static final String HTTP_S = "https://";
     private static LinkedList<URLDepthPair> CheckedURL = new LinkedList<>();
     private static LinkedList<URLDepthPair> UncheckedURL = new LinkedList<>();
 
