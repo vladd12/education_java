@@ -38,18 +38,12 @@ public class Crawler {
         // Стартовые значения для пула ссылок
         URLPool.put(new URLDepthPair(URL, 0));
 
-        // 1111
-        while(!URLPool.isEmpty()) {
 
-
-
-
-        }
 
     }
 
-    public static void startThread (URLDepthPair urlDepthPair){
-
+    private Thread createThread (FIFO pool){
+        return new Thread(new CrawlerTask(pool));
     }
 
     /**
@@ -57,14 +51,7 @@ public class Crawler {
      */
     public class CrawlerTask implements Runnable {
 
-        private FIFO pool; // Поле класса FIFO
-
-        /**
-         * Конструктор класса без параметров
-         */
-        public CrawlerTask() {
-            this.pool = null;
-        }
+        private final FIFO pool; // Поле класса FIFO
 
         /**
          * Конструктор класса с параметром
@@ -100,9 +87,6 @@ public class Crawler {
         // OutputStream stream_out = socket.getOutputStream();
         // BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
         // PrintWriter output = new PrintWriter(stream_out, true);
-
-        // Формирование запроса для получения страницы
-        // output.println("GET / HTTP/1.1\nHost: " + URL + "\nConnection: close\n");
 
         // Получение страницы
         while (true) {
