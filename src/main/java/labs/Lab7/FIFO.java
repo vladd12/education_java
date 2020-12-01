@@ -26,9 +26,11 @@ public class FIFO {
      */
     public boolean put(URLDepthPair obj) {
         boolean flagAdded = false;
-        if (items.size() < maxSize) {
-            items.addLast(obj); // Объект добавляется в конец списка
-            flagAdded = true;
+        synchronized (items) {
+            if (items.size() < maxSize) {
+                items.addLast(obj); // Объект добавляется в конец списка
+                flagAdded = true;
+            }
         }
         return flagAdded;
     }
@@ -37,11 +39,11 @@ public class FIFO {
      * Функция получения объекта из буфера
      * @return объект класса URLDepthPair из начала списка
      */
-    public URLDepthPair get() {
+    public synchronized URLDepthPair get() throws InterruptedException {
+        // synchronized - потокобезопасный метод класса
         URLDepthPair item = null;
-        synchronized (items) { // Потокобезопасный участок кода
-            if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
-        }
+        while (items.size() == 0) items.wait(); // Ожидаем, если нет объектов
+        if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
         return item;
     }
 
