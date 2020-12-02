@@ -2,7 +2,7 @@ package labs.Lab7;
 
 import java.io.*;
 import java.util.*;
-import java.net. *;
+import java.net.*;
 
 public class Crawler {
 
@@ -26,9 +26,14 @@ public class Crawler {
         // Стартовые значения для пула ссылок
         URLPool.put(new URLDepthPair(URL, 0));
         calculate(depth);
-
+        outputResult();
     }
 
+    /**
+     * Функция ищет ссылки и добавляет их в пул, при нахождении
+     * @param max_depth указанная глубина поиска
+     * @throws IOException исключение, вызванное работой с сетевыми структурами
+     */
     public static void calculate(int max_depth) throws IOException {
         while(!URLPool.isEmpty()) {
             // Временная переменная для хранения пары URLDepthPair
@@ -40,9 +45,7 @@ public class Crawler {
 
             // Работа с потоками данных URL-соединения
             InputStream stream_in = urlSocket.getInputStream();
-            OutputStream stream_out = urlSocket.getOutputStream();
             BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
-            PrintWriter output = new PrintWriter(stream_out, true);
 
             // Получение страницы и её обработка
             String str;
@@ -61,22 +64,21 @@ public class Crawler {
 
                         // Нашли новую ссылку
                         URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
-                        URLPool.put(foundURL);
+                        URLPool.put(foundURL); // Добавили её в пул
                     }
-
                 }
             }
 
-
-
-
-
+            if (temp.getDepth() < max_depth) URLPool.putCheckedItems(temp); // Добавляем просмотренную ссылку в список просмотренных
         }
-
-
     }
 
-
-
-
+    /**
+     * Функция вывода списка найденных просмотренных ссылок
+     */
+    public static void outputResult() {
+        for (URLDepthPair checked : URLPool.getCheckedItems()) {
+            System.out.println(checked.toString());
+        }
+    }
 }

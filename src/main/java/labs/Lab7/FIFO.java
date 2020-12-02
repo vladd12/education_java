@@ -42,7 +42,6 @@ public class FIFO {
     public URLDepthPair get() {
         URLDepthPair item = null;
         if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
-        checkedItems.add(item); // Добавляем объект в список просмотренных
         return item;
     }
 
@@ -53,4 +52,22 @@ public class FIFO {
     public boolean isEmpty() {
         return this.items.isEmpty();
     }
+
+    /**
+     * Функция добавления в список просмотренной ссылки
+     * @param obj прсмотренная ссылка
+     */
+    public void putCheckedItems(URLDepthPair obj) {
+        checkedItems.add(obj); // Добавляем объект в список просмотренных
+    }
+
+    /**
+     * Функция получения всего списка просмотренных ссылок
+     * @return список LinkedList<URLDepthPair> всех просмотренных ссылок
+     */
+    public LinkedList<URLDepthPair> getCheckedItems() {
+        return this.checkedItems;
+    }
+
+
 }
