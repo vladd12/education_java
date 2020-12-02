@@ -10,6 +10,7 @@ public class FIFO {
     private final int maxSize; // Максимальное количество элементов в буфере
     private final LinkedList<URLDepthPair> items; // Поле класса для хранения списка объектов URLDepthPair
     private final LinkedList<URLDepthPair> checkedItems; // Поле класса для хранения списка просмотренных URLDepthPair
+    private int waitingThreads; // Поле класса для количества ожидающих потоков
 
     /**
      * Конструктор класса
@@ -19,6 +20,7 @@ public class FIFO {
         this.maxSize = maxSize;
         this.items = new LinkedList<>();
         this.checkedItems = new LinkedList<>();
+        this.waitingThreads = 0;
     }
 
     /**
@@ -32,6 +34,8 @@ public class FIFO {
             if (items.size() < maxSize) {
                 items.addLast(obj); // Объект добавляется в конец списка
                 flagAdded = true;
+                items.notify();
+                waitingThreads--;
             }
         }
         return flagAdded;
@@ -44,7 +48,10 @@ public class FIFO {
     public synchronized URLDepthPair get() throws InterruptedException {
         // synchronized - потокобезопасный метод класса
         URLDepthPair item = null;
-        while (items.size() == 0) items.wait(); // Ожидаем, если нет объектов
+        while (items.size() == 0) {
+            waitingThreads++;
+            items.wait(); // Ожидаем, если нет объектов
+        }
         if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
         checkedItems.add(item); // Добавляем объект в список просмотренных
         return item;
@@ -72,7 +79,15 @@ public class FIFO {
      * Функция получения всего списка просмотренных ссылок
      * @return список LinkedList<URLDepthPair> всех просмотренных ссылок
      */
-    public LinkedList<URLDepthPair> getCheckedItems() {
+    public synchronized LinkedList<URLDepthPair> getCheckedItems() {
         return this.checkedItems;
+    }
+
+    /**
+     * Getter для количества ожидающих потоков
+     * @return количество ожидающих потоков
+     */
+    public int getWaitCount() {
+        return this.waitingThreads;
     }
 }

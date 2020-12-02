@@ -12,7 +12,7 @@ public class Crawler {
     public static final String BEFORE_URL = "a href=";
 
     public static final int MAXDepth = 4;
-    public static final int MAXThreads = 4;
+    public static final int MAXThreads = 16;
 
     public static final FIFO URLPool = new FIFO(100);
 
@@ -45,7 +45,16 @@ public class Crawler {
             thread.start();
         }
 
+        // Главный поток следит за состоянием пула адресов
+        while (URLPool.getWaitCount() != numThreads) {
+            try {
+                Thread.sleep(100); // Ждём 0.1 секунду, пока все потоки не встанут в ожидание
+            } catch (InterruptedException ie) {
+                System.out.println("Caught unexpected InterruptedException, ignoring...");
+            }
+        }
 
+        outputResult(URLPool);
     }
 
     /**
@@ -54,7 +63,7 @@ public class Crawler {
      * @return возвращает поток, созданный для работы с данным буфером
      */
     private static Thread createThread(FIFO pool, int max_depth){
-        return new Thread(new CrawlerTask(pool, max_depth));
+        return new Thread(new CrawlerTask(Crawler.URLPool, max_depth));
     }
 
     /**
@@ -159,11 +168,9 @@ public class Crawler {
     /**
      * Функция вывода списка найденных просмотренных ссылок
      */
-    public static void outputResult() {
-        for (URLDepthPair checked : URLPool.getCheckedItems()) {
+    public static void outputResult(FIFO pool) {
+        for (URLDepthPair checked : pool.getCheckedItems()) {
             System.out.println(checked.toString());
         }
     }
-
-
 }
