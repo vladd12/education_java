@@ -59,7 +59,7 @@ public class Crawler {
                 while ((str = input.readLine()) != null) {
                     //System.out.println(str); // Для отладки
                     if (str.contains(BEFORE_URL + "\"") && temp.getDepth() < max_depth) {
-                        String newURL = null;
+                        String newURL;
                         if (str.contains(HTTP)) {
                             newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
                             newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
