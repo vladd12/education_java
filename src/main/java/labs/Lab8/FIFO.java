@@ -46,7 +46,6 @@ public class FIFO {
         URLDepthPair item = null;
         while (items.size() == 0) items.wait(); // Ожидаем, если нет объектов
         if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
-        else throw new IndexOutOfBoundsException("Index out of range list!");
         checkedItems.add(item); // Добавляем объект в список просмотренных
         return item;
     }
@@ -57,5 +56,23 @@ public class FIFO {
      */
     public boolean isEmpty() {
         return this.items.isEmpty();
+    }
+
+    /**
+     * Функция добавления в список просмотренной ссылки
+     * @param obj прсмотренная ссылка
+     */
+    public void putCheckedItems(URLDepthPair obj) {
+        synchronized (checkedItems) {
+            checkedItems.add(obj); // Добавляем объект в список просмотренных
+        }
+    }
+
+    /**
+     * Функция получения всего списка просмотренных ссылок
+     * @return список LinkedList<URLDepthPair> всех просмотренных ссылок
+     */
+    public LinkedList<URLDepthPair> getCheckedItems() {
+        return this.checkedItems;
     }
 }

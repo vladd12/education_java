@@ -41,7 +41,7 @@ public class Crawler {
 
         // Создаём и запускаем потоки
         for (int i = 0; i < numThreads; i++) {
-            Thread thread = createThread(URLPool);
+            Thread thread = createThread(URLPool, depth);
             thread.start();
         }
 
@@ -53,8 +53,8 @@ public class Crawler {
      * @param pool буфер ссылок
      * @return возвращает поток, созданный для работы с данным буфером
      */
-    private static Thread createThread(FIFO pool){
-        return new Thread(new CrawlerTask(pool));
+    private static Thread createThread(FIFO pool, int max_depth){
+        return new Thread(new CrawlerTask(pool, max_depth));
     }
 
     /**
@@ -63,13 +63,15 @@ public class Crawler {
     public static class CrawlerTask implements Runnable {
 
         private final FIFO pool; // Поле класса FIFO
+        private final int max_depth; // Поле для хранения глубины поиска
 
         /**
          * Конструктор класса с параметром
          * @param pool передача буфера очереди FIFO в конструктор класса
          */
-        public CrawlerTask(FIFO pool) {
+        public CrawlerTask(FIFO pool, int max_depth) {
             this.pool = pool;
+            this.max_depth = max_depth;
         }
 
         /**
@@ -78,16 +80,22 @@ public class Crawler {
         @Override
         public void run() {
             try {
-                calculate(this.pool);
+                calculate(this.pool, this.max_depth);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static void calculate(FIFO pool) throws IOException {
+    /**
+     * Функция, которую выполняют потоки
+     * @param pool пул URL адресов
+     * @param max_depth глубина поиска
+     * @throws IOException исключение при возникновении ошибок
+     */
+    public static void calculate(FIFO pool, int max_depth) throws IOException {
 
-        while(!pool.isEmpty()) {
+        while(!URLPool.isEmpty()) {
 
             // Временная переменная для хранения пары URLDepthPair
             URLDepthPair temp = null;
@@ -98,31 +106,64 @@ public class Crawler {
             }
 
             // Опеределяем URL соединение
+            assert temp != null;
             URLConnection urlSocket = new URL(temp.getURL()).openConnection();
             urlSocket.setConnectTimeout(10_1000);
 
             // Работа с потоками данных URL-соединения
             InputStream stream_in = urlSocket.getInputStream();
-            OutputStream stream_out = urlSocket.getOutputStream();
             BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
-            PrintWriter output = new PrintWriter(stream_out, true);
 
-            // Получение страницы
-            while (true) {
-                String line = input.readLine();
-                if (line == null) break; // Чтение документа завершено
-                System.out.println(line);
+            // Получение страницы и её обработка
+            String str;
+            if (input != null) {
+                while ((str = input.readLine()) != null) {
+                    // System.out.println(str); // Для отладки
+                    if (temp.getDepth() < max_depth) {
+                        while(str.length() > 0) {
+                            String newURL;
+                            if (str.contains(BEFORE_URL + "\"" + HTTP)) {
+                                newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                                newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                            }
+                            else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {
+                                newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                                newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                            }
+                            else break;
+
+                            // Меняем строку
+                            str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
+
+                            // Нашли новую ссылку
+                            URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
+                            if (!URLPool.getCheckedItems().contains(foundURL)) {
+                                URLPool.put(foundURL); // Добавили её в пул
+                            }
+                        }
+                    }
+                    else break;
+                }
             }
 
+            // Закрываем потоки
+            input.close();
+            stream_in.close();
+            urlSocket.getInputStream().close();
 
-
-
+            // Добавляем просмотренную ссылку в список просмотренных
+            if (temp.getDepth() < max_depth && !URLPool.getCheckedItems().contains(temp)) URLPool.putCheckedItems(temp);
         }
-
-
     }
 
-
+    /**
+     * Функция вывода списка найденных просмотренных ссылок
+     */
+    public static void outputResult() {
+        for (URLDepthPair checked : URLPool.getCheckedItems()) {
+            System.out.println(checked.toString());
+        }
+    }
 
 
 }
