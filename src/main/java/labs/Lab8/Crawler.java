@@ -40,9 +40,10 @@ public class Crawler {
         URLPool.put(new URLDepthPair(URL, 0));
 
         // Создаём и запускаем потоки
+        Thread[] arrThread = new Thread[numThreads];
         for (int i = 0; i < numThreads; i++) {
-            Thread thread = createThread(URLPool, depth);
-            thread.start();
+            arrThread[i] = createThread(URLPool, depth);
+            arrThread[i].start();
         }
 
         // Главный поток следит за состоянием пула адресов
@@ -63,7 +64,7 @@ public class Crawler {
      * @return возвращает поток, созданный для работы с данным буфером
      */
     private static Thread createThread(FIFO pool, int max_depth){
-        return new Thread(new CrawlerTask(Crawler.URLPool, max_depth));
+        return new Thread(new CrawlerTask(pool, max_depth));
     }
 
     /**
@@ -145,8 +146,9 @@ public class Crawler {
                             str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
 
                             // Нашли новую ссылку
-                            URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
+                            URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth());
                             if (!URLPool.getCheckedItems().contains(foundURL)) {
+                                foundURL.setDepth(foundURL.getDepth() + 1); // Увеличиваем глубину
                                 URLPool.put(foundURL); // Добавили её в пул
                             }
                         }

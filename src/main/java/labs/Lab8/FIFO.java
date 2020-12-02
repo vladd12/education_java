@@ -35,7 +35,6 @@ public class FIFO {
                 items.addLast(obj); // Объект добавляется в конец списка
                 flagAdded = true;
                 items.notify();
-                waitingThreads--;
             }
         }
         return flagAdded;
@@ -51,6 +50,7 @@ public class FIFO {
         while (items.size() == 0) {
             waitingThreads++;
             items.wait(); // Ожидаем, если нет объектов
+            waitingThreads--;
         }
         if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
         checkedItems.add(item); // Добавляем объект в список просмотренных
