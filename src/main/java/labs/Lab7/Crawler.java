@@ -40,7 +40,13 @@ public class Crawler {
             URLDepthPair temp = URLPool.get();
 
             // Опеределяем URL соединение
-            URLConnection urlSocket = new URL(temp.getURL()).openConnection();
+            URLConnection urlSocket = null;
+            try {
+                urlSocket = new URL(temp.getURL()).openConnection();
+            }
+            catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             urlSocket.setConnectTimeout(10_1000);
 
             // Работа с потоками данных URL-соединения
@@ -51,6 +57,7 @@ public class Crawler {
             String str;
             if (input != null) {
                 while ((str = input.readLine()) != null) {
+                    //System.out.println(str); // Для отладки
                     if (str.contains(BEFORE_URL + "\"") && temp.getDepth() < max_depth) {
                         String newURL = null;
                         if (str.contains(HTTP)) {
@@ -61,6 +68,7 @@ public class Crawler {
                             newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
                             newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
                         }
+                        else continue;
 
                         // Нашли новую ссылку
                         URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
@@ -68,6 +76,11 @@ public class Crawler {
                     }
                 }
             }
+
+            // Закрываем потоки
+            input.close();
+            stream_in.close();
+            urlSocket.getInputStream().close();
 
             if (temp.getDepth() < max_depth) URLPool.putCheckedItems(temp); // Добавляем просмотренную ссылку в список просмотренных
         }
