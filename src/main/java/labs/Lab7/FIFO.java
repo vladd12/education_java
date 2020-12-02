@@ -68,6 +68,4 @@ public class FIFO {
     public LinkedList<URLDepthPair> getCheckedItems() {
         return this.checkedItems;
     }
-
-
 }

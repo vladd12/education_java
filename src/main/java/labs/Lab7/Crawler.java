@@ -40,13 +40,7 @@ public class Crawler {
             URLDepthPair temp = URLPool.get();
 
             // Опеределяем URL соединение
-            URLConnection urlSocket = null;
-            try {
-                urlSocket = new URL(temp.getURL()).openConnection();
-            }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            URLConnection urlSocket = new URL(temp.getURL()).openConnection();
             urlSocket.setConnectTimeout(10_1000);
 
             // Работа с потоками данных URL-соединения
@@ -57,23 +51,31 @@ public class Crawler {
             String str;
             if (input != null) {
                 while ((str = input.readLine()) != null) {
-                    //System.out.println(str); // Для отладки
-                    if (str.contains(BEFORE_URL + "\"") && temp.getDepth() < max_depth) {
-                        String newURL;
-                        if (str.contains(HTTP)) {
-                            newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
-                            newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
-                        }
-                        else if (str.contains(HTTP_S)) {
-                            newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
-                            newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
-                        }
-                        else continue;
+                    // System.out.println(str); // Для отладки
+                    if (temp.getDepth() < max_depth) {
+                        while(str.length() > 0) {
+                            String newURL;
+                            if (str.contains(BEFORE_URL + "\"" + HTTP)) {
+                                newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                                newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                            }
+                            else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {
+                                newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                                newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                            }
+                            else break;
 
-                        // Нашли новую ссылку
-                        URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
-                        URLPool.put(foundURL); // Добавили её в пул
+                            // Меняем строку
+                            str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
+
+                            // Нашли новую ссылку
+                            URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
+                            if (!URLPool.getCheckedItems().contains(foundURL)) {
+                                URLPool.put(foundURL); // Добавили её в пул
+                            }
+                        }
                     }
+                    else break;
                 }
             }
 
@@ -82,7 +84,8 @@ public class Crawler {
             stream_in.close();
             urlSocket.getInputStream().close();
 
-            if (temp.getDepth() < max_depth) URLPool.putCheckedItems(temp); // Добавляем просмотренную ссылку в список просмотренных
+            // Добавляем просмотренную ссылку в список просмотренных
+            if (temp.getDepth() < max_depth && !URLPool.getCheckedItems().contains(temp)) URLPool.putCheckedItems(temp);
         }
     }
 
