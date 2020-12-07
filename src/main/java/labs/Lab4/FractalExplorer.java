@@ -20,12 +20,12 @@ public class FractalExplorer {
      * Конструктор класса
      * @param size размер окна
      */
-    public FractalExplorer (int size){
+    public FractalExplorer (int size) {
         if (size <= 0) throw new IllegalArgumentException("Size must be better than 0; got " + size);
         else this.size = size;
         aDouble = new Rectangle2D.Double();
-        new Mandelbrot().getInitialRange(aDouble);
         fractalGenerator = new Mandelbrot();
+        fractalGenerator.getInitialRange(aDouble);
     }
 
     /**
