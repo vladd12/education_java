@@ -38,7 +38,12 @@ public class Module5 {
         System.out.println(validateCard("1234567890123452") + "\n");
 
         // Задача 7
-        System.out.println();
+        System.out.println(numToEng(0));
+        System.out.println(numToEng(18));
+        System.out.println(numToEng(126));
+        System.out.println(numToEng(909));
+
+        // Задача 8
 
 
     }
@@ -201,7 +206,6 @@ public class Module5 {
         input = new StringBuilder(input.substring(0, input.length() - 1)).reverse().toString();
         int sum = 0;    // Переменная для суммы чисел
 
-
         // Через цикл получаем сумму чисел
         for (int i = 0; i < input.length(); i++) {
             int n = Integer.parseInt(String.valueOf(input.charAt(i)));      // Каждый символ строки обратно в число
@@ -215,15 +219,90 @@ public class Module5 {
             }
         }
 
-        // Вычитаем псоледнюю цифры суммы из десяти
-        int result = 10 - (sum % 10);
+        int result = 10 - (sum % 10);       // Вычитаем псоледнюю цифры суммы из десяти
 
         // Тест Луна
         return (result == checkNum);
     }
 
     // Задача 7
-    // public static
+    // Напишите функцию, которая принимает положительное целое число от 0 до 999 включительно и возвращает
+    // строковое представление этого целого числа, написанное на английском языке.
+    public static String numToEng(int num) {
+        if (num > 999 || num < 0) return "Incorrect number!";   // Выбираем начальные условия
+        String str = Integer.toString(num);                     // Конвертируем число в строку
+        int length = str.length();                              // Длина строки
+        String result = "";                                     // Строка для сохранения результата
+
+        // Дополняем нулями при соотв. длине строки
+        if (length == 1) str = "00" + str;
+        else if (length == 2) str = "0" + str;
+
+        // Цикл для получения строки
+        for (int i = 0; i < 3; i++) {
+            int n = Integer.parseInt(String.valueOf(str.charAt(i)));    // Текущее число для проверки
+            if (i == 0) {           // Для сотен
+                switch (n) {
+                    case 0: continue;
+                    case 1: result = result + "one hundred "; break;
+                    case 2: result = result + "two hundred "; break;
+                    case 3: result = result + "three hundred "; break;
+                    case 4: result = result + "four hundred "; break;
+                    case 5: result = result + "five hundred "; break;
+                    case 6: result = result + "six hundred "; break;
+                    case 7: result = result + "seven hundred "; break;
+                    case 8: result = result + "eighth hundred "; break;
+                    case 9: result = result + "nine hundred "; break;
+                }
+            }
+            else if (i == 1) {      // Для десятков
+                switch (n) {
+                    case 0: continue;
+                    case 1: {
+                        switch (num) {
+                            case 10: result = result + "ten"; break;
+                            case 11: result = result + "eleven"; break;
+                            case 12: result = result + "twelve"; break;
+                            case 13: result = result + "thirteen"; break;
+                            case 14: result = result + "fourteen"; break;
+                            case 15: result = result + "fifteen"; break;
+                            case 16: result = result + "sixteen"; break;
+                            case 17: result = result + "seventeen"; break;
+                            case 18: result = result + "eighteen"; break;
+                            case 19: result = result + "nineteen"; break;
+                        }
+                        return result;
+                    }
+                    case 2: result = result + "twenty "; break;
+                    case 3: result = result + "thirty "; break;
+                    case 4: result = result + "forty "; break;
+                    case 5: result = result + "fifty "; break;
+                    case 6: result = result + "sixty "; break;
+                    case 7: result = result + "seventy "; break;
+                    case 8: result = result + "eighty "; break;
+                    case 9: result = result + "ninety "; break;
+                }
+            }
+            else {                  // Для единиц
+                switch (n) {
+                    case 0: result = result + "zero"; break;
+                    case 1: result = result + "one"; break;
+                    case 2: result = result + "two"; break;
+                    case 3: result = result + "three"; break;
+                    case 4: result = result + "four"; break;
+                    case 5: result = result + "five"; break;
+                    case 6: result = result + "six"; break;
+                    case 7: result = result + "seven"; break;
+                    case 8: result = result + "eighth"; break;
+                    case 9: result = result + "nine"; break;
+                }
+            }
+        }
+        return result;
+    }
+
+    // Задача 8
+
 
 
 
