@@ -25,13 +25,19 @@ public class Module5 {
         // Задача 4
         System.out.println(sumDigProd(new int[]{16, 28}));
         System.out.println(sumDigProd(new int[]{0}));
-        System.out.println(sumDigProd(new int[]{1, 2, 3, 4, 5, 6}));
+        System.out.println(sumDigProd(new int[]{1, 2, 3, 4, 5, 6}) + "\n");
+
+        // Задача 5
+        sameVowelGroup(new String[]{"toe", "ocelot", "maniac"});
+        sameVowelGroup(new String[]{"many", "carriage", "emit", "apricot", "animal"});
+        sameVowelGroup(new String[]{"hoops", "chuff", "bot", "bottom"});
+        System.out.println();
 
     }
 
     // Задача 1
-    // Создайте две функции, которые принимают строку и массив и возвращают закодированное или декодированное сообщение.
-    // Первая буква строки или первый элемент массива представляет собой символьный код этой буквы.
+    // Создайте две функции, которые принимают строку и массив и возвращают закодированное или декодированное
+    // сообщение. Первая буква строки или первый элемент массива представляет собой символьный код этой буквы.
     // Следующие элементы-это различия между символами.
     public static int[] encrypt(String str) {
         int[] array = new int[str.length()];
@@ -55,8 +61,8 @@ public class Module5 {
 
     // Задача 2
     // Создайте функцию, которая принимает имя шахматной фигуры, ее положение и целевую позицию.
-    // Функция должна возвращать true, если фигура может двигаться к цели, и false, если она не может этого сделать.
-    // Возможные входные данные - "пешка", "конь", "слон", "ладья", "ферзь" и "король".
+    // Функция должна возвращать true, если фигура может двигаться к цели, и false, если она не может этого
+    // сделать. Возможные входные данные - "пешка", "конь", "слон", "ладья", "ферзь" и "король".
     public static boolean canMove(String name, String position, String way) {
         // Строки с путями в нижний регистр
         position = position.toLowerCase();
@@ -124,6 +130,8 @@ public class Module5 {
     }
 
     // Задача 4
+    // Создайте функцию, которая принимает числа в качестве аргументов, складывает их вместе и возвращает
+    // произведение цифр до тех пор, пока ответ не станет длиной всего в 1 цифру.
     public static int sumDigProd(int[] arr) {
         int sum = 0, temp;
         for (int i : arr) { // Сумма всех элементов массива через цикл
@@ -142,7 +150,34 @@ public class Module5 {
     }
 
     // Задача 5
+    // Напишите функцию, которая выбирает все слова, имеющие все те же гласные (в любом порядке и/или
+    // количестве), что и первое слово, включая первое слово.
+    public static void sameVowelGroup(String[] arr) {
+        String vowelList = "aeiouy", nowVowel = "";
+        // Первая строка является "списком" всех гласных, вторая "списком" гласных первого слова
 
+        // В первом слове находим все гласные
+        for (int i = 0; i < vowelList.length(); i++) {
+            if (arr[0].contains(String.valueOf(vowelList.charAt(i))) && // Если гласная есть в первом списке
+            !nowVowel.contains(String.valueOf(vowelList.charAt(i))))    // и если её пока нет во втором списке
+                nowVowel = nowVowel + vowelList.charAt(i);              // добавляем её во второй список
+        }
+        System.out.print(arr[0] + " "); // Выводим первое слово массива строк
+
+        // Проверяем остальные слова в списке
+        for (int i = 1; i < arr.length; i++) {
+            boolean flag = true; // Вспомогательная переменная-флаг
+            for (int j = 0; j < vowelList.length(); j++) {
+                if (arr[i].contains(String.valueOf(vowelList.charAt(j))) &&  // Гласная есть в первом списке
+                !nowVowel.contains(String.valueOf(vowelList.charAt(j)))) {   // и её нет во втором списке
+                    flag = false;   // Обнуляем флаг
+                    break;          // Прерываем цикл
+                }
+            }
+            if (flag) System.out.print(arr[i] + " ");   // Если флаг не был обнулён, выводим слово
+        }
+        System.out.println();
+    }
 
 
 }
