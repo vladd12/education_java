@@ -33,6 +33,14 @@ public class Module5 {
         sameVowelGroup(new String[]{"hoops", "chuff", "bot", "bottom"});
         System.out.println();
 
+        // Задача 6
+        System.out.println(validateCard("1234567890123456"));
+        System.out.println(validateCard("1234567890123452") + "\n");
+
+        // Задача 7
+        System.out.println();
+
+
     }
 
     // Задача 1
@@ -178,6 +186,45 @@ public class Module5 {
         }
         System.out.println();
     }
+
+    // Задача 6
+    // Создайте функцию, которая принимает число в качестве аргумента и возвращает true, если это число является
+    // действительным номером кредитной карты, а в противном случае-false.
+    public static boolean validateCard(String input) {
+        // Первая проверка
+        if (input.length() < 14 || input.length() > 19) return false;       // Критерии по длине символов
+
+        // Контрольное число в конце номера карты
+        int checkNum = Integer.parseInt(String.valueOf(input.charAt(input.length() - 1)));
+
+        // Реверснутая строка числа без последней цифры
+        input = new StringBuilder(input.substring(0, input.length() - 1)).reverse().toString();
+        int sum = 0;    // Переменная для суммы чисел
+
+
+        // Через цикл получаем сумму чисел
+        for (int i = 0; i < input.length(); i++) {
+            int n = Integer.parseInt(String.valueOf(input.charAt(i)));      // Каждый символ строки обратно в число
+            if (i % 2 == 0) {       // Каждое нечётное число (но так как нумерация с 0, то чётное)
+                n = 2 * n;
+                if (n >= 10) n = (n / 10) + (n % 10);
+                sum = sum + n;
+            }
+            else {                  // Каждое чётное число (но так как нумерация с 0, то нечётное)
+                sum = sum + n;
+            }
+        }
+
+        // Вычитаем псоледнюю цифры суммы из десяти
+        int result = 10 - (sum % 10);
+
+        // Тест Луна
+        return (result == checkNum);
+    }
+
+    // Задача 7
+    // public static
+
 
 
 }
