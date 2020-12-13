@@ -58,8 +58,11 @@ public class Module5 {
         System.out.println(correctTitle("TYRION LANNISTER, HAND OF THE QUEEN.") + "\n");
 
         // Задача 10
-        System.out.println();
-
+        System.out.println(hexLattice(1));
+        System.out.println(hexLattice(7));
+        System.out.println(hexLattice(19));
+        System.out.println(hexLattice(21) + "\n");
+        System.out.println(hexLattice(91));
     }
 
     // Задача 1
@@ -438,7 +441,62 @@ public class Module5 {
     }
 
     // Задача 10
+    // Как указано в онлайн-энциклопедии целочисленных последовательностей:
+    // Гексагональная решетка - это привычная двумерная решетка, в которой каждая точка имеет 6 соседей.
+    // Центрированное шестиугольное число - это центрированное фигурное число, представляющее шестиугольник
+    // с точкой в центре и всеми другими точками, окружающими центральную точку в шестиугольной решетке.
+    public static String hexLattice(int n) {
 
+        // Больше информации по алгоритму тут https://wikichi.ru/wiki/Centered_hexagonal_number
 
+        int count = 0;
+        String result = "";
+
+        // Проверяем, подходит ли n по критериям центрированного шестиугольного числа
+        for (int i = 1; i <= n; i++) {
+            int num = 3 * i * (i - 1) + 1;                  // Рекуррентная формула для этих чисел
+            // Если num становится равным введёному, то выходим из цикла и сохраняем i
+            if (num == n) {
+                count = i;
+                break;
+            }
+            if (num > n) return "Incorrect input!";     // Если num становится больше, возвращаем ошибку
+        }
+
+        // После выхода из цикла выводим строку
+        int strNum = (count * 2) - 1;       // Количество строк
+        int mediumStr = (strNum / 2);       // Номер строки в середине
+
+        // Цикл формирует строку
+        for (int i = 0; i < strNum; i++) {
+            if (i > mediumStr) {
+                int diff = i - mediumStr;
+                // Цикл для количества пробелов перед каждой строкой
+                for (int j = 0; j < (count + 2*diff - i); j++) {    // Добавляем разницу
+                    result = result + " ";
+                }
+
+                // Цикл для вывода знаков
+                for (int j = 0; j < (count - 2*diff + i); j++) {    // Вычитаем разницу
+                    result = result + "o ";
+                }
+            }
+            else {
+                // Цикл для количества пробелов перед каждой строкой
+                for (int j = 0; j < (count - i); j++) {     // Вычитаем номер строки
+                    result = result + " ";
+                }
+
+                // Цикл для вывода знаков
+                for (int j = 0; j < (count + i); j++) {     // Добавляем номер строки
+                    result = result + "o ";
+                }
+            }
+            result = result + "\n";
+        }
+
+        // Выводим результат
+        return result;
+    }
 
 }
