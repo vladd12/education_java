@@ -42,9 +42,15 @@ public class Module5 {
         System.out.println(numToEng(18));
         System.out.println(numToEng(126));
         System.out.println(numToEng(909));
+        System.out.println(numToRus(0));
+        System.out.println(numToRus(18));
+        System.out.println(numToRus(126));
+        System.out.println(numToRus(909) + "\n");
 
         // Задача 8
-
+        System.out.println(getSha256Hash("password123"));
+        System.out.println(getSha256Hash("Fluffy@home"));
+        System.out.println(getSha256Hash("Hey dude!"));
 
     }
 
@@ -301,7 +307,91 @@ public class Module5 {
         return result;
     }
 
+    // Русский вариант
+    public static String numToRus(int num) {
+        if (num > 999 || num < 0) return "Неправильное число!"; // Выбираем начальные условия
+        String str = Integer.toString(num);                     // Конвертируем число в строку
+        int length = str.length();                              // Длина строки
+        String result = "";                                     // Строка для сохранения результата
+
+        // Дополняем нулями при соотв. длине строки
+        if (length == 1) str = "00" + str;
+        else if (length == 2) str = "0" + str;
+
+        // Цикл для получения строки
+        for (int i = 0; i < 3; i++) {
+            int n = Integer.parseInt(String.valueOf(str.charAt(i)));    // Текущее число для проверки
+            if (i == 0) {           // Для сотен
+                switch (n) {
+                    case 0: continue;
+                    case 1: result = result + "сто "; break;
+                    case 2: result = result + "двести "; break;
+                    case 3: result = result + "триста "; break;
+                    case 4: result = result + "четыреста "; break;
+                    case 5: result = result + "пятьсот "; break;
+                    case 6: result = result + "шестьсот "; break;
+                    case 7: result = result + "семьсот "; break;
+                    case 8: result = result + "восемьсот "; break;
+                    case 9: result = result + "двеятьсот "; break;
+                }
+            }
+            else if (i == 1) {      // Для десятков
+                switch (n) {
+                    case 0: continue;
+                    case 1: {
+                        switch (num) {
+                            case 10: result = result + "десять"; break;
+                            case 11: result = result + "одиннадцать"; break;
+                            case 12: result = result + "двенадцать"; break;
+                            case 13: result = result + "тринадцать"; break;
+                            case 14: result = result + "четырнадцать"; break;
+                            case 15: result = result + "пятнадцать"; break;
+                            case 16: result = result + "шестнадцать"; break;
+                            case 17: result = result + "семнадцать"; break;
+                            case 18: result = result + "восемнадцать"; break;
+                            case 19: result = result + "девятнадцать"; break;
+                        }
+                        return result;
+                    }
+                    case 2: result = result + "двадцать "; break;
+                    case 3: result = result + "тридцать "; break;
+                    case 4: result = result + "сорок "; break;
+                    case 5: result = result + "пятьдесят "; break;
+                    case 6: result = result + "шестьдесят "; break;
+                    case 7: result = result + "семьдесят "; break;
+                    case 8: result = result + "восемьдесять "; break;
+                    case 9: result = result + "девяносто "; break;
+                }
+            }
+            else {                  // Для единиц
+                switch (n) {
+                    case 0: result = result + "ноль"; break;
+                    case 1: result = result + "один"; break;
+                    case 2: result = result + "два"; break;
+                    case 3: result = result + "три"; break;
+                    case 4: result = result + "четыре"; break;
+                    case 5: result = result + "пять"; break;
+                    case 6: result = result + "шесть"; break;
+                    case 7: result = result + "семь"; break;
+                    case 8: result = result + "восемь"; break;
+                    case 9: result = result + "девять"; break;
+                }
+            }
+        }
+        return result;
+    }
+
     // Задача 8
+    // Хеш-алгоритмы легко сделать одним способом, но по существу невозможно сделать наоборот. Например, если
+    // вы хешируете что-то простое, например, password123, это даст вам длинный код, уникальный для этого слова
+    // или фразы. В идеале, нет способа сделать это в обратном порядке. Вы не можете взять хеш-код и вернуться к
+    // слову или фразе, с которых вы начали. Создайте функцию, которая возвращает безопасный хеш SHA-256 для
+    // данной строки. Хеш должен быть отформатирован в виде шестнадцатеричной цифры.
+    public static String getSha256Hash(String str) {
+        // Использование библиотеки Apache Common Codec
+        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(str);
+    }
+
 
 
 
