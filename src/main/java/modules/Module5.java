@@ -50,7 +50,15 @@ public class Module5 {
         // Задача 8
         System.out.println(getSha256Hash("password123"));
         System.out.println(getSha256Hash("Fluffy@home"));
-        System.out.println(getSha256Hash("Hey dude!"));
+        System.out.println(getSha256Hash("Hey dude!") + "\n");
+
+        // Задача 9
+        System.out.println(correctTitle("jOn SnoW, kINg IN thE noRth."));
+        System.out.println(correctTitle("sansa stark, lady of winterfell."));
+        System.out.println(correctTitle("TYRION LANNISTER, HAND OF THE QUEEN.") + "\n");
+
+        // Задача 10
+        System.out.println();
 
     }
 
@@ -392,7 +400,44 @@ public class Module5 {
         return org.apache.commons.codec.digest.DigestUtils.sha256Hex(str);
     }
 
+    // Задача 9
+    // Напишите функцию, которая принимает строку и возвращает строку с правильным регистром для заголовков символов
+    // в серии "Игра престолов". Слова and, the, of и in должны быть строчными. Все остальные слова должны иметь
+    // первый символ в верхнем регистре, а остальные - в нижнем.
+    public static String correctTitle(String str) {
+        str = str.toLowerCase();        // Все символы в нижний регистр
+        String temp = "";               // Временная строка
 
+        // Цикл для прохождения по строке
+        for (int i = 0; i < str.length(); i++) {
+            if (i == 0) temp = temp + Character.toUpperCase(str.charAt(i));   // Если первый символ
+            if (str.charAt(i) == ' ') {
+                // Обрезаем слово до след. пробела
+                int endIndex = str.indexOf(' ', i + 1);     // Индекс след. пробела
+                String substr = "";                                      // Слово (инициализируем пустой строкой)
+                if (endIndex != -1) substr = str.substring(i + 1, endIndex);    // Если пробел был найден
+                else substr = str.substring(i + 1);                             // Иначе обрезаем до конца
+
+                // Если это слово не является определёнными словами
+                if (!substr.equals("and") && !substr.equals("the") && !substr.equals("of") && !substr.equals("in")) {
+                    // Буква после пробела в верхний регистр
+                    temp = temp + ' ' + Character.toUpperCase(str.charAt(i + 1));
+                    i = i + 1;      // Инкрементируем указатель на символ, чтобы цикл пропустил этот символ
+                                    // и взял анализировать следующий после него символ
+                }
+                else temp = temp + str.charAt(i);
+            }
+            else {
+                // Если не первая буква, то компируем во временную строку
+                if (i != 0) temp = temp + str.charAt(i);
+            }
+        }
+
+        // Возвращаем полученную строку
+        return temp;
+    }
+
+    // Задача 10
 
 
 
