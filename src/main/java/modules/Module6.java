@@ -21,14 +21,17 @@ public class Module6 {
         System.out.println(translateSentence("Do you think it is going to rain today?") + "\n");
 
         // Задача 3
-
+        System.out.println(validColor("rgb(0,0,0)"));
+        System.out.println(validColor("rgb(0,,0)"));
+        System.out.println(validColor("rgb(255,256,255)"));
+        System.out.println(validColor("rgba(0,0,0,0.123456789)") + "\n");
 
 
     }
 
     // Задача 1
-    // Число Белла - это количество способов, которыми массив из n элементов может быть разбит на непустые подмножества.
-    // Создайте функцию, которая принимает число n и возвращает соответствующее число Белла.
+    // Число Белла - это количество способов, которыми массив из n элементов может быть разбит на непустые
+    // подмножества. Создайте функцию, которая принимает число n и возвращает соответствующее число Белла.
     public static int bell(int num) {
 
         // Подробнее про алгоритм тут: https://neerc.ifmo.ru/wiki/index.php?title=Числа_Белла
@@ -62,6 +65,8 @@ public class Module6 {
     // translateWord(word) получает слово на английском и возвращает это слово, переведенное на латинский язык.
     // Вторая функция translateSentence(предложение) берет английское предложение и возвращает это предложение,
     // переведенное на латинский язык.
+
+    // Первая функция (для слов)
     public static String translateWord(String input) {
         // Если строка пустая, то вернём пустую строку
         if (input.equals("")) return "";
@@ -115,6 +120,7 @@ public class Module6 {
         return result;
     }
 
+    // Вторая функция (для предложений)
     public static String translateSentence(String input) {
         String[] arr = input.split(" ");        // Разделяем строку на слова через пробел
         String result = "";                           // Переменная для получения результатов
@@ -128,8 +134,75 @@ public class Module6 {
         return result;
     }
 
+    // Задача 3
+    // Учитывая параметры RGB(A) CSS, определите, является ли формат принимаемых значений допустимым
+    // или нет. Создайте функцию, которая принимает строку (например, "rgb(0, 0, 0)") и возвращает
+    // true, если ее формат правильный, в противном случае возвращает false.
+    public static boolean validColor(String input) {
 
+        // Переменная для хранения цвета
+        String color = input.substring(0, input.indexOf('('));
+        color = color.toLowerCase();    // в нижний регистр
+        // Переменная для хранения данных о цвете
+        String data = input.substring(input.indexOf('(') + 1, input.length() - 1);
+        // Разбиваем данные на массив, содержащий числа
+        String[] arrData = data.split(",");
 
+        // Формируем действия в зависимости от полученной цветовой схемы
+        if (color.equals("rgb")) {          // Если rgb
+            // Если получено больше трёх значений для задания цвета rgb
+            if (arrData.length != 3) return false;
+
+            // Цикл: проверяем каждый элемент из массива arrData (всего их 3)
+            for (String k: arrData) {
+                int num;
+                try {
+                    num = Integer.parseInt(k);              // Конвертируем строку в число
+                } catch (NumberFormatException ignored) {   // Если не получилось сконвертировать
+                    return false;                           // возвращаем сразу false
+                }
+                // Если число не удовлятворяет заданному диапазону для значений RGB возвращаем false
+                if (num < 0 || num > 255) return false;
+            }
+        }
+
+        else if(color.equals("rgba")) {     // Если rgba
+            // Если получено больше четырёх значений для задания цвета rgb
+            if (arrData.length != 4) return false;
+
+            // Цикл: проверяем каждый элемент из массива arrData (всего их 4)
+            for (int i = 0; i < arrData.length - 1; i++) {
+                int num;
+                try {
+                    num = Integer.parseInt(arrData[i]);     // Конвертируем строку в число
+                } catch (NumberFormatException ignored) {   // Если не получилось сконвертировать
+                    return false;                           // возвращаем сразу false
+                }
+                // Если число не удовлятворяет заданному диапазону для значений RGB, возвращаем false
+                if (num < 0 || num > 255) return false;
+            }
+
+            // Проделываем аналогичные действия для последнего числа
+            double num;
+            try {
+                num = Double.parseDouble(arrData[3]);   // Конвертируем строку в число с плавающей точкой
+            } catch(NumberFormatException ignored) {    // Если не получилось сконвертировать
+                return false;                           // возвращаем сразу false
+            }
+            // Если число не удовлятворяет заданному диапазону для значения прозрачности, RGBA возвращаем false
+            if (num < 0 || num > 1) return false;
+        }
+
+        // Формируем исключение, если цветовая схема не совпала с одной из двух представленных
+        else {
+            throw new IllegalArgumentException("Получено некорректное значение данных!");
+        }
+
+        // Если дошли до этого пункты, то были проведены все проверки, возвращаем true
+        return true;
+    }
+
+    // Задача 4
 
 
 
