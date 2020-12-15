@@ -1,5 +1,7 @@
 package modules;
 
+import java.util.HashMap;
+
 public class Module6 {
 
     public static void main(String[] args) {
@@ -25,6 +27,12 @@ public class Module6 {
         System.out.println(validColor("rgb(0,,0)"));
         System.out.println(validColor("rgb(255,256,255)"));
         System.out.println(validColor("rgba(0,0,0,0.123456789)") + "\n");
+
+        // Задача 4
+        System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&a=2"));
+        System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&a=2", new String[] {"b"}));
+        System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&c=3", new String[] {"b", "c"}));
+        System.out.println(stripUrlParams("https://edabit.com", new String[] {"b"}));
 
 
     }
@@ -203,6 +211,89 @@ public class Module6 {
     }
 
     // Задача 4
+    // Создайте функцию, которая принимает URL (строку), удаляет дублирующиеся параметры запроса и
+    // параметры, указанные во втором аргументе (который будет необязательным массивом).
+
+    // Перегружаем функцию
+    public static String stripUrlParams(String input) {
+        return stripUrlParams(input, new String[] {""});
+    }
+
+    // Функция с необязательным параметром
+    public static String stripUrlParams(String input, String[] paramsToStrip ) {
+
+        // Если input не является ссылкой
+        String https = input.substring(0, 8);
+        if (!https.equals("https://")) return "Введена неверная ссылка!";
+
+        // Объявление и инициализация переменных, массивов и списка
+        String URL;      // Строка для разделения input на подстроку ссылки
+        final String[] params = new String[1];  // Строка для разделения input на подстроку параметров
+        String[] arrParams;     // Массив строк с параметрами
+        int delimiterIndex = input.indexOf('?');        // Индекс разделителя ссылки и параметров
+        if (delimiterIndex == -1) return input;         // Если не найден, возвращаем input
+        else {
+            URL = input.substring(0, delimiterIndex + 1);   // Задаём строку для ссылки из input
+            params[0] = input.substring(delimiterIndex + 1);   // Задаём строку для параметров из input
+            arrParams = params[0].split("&");            // Создаём массив строк-параметров из строки параметров
+        }
+        HashMap<String, String> List = new HashMap<>();     // Список для хранения данных
+
+        // Формируем список формата <Имя параметра, значение параметра>
+        for (int i = 0; i < arrParams.length; i++) {
+            int index = arrParams[i].indexOf('=');          // Указываем индекс символа присвоения значения
+
+            // Если параметр не принимает значение, то он удаляется
+            if (index != -1) {
+                String key = arrParams[i].substring(0, index);      // Ключ - имя параметра
+                String value = arrParams[i].substring(index + 1);   // Значение - значение параметра
+
+                // Если параметра нет в списке, то добавляем его в список
+                if (!List.containsKey(key)) List.put(key, value);
+                // Если параметр есть в списке
+                else {
+                    List.remove(key);           // Удаляем старое старое значение
+                    List.put(key, value);       // Добавляем новое значение
+                }
+            }
+        }
+
+        // Если не было передано параметров или был передан параметр пустой строки
+        // (соответствует вызову без необязательного параметра)
+        // Переопределяем значение строки URL, она будет возвращаемой переменной
+        // Обрезаем последний лишний символ
+        if (paramsToStrip.length == 1 && paramsToStrip[0].equals("")) {
+            params[0] = "";        // Обнуляем значение строки старых параметров
+            // Цикл типа "для каждой пары ключ-значение"
+            List.forEach((k,v)-> {
+                // Формируем новую строку параметров
+                params[0] = params[0] + k + "=" + v + "&";
+            } );
+        }
+
+        // Необязательный параметр задан
+        else {
+            // Цикл для удаления заданных параметров из списка
+            for (String str : paramsToStrip) {
+                List.remove(str);
+            }
+            params[0] = "";        // Обнуляем значение строки старых параметров
+
+            // Цикл типа "для каждой пары ключ-значение"
+            List.forEach((k,v)-> {
+                // Формируем новую строку параметров
+                params[0] = params[0] + k + "=" + v + "&";
+            } );
+        }
+
+        params[0] = params[0].substring(0, params[0].length() - 1);   // Обрезаем последний лишний символ
+        URL = URL + params[0];   // Переопределяем значение строки URL, она будет возвращаемой переменной
+
+        // Возвращаем результат
+        return URL;
+    }
+
+    // Задача 5
 
 
 
