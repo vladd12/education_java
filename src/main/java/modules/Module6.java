@@ -32,7 +32,9 @@ public class Module6 {
         System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&a=2"));
         System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&a=2", new String[] {"b"}));
         System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&c=3", new String[] {"b", "c"}));
-        System.out.println(stripUrlParams("https://edabit.com", new String[] {"b"}));
+        System.out.println(stripUrlParams("https://edabit.com", new String[] {"b"}) + "\n");
+
+        // Задача 5
 
 
     }
@@ -294,6 +296,52 @@ public class Module6 {
     }
 
     // Задача 5
+    public static String[] getHashTags(String input) {
+        String[] result;                              // Массив для результата
+        input = input.toLowerCase();                  // Входную строку в нижний регистр
+        String[] arrWords = input.split(" ");   // Массив слов из входной строки
+
+        // Цикл для удаления из слов знаков препинания и прочих символов
+        for (String word : arrWords) {      // Для каждого слова из массива
+            String temp = "#";              // Временная переменная, заранее со знаком хештега
+            // Цикл проходит по каждому символу слова
+            for (int i = 0; i < word.length(); i++) {
+                // Если символ является буквой, то он добавляется к временной строке
+                if (Character.isAlphabetic(word.charAt(i))) temp = temp + word.charAt(i);
+            }
+            word = temp;
+        }
+
+        // Если слов 3 и менее, то выводим их все в порядке возрастания длины слов
+        if (arrWords.length < 4) {
+            result = new String[arrWords.length];   // Инициализируем массив таким же размером
+            // Копируем один массив в другой
+            System.arraycopy(arrWords, 0, result, 0, arrWords.length);
+        }
+        // В противном случае
+        else {
+            int n = 3;                  // Число выводимых слов
+            result = new String[n];     // Инициализируем массив для трёх слов
+            // Цикл для нахождения n самых длинных слов
+            while (n > 0) {
+                String maxWord = "";    // Пустая строка нулевой длины
+                // Находим
+                for (String word : arrWords) {
+                    if (word.length() > maxWord.length()) maxWord = word;
+                }
+
+
+
+                result[Math.abs(n - 3)] = "";
+                n--;
+            }
+
+        }
+
+
+
+        return result;
+    }
 
 
 
