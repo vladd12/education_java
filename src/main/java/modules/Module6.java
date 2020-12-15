@@ -17,8 +17,10 @@ public class Module6 {
         System.out.println(translateWord("Apple"));
         System.out.println(translateWord("button"));
         System.out.println(translateWord(""));
+        System.out.println(translateSentence("I like to eat honey waffles."));
+        System.out.println(translateSentence("Do you think it is going to rain today?") + "\n");
 
-
+        // Задача 3
 
 
 
@@ -84,10 +86,21 @@ public class Module6 {
             for (int i = 0; i < input.length(); i++) {
                 // Если встречена гласная буква
                 if (vowelsList.contains(String.valueOf(input.charAt(i)))) {
-                    String temp1 = input.substring(0, i);   // Обрезаем слово до первой гласной
-                    String temp2 = input.substring(i);      // Вторая половина слова
-                    result = temp2 + temp1 + "ay";          // Формируем слово согласно заданию
-                    break;                                  // Выходим из цикла
+                    // Если последний символ не буква (знак препинания)
+                    if (!Character.isAlphabetic(input.charAt(input.length() - 1))) {
+                        String temp1 = input.substring(0, i);                  // Обрезаем слово до первой гласной
+                        String temp2 = input.substring(i, input.length() - 1); // Вторая половина слова
+                        char endSymbol = input.charAt(input.length() - 1);     // Символ в конце слова
+                        result = temp2 + temp1 + "ay" + endSymbol;          // Формируем слово согласно заданию
+                        break;
+                    }
+                    // В противном случае следуем по стандартному алгоритму
+                    else {
+                        String temp1 = input.substring(0, i);   // Обрезаем слово до первой гласной
+                        String temp2 = input.substring(i);      // Вторая половина слова
+                        result = temp2 + temp1 + "ay";          // Формируем слово согласно заданию
+                        break;                                  // Выходим из цикла
+                    }
                 }
             }
         }
@@ -103,10 +116,16 @@ public class Module6 {
     }
 
     public static String translateSentence(String input) {
+        String[] arr = input.split(" ");        // Разделяем строку на слова через пробел
+        String result = "";                           // Переменная для получения результатов
 
+        // Для каждого слова из массива вызываем функцию translateWord
+        for (int i = 0; i < arr.length; i++) {
+            result = result + translateWord(arr[i]) + " ";
+        }
 
-
-        return "";
+        // Возвращаем результат
+        return result;
     }
 
 
