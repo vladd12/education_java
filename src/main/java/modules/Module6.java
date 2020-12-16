@@ -1,5 +1,6 @@
 package modules;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Module6 {
@@ -35,6 +36,10 @@ public class Module6 {
         System.out.println(stripUrlParams("https://edabit.com", new String[] {"b"}) + "\n");
 
         // Задача 5
+        System.out.println(Arrays.toString(getHashTags("How the Avocado Became the Fruit of the Global Trade")));
+        System.out.println(Arrays.toString(getHashTags("Why You Will Probably Pay More for Your Christmas Tree This Year")));
+        System.out.println(Arrays.toString(getHashTags("Hey Parents, Surprise, Fruit Juice Is Not Fruit")));
+        System.out.println(Arrays.toString(getHashTags("Visualizing Science")));
 
 
     }
@@ -296,50 +301,50 @@ public class Module6 {
     }
 
     // Задача 5
+    // Напишите функцию, которая извлекает три самых длинных слова из заголовка газеты и преобразует их в хэштеги.
+    // Если несколько слов одинаковой длины, найдите слово, которое встречается первым.
     public static String[] getHashTags(String input) {
         String[] result;                              // Массив для результата
         input = input.toLowerCase();                  // Входную строку в нижний регистр
         String[] arrWords = input.split(" ");   // Массив слов из входной строки
 
         // Цикл для удаления из слов знаков препинания и прочих символов
-        for (String word : arrWords) {      // Для каждого слова из массива
-            String temp = "#";              // Временная переменная, заранее со знаком хештега
+        for (int i = 0; i < arrWords.length; i++) {      // Для каждого слова из массива
+            String temp = "";              // Временная переменная
             // Цикл проходит по каждому символу слова
-            for (int i = 0; i < word.length(); i++) {
+            for (int j = 0; j < arrWords[i].length(); j++) {
                 // Если символ является буквой, то он добавляется к временной строке
-                if (Character.isAlphabetic(word.charAt(i))) temp = temp + word.charAt(i);
+                if (Character.isAlphabetic(arrWords[i].charAt(j)) && arrWords[i].charAt(j) != ',')
+                    temp = temp + arrWords[i].charAt(j);
             }
-            word = temp;
+            arrWords[i] = temp;
         }
 
-        // Если слов 3 и менее, то выводим их все в порядке возрастания длины слов
-        if (arrWords.length < 4) {
-            result = new String[arrWords.length];   // Инициализируем массив таким же размером
-            // Копируем один массив в другой
-            System.arraycopy(arrWords, 0, result, 0, arrWords.length);
-        }
-        // В противном случае
-        else {
-            int n = 3;                  // Число выводимых слов
-            result = new String[n];     // Инициализируем массив для трёх слов
-            // Цикл для нахождения n самых длинных слов
-            while (n > 0) {
-                String maxWord = "";    // Пустая строка нулевой длины
-                // Находим
-                for (String word : arrWords) {
-                    if (word.length() > maxWord.length()) maxWord = word;
-                }
-
-
-
-                result[Math.abs(n - 3)] = "";
-                n--;
+        // Сортировка массива строк по длине каждой строки (сортировка вставками)
+        for (int i = 1; i < arrWords.length; i++) {
+            String temp = arrWords[i];
+            // Вставляем s[j] в правильное положение
+            int j = i - 1;
+            while (j >= 0 && temp.length() < arrWords[j].length()) {
+                arrWords[j + 1] = arrWords[j];
+                j--;
             }
-
+            arrWords[j + 1] = temp;
         }
 
+        int n;                     // Переменная, указывающая размер результирующего массива
+        // Если слов 3 и менее, то n равняется количество слов во входной строке
+        if (arrWords.length < 4) n = arrWords.length;
+        // Если слов больше, то n всегда равен трём
+        else n = 3;                // Число выводимых слов
+        result = new String[n];    // Инициализируем массив числом элементов n
 
+        // Копируем все элементы из отсортированного массива с конца (в конце хранятся слова наибольшей длины)
+        for (int i = 0; i < n; i++) {
+            result[i] = "#" + arrWords[arrWords.length - (1 + i)];      // Добавляем к словам хештег слева
+        }
 
+        // Возвращаем результат
         return result;
     }
 
