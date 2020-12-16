@@ -62,6 +62,11 @@ public class Module6 {
         System.out.println(convertToRoman(3981) + "\n");
 
         // Задача 9
+        System.out.println(formula("6 * 4 = 24"));
+        System.out.println(formula("18 / 17 = 2"));
+        System.out.println(formula("16 * 10 = 160 = 14 + 120"));
+
+        // Задача 10
 
 
     }
@@ -503,6 +508,8 @@ public class Module6 {
     }
 
     // Задача 9
+    // Создайте функцию, которая принимает строку и возвращает true или false в зависимости от того,
+    // является ли формула правильной или нет.
     public static boolean formula(String input) {
         // Удаляем все пробелы
         input = input.replace(" ", "");
@@ -588,7 +595,7 @@ public class Module6 {
         return false;
     }
 
-
+    // Задача 10
 
 
 
