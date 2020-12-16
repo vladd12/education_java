@@ -1,8 +1,6 @@
 package modules;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 public class Module6 {
 
@@ -48,7 +46,13 @@ public class Module6 {
         System.out.println(ulam(3));
         System.out.println(ulam(4));
         System.out.println(ulam(9));
-        System.out.println(ulam(206));
+        System.out.println(ulam(206) + "\n");
+
+        // Задача 7
+        System.out.println(longestNonrepeatingSubstring("abcabcbb"));
+        System.out.println(longestNonrepeatingSubstring("aaaaaa"));
+        System.out.println(longestNonrepeatingSubstring("abcde"));
+        System.out.println(longestNonrepeatingSubstring("abcda"));
 
 
     }
@@ -360,6 +364,9 @@ public class Module6 {
     // Задача 6
     // Создайте функцию, которая принимает число n и возвращает n-е число в последовательности Улама.
     public static int ulam(int num) {
+
+        // Больше информации тут: https://ru.wikipedia.org/wiki/Число_Улама
+
         Vector<Integer> vec = new Vector<>(2);   // Инициализируем вектор
         int count = 0;                                      // Переменная-счётчик
         vec.add(1);                                         // Добавляем первый элемент
@@ -386,7 +393,32 @@ public class Module6 {
     }
 
     // Задача 7
+    // Напишите функцию, которая возвращает самую длинную неповторяющуюся подстроку для строкового ввода.
+    public static String longestNonrepeatingSubstring(String input) {
 
+        // Информация об алгоритме:
+        // https://www.codeflow.site/ru/article/java-longest-substring-without-repeated-characters
+
+        String result = "";                             // Пустая строка для результата
+
+        // Цикл для поиска подстроки
+        for (int i = 0; i < input.length(); i++) {
+            Set<Character> visited = new HashSet<>();   // Множество, в котором элементы не повторяются
+            int end = i;                                // Переменная, обозначающая конец подстроки
+
+            // Цикл, который добавляет к множеству символы
+            for (; end < input.length(); end++) {
+                char currChar = input.charAt(end);      // Переменная для текущего символа
+                if (visited.contains(currChar)) break;  // Если множество содержит символ, то прерываем цикл
+                else visited.add(currChar);             // В другом случае добавляем символ к множеству
+            }
+
+            // Если длина текущей подстроки с уникальными символами меньше длины найденной подстроки
+            // меняем строку result найденной подстрокой
+            if (result.length() < (end - i)) result = input.substring(i, end);
+        }
+        return result;
+    }
 
 
 }
