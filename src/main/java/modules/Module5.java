@@ -7,37 +7,44 @@ public class Module5 {
     public static void main(String[] args) {
 
         // Задача 1
+        System.out.println("Задача 1.");
         System.out.println(Arrays.toString(encrypt("Hello")));
         System.out.println(decrypt(new int[] { 72, 33, -73, 84, -12, -3, 13, -13, -68 }));
         System.out.println(Arrays.toString(encrypt("Sunshine")) + "\n");
 
         // Задача 2
+        System.out.println("Задача 2.");
         System.out.println(canMove("Ладья", "A8", "H8"));
         System.out.println(canMove("Слон", "A7", "G1"));
         System.out.println(canMove("Ферзь", "C4", "D6") + "\n");
 
         // Задача 3
+        System.out.println("Задача 3.");
         System.out.println(canComplete("butl","beautiful"));
         System.out.println(canComplete("butlz","beautiful"));
         System.out.println(canComplete("tulb","beautiful"));
         System.out.println(canComplete("bbutl","beautiful") + "\n");
 
         // Задача 4
+        System.out.println("Задача 4.");
         System.out.println(sumDigProd(new int[]{16, 28}));
         System.out.println(sumDigProd(new int[]{0}));
         System.out.println(sumDigProd(new int[]{1, 2, 3, 4, 5, 6}) + "\n");
 
         // Задача 5
+        System.out.println("Задача 5.");
         sameVowelGroup(new String[]{"toe", "ocelot", "maniac"});
         sameVowelGroup(new String[]{"many", "carriage", "emit", "apricot", "animal"});
         sameVowelGroup(new String[]{"hoops", "chuff", "bot", "bottom"});
         System.out.println();
 
         // Задача 6
+        System.out.println("Задача 6.");
         System.out.println(validateCard("1234567890123456"));
         System.out.println(validateCard("1234567890123452") + "\n");
 
         // Задача 7
+        System.out.println("Задача 7.");
         System.out.println(numToEng(0));
         System.out.println(numToEng(18));
         System.out.println(numToEng(126));
@@ -48,16 +55,19 @@ public class Module5 {
         System.out.println(numToRus(909) + "\n");
 
         // Задача 8
+        System.out.println("Задача 8.");
         System.out.println(getSha256Hash("password123"));
         System.out.println(getSha256Hash("Fluffy@home"));
         System.out.println(getSha256Hash("Hey dude!") + "\n");
 
         // Задача 9
+        System.out.println("Задача 9.");
         System.out.println(correctTitle("jOn SnoW, kINg IN thE noRth."));
         System.out.println(correctTitle("sansa stark, lady of winterfell."));
         System.out.println(correctTitle("TYRION LANNISTER, HAND OF THE QUEEN.") + "\n");
 
         // Задача 10
+        System.out.println("Задача 10.");
         System.out.println(hexLattice(1));
         System.out.println(hexLattice(7));
         System.out.println(hexLattice(19));
