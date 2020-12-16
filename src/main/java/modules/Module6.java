@@ -7,6 +7,7 @@ public class Module6 {
     public static void main(String[] args) {
 
         // Задача 1
+        System.out.println("Задача 1.");
         System.out.println(bell(1));
         System.out.println(bell(2));
         System.out.println(bell(3));
@@ -15,6 +16,7 @@ public class Module6 {
         System.out.println(bell(6) + "\n");
 
         // Задача 2
+        System.out.println("Задача 2.");
         System.out.println(translateWord("flag"));
         System.out.println(translateWord("Apple"));
         System.out.println(translateWord("button"));
@@ -23,24 +25,28 @@ public class Module6 {
         System.out.println(translateSentence("Do you think it is going to rain today?") + "\n");
 
         // Задача 3
+        System.out.println("Задача 3.");
         System.out.println(validColor("rgb(0,0,0)"));
         System.out.println(validColor("rgb(0,,0)"));
         System.out.println(validColor("rgb(255,256,255)"));
         System.out.println(validColor("rgba(0,0,0,0.123456789)") + "\n");
 
         // Задача 4
+        System.out.println("Задача 4.");
         System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&a=2"));
         System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&a=2", new String[] {"b"}));
         System.out.println(stripUrlParams("https://edabit.com?a=1&b=2&c=3", new String[] {"b", "c"}));
         System.out.println(stripUrlParams("https://edabit.com", new String[] {"b"}) + "\n");
 
         // Задача 5
+        System.out.println("Задача 5.");
         System.out.println(Arrays.toString(getHashTags("How the Avocado Became the Fruit of the Global Trade")));
         System.out.println(Arrays.toString(getHashTags("Why You Will Probably Pay More for Your Christmas Tree This Year")));
         System.out.println(Arrays.toString(getHashTags("Hey Parents, Surprise, Fruit Juice Is Not Fruit")));
         System.out.println(Arrays.toString(getHashTags("Visualizing Science")) + "\n");
 
         // Задача 6
+        System.out.println("Задача 6.");
         System.out.println(ulam(1));
         System.out.println(ulam(2));
         System.out.println(ulam(3));
@@ -49,12 +55,14 @@ public class Module6 {
         System.out.println(ulam(206) + "\n");
 
         // Задача 7
+        System.out.println("Задача 7.");
         System.out.println(longestNonrepeatingSubstring("abcabcbb"));
         System.out.println(longestNonrepeatingSubstring("aaaaaa"));
         System.out.println(longestNonrepeatingSubstring("abcde"));
         System.out.println(longestNonrepeatingSubstring("abcda") + "\n");
 
         // Задача 8
+        System.out.println("Задача 8.");
         System.out.println(convertToRoman(2));
         System.out.println(convertToRoman(12));
         System.out.println(convertToRoman(16));
@@ -62,13 +70,17 @@ public class Module6 {
         System.out.println(convertToRoman(3981) + "\n");
 
         // Задача 9
+        System.out.println("Задача 9.");
         System.out.println(formula("6 * 4 = 24"));
         System.out.println(formula("18 / 17 = 2"));
-        System.out.println(formula("16 * 10 = 160 = 14 + 120"));
+        System.out.println(formula("16 * 10 = 160 = 14 + 120") + "\n");
 
         // Задача 10
-
-
+        System.out.println("Задача 10.");
+        System.out.println(palindromedescendant(11211230));
+        System.out.println(palindromedescendant(13001120));
+        System.out.println(palindromedescendant(23336014));
+        System.out.println(palindromedescendant(11));
     }
 
     // Задача 1
@@ -596,7 +608,43 @@ public class Module6 {
     }
 
     // Задача 10
+    public static boolean palindromedescendant(int num) {
+        // Преобразование int to string
+        String input = String.valueOf(num);
 
+        // Основной алгоритм программы
+        while (input.length() > 1) {
+            // Проверка, введено ли чётное количество цифр
+            if (input.length() % 2 == 1) return false;
+            int indexMiddle = input.length() / 2;       // Индекс середины строки
+            // Деление строки на две подстроки
+            String firstHalf = input.substring(0, indexMiddle), secondHalf = input.substring(indexMiddle);
 
+            // Если они эквивалентны, то строка или потомок - палиндром
+            if (firstHalf.equals(secondHalf)) return true;
+            // В другом случае
+            else {
+                // Создаём вектор для хранения двузначных чисел
+                Vector<Integer> nums = new Vector<>();
 
+                // В этом цикле каждые 2 символа конвертируются в int и складываются
+                for (int i = 0; i < input.length(); i = i + 2) {
+                    String temp1 = input.substring(i, i + 2);       // 2 символа от строки
+                    int temp2 = Integer.parseInt(temp1);            // Конвертация в int
+                    temp2 = (temp2 / 10) + (temp2 % 10);             // Их сложение
+                    nums.add(temp2);                                // Результат в вектор nums
+                }
+
+                // Обнуляем строку input
+                input = "";
+                // В цикле строка заполняется элементами вектора nums
+                for (Integer integer: nums) {
+                    input = input + integer;
+                }
+            }
+        }
+
+        // Если цикл окончен, то строка представляет из себя 1 символ, возвращаем false
+        return false;
+    }
 }
