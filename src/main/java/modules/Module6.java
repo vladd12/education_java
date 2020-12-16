@@ -52,7 +52,16 @@ public class Module6 {
         System.out.println(longestNonrepeatingSubstring("abcabcbb"));
         System.out.println(longestNonrepeatingSubstring("aaaaaa"));
         System.out.println(longestNonrepeatingSubstring("abcde"));
-        System.out.println(longestNonrepeatingSubstring("abcda"));
+        System.out.println(longestNonrepeatingSubstring("abcda") + "\n");
+
+        // Задача 8
+        System.out.println(convertToRoman(2));
+        System.out.println(convertToRoman(12));
+        System.out.println(convertToRoman(16));
+        System.out.println(convertToRoman(154));
+        System.out.println(convertToRoman(3981) + "\n");
+
+        // Задача 9
 
 
     }
@@ -419,6 +428,91 @@ public class Module6 {
         }
         return result;
     }
+
+    // Задача 8
+    // Создайте функцию, которая принимает арабское число и преобразует его в римское число
+    public static String convertToRoman(int num) {
+        if (num > 3999 || num < 1) return "Неправильное число!";   // Выбираем начальные условия
+        String str = Integer.toString(num);                        // Конвертируем число в строку
+        int length = str.length();                                 // Длина строки
+        String result = "";                                        // Строка для сохранения результата
+
+        // Дополняем нулями при соотв. длине строки
+        if (length == 1) str = "000" + str;
+        else if (length == 2) str = "00" + str;
+        else if (length == 3) str = "0" + str;
+
+        // Цикл для получения строки
+        for (int i = 0; i < 4; i++) {
+            int n = Integer.parseInt(String.valueOf(str.charAt(i)));    // Текущее число для проверки
+
+            if (i == 0) {           // Для тысяч
+                switch (n) {
+                    case 0: continue;
+                    case 1: result = result + "M"; break;
+                    case 2: result = result + "MM"; break;
+                    case 3: result = result + "MMM"; break;
+                }
+            }
+
+            else if (i == 1) {      // Для сотен
+                switch (n) {
+                    case 0: continue;
+                    case 1: result = result + "C"; break;
+                    case 2: result = result + "CC"; break;
+                    case 3: result = result + "CCC"; break;
+                    case 4: result = result + "CD"; break;
+                    case 5: result = result + "D"; break;
+                    case 6: result = result + "DC"; break;
+                    case 7: result = result + "DCC"; break;
+                    case 8: result = result + "DCCC"; break;
+                    case 9: result = result + "CM"; break;
+                }
+            }
+
+            else if (i == 2) {      // Для десятков
+                switch (n) {
+                    case 0: continue;
+                    case 1: result = result + "X"; break;
+                    case 2: result = result + "XX"; break;
+                    case 3: result = result + "XXX"; break;
+                    case 4: result = result + "XL"; break;
+                    case 5: result = result + "L"; break;
+                    case 6: result = result + "LX"; break;
+                    case 7: result = result + "LXX"; break;
+                    case 8: result = result + "LXXX"; break;
+                    case 9: result = result + "XC"; break;
+                }
+            }
+
+            else {                  // Для единиц
+                switch (n) {
+                    case 1: result = result + "I"; break;
+                    case 2: result = result + "II"; break;
+                    case 3: result = result + "III"; break;
+                    case 4: result = result + "IV"; break;
+                    case 5: result = result + "V"; break;
+                    case 6: result = result + "VI"; break;
+                    case 7: result = result + "VII"; break;
+                    case 8: result = result + "VIII"; break;
+                    case 9: result = result + "IX"; break;
+                }
+            }
+        }
+        return result;
+    }
+
+    // Задача 9
+    public static boolean formula(String input) {
+
+
+
+
+        return false;
+    }
+
+
+
 
 
 }
