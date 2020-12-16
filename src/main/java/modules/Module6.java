@@ -504,7 +504,29 @@ public class Module6 {
 
     // Задача 9
     public static boolean formula(String input) {
+        // Создаём и инициализируем массив символов операций
+        Vector<Character> operations = new Vector<>();
 
+        // Цикл для получения символов операций в формуле или выражении
+        for (int i = 0; i < input.length(); i++) {
+            // Если символ не число и не является пробелом
+            if (!Character.isDigit(input.charAt(i))) {
+                operations.add(input.charAt(i));        // Добавляем в массив-вектор
+            }
+        }
+
+        //
+        boolean flag = true;
+
+        //
+        for (int i = 0; i < operations.size(); i++) {
+            switch(operations.get(i)) {
+
+
+
+
+            }
+        }
 
 
 
