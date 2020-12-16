@@ -504,32 +504,87 @@ public class Module6 {
 
     // Задача 9
     public static boolean formula(String input) {
-        // Создаём и инициализируем массив символов операций
-        Vector<Character> operations = new Vector<>();
+        // Удаляем все пробелы
+        input = input.replace(" ", "");
 
-        // Цикл для получения символов операций в формуле или выражении
-        for (int i = 0; i < input.length(); i++) {
-            // Если символ не число и не является пробелом
-            if (!Character.isDigit(input.charAt(i))) {
-                operations.add(input.charAt(i));        // Добавляем в массив-вектор
-            }
+        // Переменные для чисел, операций и результата
+        String first = "", second = "", res = "", operand2 = "";
+        double first_val, second_val, res_val;
+        char operand1, operand2_char, operand22_char = 0;
+
+        // Формируем первое число
+        int i = 0;
+        while (input.charAt(i) != '+' && input.charAt(i) != '-' && input.charAt(i) != '*' &&
+               input.charAt(i) != '/' && input.charAt(i) != '%') {
+            first += input.charAt(i);
+            i++;
         }
 
-        //
-        boolean flag = true;
+        // Первый операнд
+        operand1 = input.charAt(i);
+        i++;
 
-        //
-        for (int i = 0; i < operations.size(); i++) {
-            switch(operations.get(i)) {
-
-
-
-
-            }
+        // Формируем второе число
+        while (input.charAt(i) != '=') {
+            second += input.charAt(i);
+            i++;
         }
 
+        // Второй операнд
+        operand2 += input.charAt(i);
+        i++;
+        // Если следующий знак не число, то добавляем второй знак
+        if (!Character.isDigit(input.charAt(i))) operand2 += input.charAt(i);
 
+        // Формируем результат
+        while (i != input.length()) {
+            res += input.charAt(i);
+            i++;
+        }
 
+        // Пытаемся конвертировать числа, если не получается, возвращаем false
+        try {
+            first_val = Double.parseDouble(first);
+            second_val = Double.parseDouble(second);
+            res_val = Double.parseDouble(res);
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
+
+        // Делим второй операнд на символы, если его длина больше одного символа
+        operand2_char = operand2.charAt(0);
+        if (operand2.length()>1) operand22_char = operand2.charAt(1);
+
+        if (operand1 == '+') {
+            if (operand2_char == '=') return first_val + second_val == res_val;
+            if (operand2_char == '>' && operand22_char == '=') return first_val + second_val >= res_val;
+            if (operand2_char == '<' && operand22_char == '=') return first_val + second_val <= res_val;
+            if (operand2_char == '<') return first_val + second_val < res_val;
+        }
+        if (operand1 == '-') {
+            if (operand2_char == '=') return first_val - second_val == res_val;
+            if (operand2_char == '>' && operand22_char == '=') return first_val - second_val >= res_val;
+            if (operand2_char == '<' && operand22_char == '=') return first_val - second_val <= res_val;
+            if (operand2_char == '<') return first_val - second_val < res_val;
+        }
+        if (operand1 == '*') {
+            if (operand2_char == '=') return first_val * second_val == res_val;
+            if (operand2_char == '>' && operand22_char == '=') return first_val * second_val >= res_val;
+            if (operand2_char == '<' && operand22_char == '=') return first_val * second_val <= res_val;
+            if (operand2_char == '<') return first_val * second_val < res_val;
+        }
+        if (operand1 == '/') {
+            if (operand2_char == '=') return first_val / second_val == res_val;
+            if (operand2_char == '>' && operand22_char == '=') return first_val / second_val >= res_val;
+            if (operand2_char == '<' && operand22_char == '=') return first_val / second_val <= res_val;
+            if (operand2_char == '<') return first_val / second_val < res_val;
+        }
+        if (operand1 == '%') {
+            if (operand2_char == '=') return first_val % second_val == res_val;
+            if (operand2_char == '>' && operand22_char == '=') return first_val % second_val >= res_val;
+            if (operand2_char == '<' && operand22_char == '=') return first_val % second_val <= res_val;
+            if (operand2_char == '<') return first_val % second_val < res_val;
+        }
         return false;
     }
 
