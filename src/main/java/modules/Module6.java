@@ -2,6 +2,7 @@ package modules;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Vector;
 
 public class Module6 {
 
@@ -39,7 +40,15 @@ public class Module6 {
         System.out.println(Arrays.toString(getHashTags("How the Avocado Became the Fruit of the Global Trade")));
         System.out.println(Arrays.toString(getHashTags("Why You Will Probably Pay More for Your Christmas Tree This Year")));
         System.out.println(Arrays.toString(getHashTags("Hey Parents, Surprise, Fruit Juice Is Not Fruit")));
-        System.out.println(Arrays.toString(getHashTags("Visualizing Science")));
+        System.out.println(Arrays.toString(getHashTags("Visualizing Science")) + "\n");
+
+        // Задача 6
+        System.out.println(ulam(1));
+        System.out.println(ulam(2));
+        System.out.println(ulam(3));
+        System.out.println(ulam(4));
+        System.out.println(ulam(9));
+        System.out.println(ulam(206));
 
 
     }
@@ -348,6 +357,35 @@ public class Module6 {
         return result;
     }
 
+    // Задача 6
+    // Создайте функцию, которая принимает число n и возвращает n-е число в последовательности Улама.
+    public static int ulam(int num) {
+        Vector<Integer> vec = new Vector<>(2);   // Инициализируем вектор
+        int count = 0;                                      // Переменная-счётчик
+        vec.add(1);                                         // Добавляем первый элемент
+        vec.add(2);                                         // Добавляем второй элемент
+
+        // Граничные условия: возвращаем первые элементы при надобности
+        if (num == 1 || num == 2) return vec.get(num - 1);
+
+        // Основной алгоритм
+        int max = Integer.MAX_VALUE;                        // Максимально возможное число для int
+        for (int i = 3; i < max; i++) {                     // Ищем число по индексу в числах до max
+            for (int j = 0; j < vec.size() - 1; j++) {      // Через два цикла ищем совпадения при сложении
+                for (int k = j+1; k < vec.size(); k++) {
+                    if (vec.get(j)+vec.get(k)==i) count++;  // Если из прошлых чисел можно создать третье увелич. счётчик
+                    if (count > 1) break;                   // Если вариантов создания больше одного
+                }
+                if (count > 1) break;                       // Если вариантов создания больше одного
+            }
+            if (count == 1) vec.add(i);                     // После завершения циклов добавляем число, если count == 1
+            count = 0;                                      // Обнуляем переменную-счётчик
+            if (vec.size() == num) return vec.get(num - 1); // Если размер вектора равен num, возвращаем послдений элемент
+        }
+        return 1;                                           // Возвращаем 1, если не смогли вернуть другое число
+    }
+
+    // Задача 7
 
 
 
