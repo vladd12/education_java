@@ -6,14 +6,6 @@ public class URLDepthPair {
     private int depth; // Поле класса с глубиной поиска
 
     /**
-     * Конструктор класса по умолчанию
-     */
-    public URLDepthPair() {
-        this.URL = null;
-        this.depth = 0;
-    }
-
-    /**
      * Конструктор класса с параметрами
      * @param URL строка URL
      * @param depth глубина поиска

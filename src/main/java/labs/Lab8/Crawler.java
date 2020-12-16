@@ -161,7 +161,7 @@ public class Crawler {
      * Функция вывода списка найденных просмотренных ссылок
      */
     public static void outputResult(FIFO pool) {
-        for (URLDepthPair checked : pool.getCheckedItems()) {
+        for (Object checked : pool.getCheckedItems()) {
             System.out.println(checked.toString());
         }
     }

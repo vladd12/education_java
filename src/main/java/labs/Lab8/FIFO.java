@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Класс для работы методом "First In, First Out" (реализация очереди)
  */
-public class FIFO {
+public class FIFO<flagAdded> {
 
     private final int maxSize; // Максимальное количество элементов в буфере
     private final LinkedList<URLDepthPair> items; // Поле класса для хранения списка объектов URLDepthPair
@@ -28,14 +28,14 @@ public class FIFO {
      * @param obj объект класса URLDepthPair
      * @return true, если объект был добавлен, false в противном случае
      */
-    public boolean put(URLDepthPair obj) {
+    public synchronized boolean put(URLDepthPair obj) {
+        // synchronized - потокобезопасный метод класса
         boolean flagAdded = false;
-        synchronized (items) {
-            if (items.size() < maxSize) {
-                items.addLast(obj); // Объект добавляется в конец списка
-                flagAdded = true;
-                items.notify();
-            }
+        if (items.size() < maxSize && !checkedItems.contains(obj)) {
+            items.addLast(obj); // Объект добавляется в конец списка
+            flagAdded = true;
+            if (waitingThreads > 0) waitingThreads--;
+            items.notify();
         }
         return flagAdded;
     }
@@ -47,12 +47,16 @@ public class FIFO {
     public synchronized URLDepthPair get() throws InterruptedException {
         // synchronized - потокобезопасный метод класса
         URLDepthPair item = null;
-        while (items.size() == 0) {
+        if (items.size() == 0) {
             waitingThreads++;
-            items.wait(); // Ожидаем, если нет объектов
-            waitingThreads--;
+            try {
+                items.wait(); // Ожидаем, если нет объектов
+            } catch (InterruptedException e) {
+                System.out.println("InterruptedException:" + e);
+            }
         }
-        if (items.size() > 0) item = items.removeFirst(); // Получаем объект из начала списка
+
+        item = items.removeFirst(); // Получаем объект из начала списка
         checkedItems.add(item); // Добавляем объект в список просмотренных
         return item;
     }
