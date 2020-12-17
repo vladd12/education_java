@@ -1,6 +1,7 @@
 package labs.Lab8;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -66,15 +67,20 @@ public class Crawler {
 
         ArrayList<String> URLs = new ArrayList<>();
 
-        URLConnection urlSocket = new URL(temp.getURL()).openConnection();
-        urlSocket.setConnectTimeout(10_1000);
+        URLConnection urlSocket = null;
+        try {
+            urlSocket = new URL(temp.getURL()).openConnection();
+            urlSocket.setConnectTimeout(10_1000);
+        } catch (MalformedURLException e) {
+            System.out.println("MalformedURLException: " + e.getMessage());
+        }
+        assert urlSocket != null;
 
         // Работа с потоками данных URL-соединения
         InputStream stream_in;
         try {
             stream_in = urlSocket.getInputStream();
         } catch (IOException ignored) {
-            System.out.println("Some IOException, ignored;");
             return URLs;
         }
         BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
@@ -82,8 +88,6 @@ public class Crawler {
         // Получение страницы и её обработка
         while (true) {
             String str;
-            int beginIndex = 0;
-            int endIndex;
 
             try {
                 str = input.readLine();
@@ -93,14 +97,22 @@ public class Crawler {
             }
 
             if (str == null) return URLs;
-            while (true) {
-                beginIndex = str.indexOf(BEFORE_URL,beginIndex);
-                if (beginIndex == -1) break;
-                beginIndex = beginIndex + BEFORE_URL.length();
-                endIndex = str.indexOf("\"", beginIndex);
-                String foundURL = str.substring(beginIndex,endIndex);
-                URLs.add(foundURL);
-                beginIndex = endIndex;
+
+            while (str.length() > 0) {
+                String newURL;
+                if (str.contains(BEFORE_URL + "\"" + HTTP)) {
+                    newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                    newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                } else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {
+                    newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                    newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                } else break;
+
+                // Меняем строку
+                str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
+
+                // Нашли новую ссылку
+                URLs.add(newURL);
             }
         }
     }
