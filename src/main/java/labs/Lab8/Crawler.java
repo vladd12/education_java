@@ -60,15 +60,81 @@ public class Crawler {
     }
 
     /**
-     * Функция для создания потоков
-     * @param pool буфер ссылок
-     * @return возвращает поток, созданный для работы с данным буфером
+     * Функция ищет ссылки и добавляет их в пул, при нахождении
+     * @param max_depth указанная глубина поиска
      */
-    private static Thread createThread(FIFO pool, int max_depth){
-        return new Thread(new CrawlerTask(pool, max_depth));
+    public static void calculate(FIFO pool, int max_depth) {
+        try {
+            while(!pool.isEmpty()) {
+
+                // Временная переменная для хранения пары URLDepthPair
+                URLDepthPair temp = null;
+                try {
+                    temp = pool.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // Опеределяем URL соединение
+                assert temp != null;
+                URLConnection urlSocket = new URL(temp.getURL()).openConnection();
+                urlSocket.setConnectTimeout(10_1000);
+
+                // Работа с потоками данных URL-соединения
+                InputStream stream_in = null;
+                try {
+                    stream_in = urlSocket.getInputStream();
+                } catch (IOException ignored) {
+                    System.out.println("Some IOException, ignored;");
+                }
+                assert stream_in != null;
+                BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
+
+                // Получение страницы и её обработка
+                String str;
+                if (input != null) {
+                    while ((str = input.readLine()) != null) {
+                        // System.out.println(str); // Для отладки
+                        if (temp.getDepth() < max_depth) {
+                            while(str.length() > 0) {
+                                String newURL;
+                                if (str.contains(BEFORE_URL + "\"" + HTTP)) {
+                                    newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                                    newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                                }
+                                else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {
+                                    newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                                    newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                                }
+                                else break;
+
+                                // Меняем строку
+                                str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
+
+                                // Нашли новую ссылку
+                                URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth());
+                                if (!pool.getCheckedItems().contains(foundURL)) {
+                                    foundURL.setDepth(foundURL.getDepth() + 1); // Увеличиваем глубину
+                                    pool.put(foundURL); // Добавили её в пул
+                                }
+                            }
+                        }
+                        else break;
+                    }
+                }
+
+                // Закрываем потоки
+                input.close();
+                stream_in.close();
+                urlSocket.getInputStream().close();
+
+                // Добавляем просмотренную ссылку в список просмотренных
+                if (temp.getDepth() <= max_depth && !pool.getCheckedItems().contains(temp)) pool.putCheckedItems(temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
 
     /**
      * Функция вывода списка найденных просмотренных ссылок
