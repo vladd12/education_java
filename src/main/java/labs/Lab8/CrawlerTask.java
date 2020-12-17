@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class CrawlerTask implements Runnable {
 
-    private final FIFO pool; // Поле класса FIFO
+    private final FIFO pool;        // Поле класса FIFO
 
     /**
      * Конструктор класса с параметром
@@ -23,21 +23,15 @@ public class CrawlerTask implements Runnable {
      */
     @Override
     public void run() {
-        URLDepthPair temp = null;
+        URLDepthPair temp = pool.get();         // Получаем элемент URLDepthPair из пула
+        ArrayList<String> links = null;         // Создаём список строк
         try {
-            temp = pool.get();
-        } catch (InterruptedException ignored) {
-            System.out.println("InterruptedException, ignoring...");
-        }
-        assert temp != null;
-
-        ArrayList<String> links = null;
-        try {
-            links = Crawler.calculate(temp);
+            links = Crawler.calculate(temp);    // В это список попадают наденные ссылки
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // В ходе цикла каждая строка, если до этого её не было в пуле
         for (String link : links) {
             URLDepthPair newPair = new URLDepthPair(link, temp.getDepth() + 1);
             if (!pool.getCheckedItems().contains(link)) {

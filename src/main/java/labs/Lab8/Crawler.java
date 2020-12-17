@@ -57,16 +57,17 @@ public class Crawler {
                 }
             }
         }
-        outputResult(URLPool);
+        outputResult(URLPool);    // Выводим результат работы программы
+        System.exit(1);     // Принудительно завершаем потоки и выходим из программы
     }
 
     /**
      * Функция ищет ссылки и добавляет их в пул, при нахождении
      */
     public static ArrayList<String> calculate(URLDepthPair temp) throws IOException {
+        ArrayList<String> URLs = new ArrayList<>();     // Список строк для найденных ссылок
 
-        ArrayList<String> URLs = new ArrayList<>();
-
+        // Устанавливаем URL-соединение
         URLConnection urlSocket = null;
         try {
             urlSocket = new URL(temp.getURL()).openConnection();
@@ -80,38 +81,39 @@ public class Crawler {
         InputStream stream_in;
         try {
             stream_in = urlSocket.getInputStream();
-        } catch (IOException ignored) {
-            return URLs;
+        } catch (IOException ignored) {     // Игнорируем исключение
+            return URLs;                    // Возвращаем список найденных ссылок
         }
         BufferedReader input = new BufferedReader(new InputStreamReader(stream_in));
 
         // Получение страницы и её обработка
         while (true) {
-            String str;
+            String str;     // Переменная-строка для получения html-файла страницы
 
             try {
-                str = input.readLine();
+                str = input.readLine();     // Получаем страницу в виде строки из потока
             } catch (IOException e) {
                 System.out.println("IOException: " + e.getMessage());
                 return URLs;
             }
 
-            if (str == null) return URLs;
+            if (str == null) return URLs;   // Если поток был null, возвращаем список ссылок
 
+            // Основной цикл для получения
             while (str.length() > 0) {
-                String newURL;
-                if (str.contains(BEFORE_URL + "\"" + HTTP)) {
+                String newURL;                                           // Переменная-строка для новой строки
+                if (str.contains(BEFORE_URL + "\"" + HTTP)) {            // Если ссылка содержит http
                     newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
-                    newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
-                } else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {
+                    newURL = newURL.substring(0, newURL.indexOf("\""));  // Обрезаем адрес справа
+                } else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {   // Если ссылка содержит https
                     newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
-                    newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
-                } else break;
+                    newURL = newURL.substring(0, newURL.indexOf("\""));  // Обрезаем адрес справа
+                } else break; //
 
                 // Меняем строку
                 str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
 
-                // Нашли новую ссылку
+                // Нашли новую ссылку и добавили в список ссылок
                 URLs.add(newURL);
             }
         }
@@ -119,6 +121,7 @@ public class Crawler {
 
     /**
      * Функция вывода списка найденных просмотренных ссылок
+     * @param pool пул ссылок
      */
     public static void outputResult(FIFO pool) {
         for (Object checked : pool.getCheckedItems()) {

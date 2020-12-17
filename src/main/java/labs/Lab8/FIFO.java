@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Класс для работы методом "First In, First Out" (реализация очереди)
  */
-public class FIFO<flagAdded> {
+public class FIFO {
 
     private final int maxDepth; // Максимальное количество элементов в буфере
     private final LinkedList<URLDepthPair> items; // Поле класса для хранения списка объектов URLDepthPair
@@ -32,10 +32,11 @@ public class FIFO<flagAdded> {
         // synchronized - потокобезопасный метод класса
         boolean flagAdded = false;
         if (obj.getDepth() < maxDepth && !checkedItems.contains(obj)) {
-            items.addLast(obj); // Объект добавляется в конец списка
+            items.addLast(obj);     // Объект добавляется в конец списка
             flagAdded = true;
+            // Если ожидающих потоков больше одного и получена непросмотренная ссылка
             if (waitingThreads > 0) waitingThreads--;
-            this.notify();
+            this.notify();          // Сообщение потокам, что появилась непросмотренная ссылка
         }
         return flagAdded;
     }
@@ -44,29 +45,21 @@ public class FIFO<flagAdded> {
      * Функция получения объекта из буфера
      * @return объект класса URLDepthPair из начала списка
      */
-    public synchronized URLDepthPair get() throws InterruptedException {
-        // synchronized - потокобезопасный метод класса
-        URLDepthPair item = null;
+    public synchronized URLDepthPair get() {
+        URLDepthPair item;
+        // Если нет непросмотренных ссылок
         if (items.size() == 0) {
-            waitingThreads++;
+            waitingThreads++;                       // Увеличиваем количество ожидающих потоков
             try {
-                this.wait(); // Ожидаем, если нет объектов
-            } catch (InterruptedException e) {
+                this.wait();                        // Заставляем поток ждать, если нет ссылок
+            } catch (InterruptedException e) {      // Исключение
                 System.out.println("InterruptedException:" + e);
             }
         }
 
-        item = items.removeFirst(); // Получаем объект из начала списка
-        checkedItems.add(item); // Добавляем объект в список просмотренных
+        item = items.removeFirst();     // Получаем объект из начала списка
+        this.putCheckedItems(item);     // Добавляем объект в список просмотренных
         return item;
-    }
-
-    /**
-     * Функция проверяет, пустой ли буфер
-     * @return возвращает true, если буфер пустой, false в противном случае
-     */
-    public boolean isEmpty() {
-        return this.items.isEmpty();
     }
 
     /**
@@ -74,7 +67,9 @@ public class FIFO<flagAdded> {
      * @param obj прсмотренная ссылка
      */
     public void putCheckedItems(URLDepthPair obj) {
+        // Синхронизация потоков (потокобезопасный код)
         synchronized (checkedItems) {
+            // Если ссылки нет в списке просмотренных
             if (!checkedItems.contains(obj)) checkedItems.add(obj);  // Добавляем объект в список просмотренных
         }
     }
