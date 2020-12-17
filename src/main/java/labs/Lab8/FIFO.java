@@ -7,7 +7,7 @@ import java.util.LinkedList;
  */
 public class FIFO<flagAdded> {
 
-    private final int maxSize; // Максимальное количество элементов в буфере
+    private final int maxDepth; // Максимальное количество элементов в буфере
     private final LinkedList<URLDepthPair> items; // Поле класса для хранения списка объектов URLDepthPair
     private final LinkedList<URLDepthPair> checkedItems; // Поле класса для хранения списка просмотренных URLDepthPair
     private int waitingThreads; // Поле класса для количества ожидающих потоков
@@ -17,7 +17,7 @@ public class FIFO<flagAdded> {
      * @param maxSize максимальное количество элементов в буфере
      */
     public FIFO(int maxSize) {
-        this.maxSize = maxSize;
+        this.maxDepth = maxSize;
         this.items = new LinkedList<>();
         this.checkedItems = new LinkedList<>();
         this.waitingThreads = 0;
@@ -31,7 +31,7 @@ public class FIFO<flagAdded> {
     public synchronized boolean put(URLDepthPair obj) {
         // synchronized - потокобезопасный метод класса
         boolean flagAdded = false;
-        if (items.size() < maxSize && !checkedItems.contains(obj)) {
+        if (obj.getDepth() < maxDepth && !checkedItems.contains(obj)) {
             items.addLast(obj); // Объект добавляется в конец списка
             flagAdded = true;
             if (waitingThreads > 0) waitingThreads--;

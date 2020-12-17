@@ -1,6 +1,7 @@
 package labs.Lab8;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Класс, содержащий код для выполнения в каждом потоке
@@ -8,15 +9,13 @@ import java.io.IOException;
 public class CrawlerTask implements Runnable {
 
     private final FIFO pool; // Поле класса FIFO
-    private final int max_depth; // Поле для хранения глубины поиска
 
     /**
      * Конструктор класса с параметром
      * @param pool передача буфера очереди FIFO в конструктор класса
      */
-    public CrawlerTask(FIFO pool, int max_depth) {
+    public CrawlerTask(FIFO pool) {
         this.pool = pool;
-        this.max_depth = max_depth;
     }
 
     /**
@@ -24,6 +23,26 @@ public class CrawlerTask implements Runnable {
      */
     @Override
     public void run() {
-        Crawler.calculate(this.pool, this.max_depth);
+        URLDepthPair temp = null;
+        try {
+            temp = pool.get();
+        } catch (InterruptedException ignored) {
+            System.out.println("InterruptedException, ignoring...");
+        }
+        assert temp != null;
+
+        ArrayList<String> links = null;
+        try {
+            links = Crawler.calculate(temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (String link : links) {
+            URLDepthPair newPair = new URLDepthPair(link, temp.getDepth() + 1);
+            if (!pool.getCheckedItems().contains(link)) {
+                pool.put(newPair);
+            }
+        }
     }
 }
