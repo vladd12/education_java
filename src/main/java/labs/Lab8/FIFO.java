@@ -35,7 +35,7 @@ public class FIFO<flagAdded> {
             items.addLast(obj); // Объект добавляется в конец списка
             flagAdded = true;
             if (waitingThreads > 0) waitingThreads--;
-            items.notify();
+            this.notify();
         }
         return flagAdded;
     }
@@ -50,7 +50,7 @@ public class FIFO<flagAdded> {
         if (items.size() == 0) {
             waitingThreads++;
             try {
-                items.wait(); // Ожидаем, если нет объектов
+                this.wait(); // Ожидаем, если нет объектов
             } catch (InterruptedException e) {
                 System.out.println("InterruptedException:" + e);
             }
@@ -75,7 +75,7 @@ public class FIFO<flagAdded> {
      */
     public void putCheckedItems(URLDepthPair obj) {
         synchronized (checkedItems) {
-            checkedItems.add(obj); // Добавляем объект в список просмотренных
+            if (!checkedItems.contains(obj)) checkedItems.add(obj);  // Добавляем объект в список просмотренных
         }
     }
 
