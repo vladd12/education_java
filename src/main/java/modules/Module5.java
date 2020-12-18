@@ -47,11 +47,11 @@ public class Module5 {
         System.out.println("Задача 7.");
         System.out.println(numToEng(0));
         System.out.println(numToEng(18));
-        System.out.println(numToEng(126));
+        System.out.println(numToEng(111));
         System.out.println(numToEng(909));
         System.out.println(numToRus(0));
         System.out.println(numToRus(18));
-        System.out.println(numToRus(126));
+        System.out.println(numToRus(111));
         System.out.println(numToRus(909) + "\n");
 
         // Задача 8
@@ -90,10 +90,10 @@ public class Module5 {
 
     public static String decrypt(int[] array) {
         String result = "";
-        int temp=array[0];
+        int temp = array[0];
         result = result + (char)array[0];
         for (int i = 1; i < array.length; i++) {
-            temp+=array[i];
+            temp = temp + array[i];
             result = result + (char)temp;
         }
         return result;
@@ -153,17 +153,19 @@ public class Module5 {
         // Второй блок проверок
         String temp = ""; // Временная строка
         for (int i = 0; i < str1.length(); i++) {
-            // Еcли последний символ первой строки, то копируем вторую до конца
+            // Если последний символ первой строки, то копируем вторую до конца
+            int beginIndex = str2.indexOf(str1.charAt(i));
             if (i == str1.length() - 1) {
-                temp = temp + str2.substring(str2.indexOf(str1.charAt(i)));
+                temp = temp + str2.substring(beginIndex);
                 break;
             }
             else {
-                // Если следующий символ не найден после первого во второй строке, то возвращаем аalse
-                if (str2.indexOf(str1.charAt(i + 1), str2.indexOf(str1.charAt(i)) + 1) == -1) return false;
+                int endIndex = str2.indexOf(str1.charAt(i + 1), beginIndex + 1);
+                // Если следующий символ не найден после первого во второй строке, то возвращаем false
+                if (endIndex == -1) return false;
                 // Копируем из второй строки подстроки с помощью символов из первой строки по этому правилу
                 // после чего сравниваем временную строку со второй
-                temp = temp + str2.substring(str2.indexOf(str1.charAt(i)), str2.indexOf(str1.charAt(i + 1), str2.indexOf(str1.charAt(i)) + 1));
+                temp = temp + str2.substring(beginIndex, endIndex);
             }
         }
         return str2.equals(temp);
@@ -174,15 +176,15 @@ public class Module5 {
     // произведение цифр до тех пор, пока ответ не станет длиной всего в 1 цифру.
     public static int sumDigProd(int[] arr) {
         int sum = 0, temp;
-        for (int i : arr) { // Сумма всех элементов массива через цикл
+        for (int i : arr) {         // Сумма всех элементов массива через цикл
             sum = sum + i;
         }
-        while (sum > 0) { // Цикл, который будет умножать цифры числа, пока результат не станет 1 символом
-            if (sum < 10) break; // Выход из цикла при < 10
+        while (sum > 0) {           // Цикл, который будет умножать цифры числа, пока результат не станет 1 символом
+            if (sum < 10) break;            // Выход из цикла при < 10
             temp = sum;
             sum = 1;
-            while (temp > 0) { // Разложение числа на цифры
-                sum = sum * (temp % 10); // Умножение
+            while (temp > 0) {              // Разложение числа на цифры
+                sum = sum * (temp % 10);    // Умножение
                 temp = temp / 10;
             }
         }
@@ -208,8 +210,8 @@ public class Module5 {
         for (int i = 1; i < arr.length; i++) {
             boolean flag = true; // Вспомогательная переменная-флаг
             for (int j = 0; j < vowelList.length(); j++) {
-                if (arr[i].contains(String.valueOf(vowelList.charAt(j))) &&  // Гласная есть в первом списке
-                !nowVowel.contains(String.valueOf(vowelList.charAt(j)))) {   // и её нет во втором списке
+                if (arr[i].contains(String.valueOf(vowelList.charAt(j))) &&     // Гласная есть в первом списке
+                !nowVowel.contains(String.valueOf(vowelList.charAt(j)))) {      // и её нет во втором списке
                     flag = false;   // Обнуляем флаг
                     break;          // Прерываем цикл
                 }
@@ -246,7 +248,7 @@ public class Module5 {
             }
         }
 
-        int result = 10 - (sum % 10);       // Вычитаем псоледнюю цифры суммы из десяти
+        int result = 10 - (sum % 10);       // Вычитаем поcледнюю цифры суммы из десяти
 
         // Тест Луна
         return (result == checkNum);
@@ -286,6 +288,7 @@ public class Module5 {
                 switch (n) {
                     case 0: continue;
                     case 1: {
+                        num = num % 100;
                         switch (num) {
                             case 10: result = result + "ten"; break;
                             case 11: result = result + "eleven"; break;
@@ -360,6 +363,7 @@ public class Module5 {
                 switch (n) {
                     case 0: continue;
                     case 1: {
+                        num = num % 100;
                         switch (num) {
                             case 10: result = result + "десять"; break;
                             case 11: result = result + "одиннадцать"; break;
@@ -423,11 +427,11 @@ public class Module5 {
 
         // Цикл для прохождения по строке
         for (int i = 0; i < str.length(); i++) {
-            if (i == 0) temp = temp + Character.toUpperCase(str.charAt(i));   // Если первый символ
+            if (i == 0) temp = temp + Character.toUpperCase(str.charAt(i));     // Если первый символ
             if (str.charAt(i) == ' ') {
                 // Обрезаем слово до след. пробела
-                int endIndex = str.indexOf(' ', i + 1);     // Индекс след. пробела
-                String substr = "";                                      // Слово (инициализируем пустой строкой)
+                int endIndex = str.indexOf(' ', i + 1);             // Индекс след. пробела
+                String substr = "";                                             // Слово (пустая строка)
                 if (endIndex != -1) substr = str.substring(i + 1, endIndex);    // Если пробел был найден
                 else substr = str.substring(i + 1);                             // Иначе обрезаем до конца
 
@@ -441,7 +445,7 @@ public class Module5 {
                 else temp = temp + str.charAt(i);
             }
             else {
-                // Если не первая буква, то компируем во временную строку
+                // Если не первая буква, то копируем во временную строку
                 if (i != 0) temp = temp + str.charAt(i);
             }
         }
