@@ -335,9 +335,9 @@ public class Module4 {
                         k++;
                     }
                     if (unic == 0) res++;
-                    unic=0;
+                    unic = 0;
                 }
-                i+=chars+1;
+                i = i + chars + 1;
             }
         }
         return res;
