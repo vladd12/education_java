@@ -65,7 +65,8 @@ public class Module4 {
 
     // Задача 1
     public static String bessie(int n, int k, String str) {
-        if ((n < 1 || n > 100) || (k < 1 || k > 80)) return "Error input params!"; // Некорректные входные данные для функции
+        // Если получены некорректные входные данные для функции
+        if ((n < 1 || n > 100) || (k < 1 || k > 80)) return "Error input params!";
         String result = "";
         int indexStart = 0, indexEnd = 0, k_save = k;
         while (n > 0) { // Пока количество слов не равно нулю
@@ -76,7 +77,9 @@ public class Module4 {
                     break;
                 }
             }
-            if (indexEnd - indexStart > 15) return "Error! A word containing more than 15 characters was found."; // Найдено слово, длина которого больше 15 символов
+
+            // Если найдено слово, длина которого больше 15 символов
+            if (indexEnd - indexStart > 15) return "Error! A word containing more than 15 characters was found.";
             String word = str.substring(indexStart, indexEnd);
             indexStart = indexEnd + 1;
             if (k_save >= word.length()) {
