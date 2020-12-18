@@ -99,8 +99,7 @@ public class Module4 {
     // Задача 2
     public static String[] split (String str) {
         int left = 0, right = 0, k = 0, groups = 0;
-        for (int i = 0; i < str.length(); i++)
-        {
+        for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == '(') left++;
             if (str.charAt(i) == ')') right++;
             if (left == right) {
@@ -112,8 +111,7 @@ public class Module4 {
         left = right = 0;
         String[] res = new String[groups];
         String temp = "";
-        for (int i = 0; i < iter; i++)
-        {
+        for (int i = 0; i < iter; i++) {
             if (str.charAt(i) == '(') {
                 left++;
                 temp+="(";
@@ -134,9 +132,9 @@ public class Module4 {
     // Задача 3
     public static String toCamelCase(String str) {
         String result = "";
-        for(int i = 0; i < str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == '_') {
-                result = result + Character.toUpperCase(str.charAt(i+1));
+                result = result + Character.toUpperCase(str.charAt(i + 1));
                 i++;
             }
             else result = result + str.charAt(i);
@@ -146,7 +144,7 @@ public class Module4 {
 
     public static String toSnakeCase(String str) {
         String result = "";
-        for(int i = 0; i < str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
             if (Character.isUpperCase(str.charAt(i))) result = result + "_" + Character.toLowerCase(str.charAt(i));
             else result = result + str.charAt(i);
         }
@@ -158,45 +156,33 @@ public class Module4 {
         double result;
         if (arr[1] >= 17) result = (17 - arr[0]) * arr[2] + (arr[1] - 17) * arr[2] * arr[3];
         else result = (arr[1] - arr[0]) * arr[2];
-        result = Math.round(result * 100.0) / 100.0; // Округление до сотых
+        result = Math.round(result * 100.0) / 100.0;    // Округление до сотых
         return "$" + result + "0";
     }
 
     // Задача 5
     public static String BMI(String weight, String height) {
-        int index = 0;
+        int index;
         String[] first, second;
         double weightDouble, heightDouble;
         double BMI;
 
-        // Поиск индекса пробела в первой строке
-        for (int i = 0; i < weight.length(); i++) {
-            if (weight.charAt(i) == ' ') {
-                index = i;
-                break;
-            }
-        }
-
+        index = weight.indexOf(' ');        // Поиск индекса пробела в первой строке
         // Разделение строки на массив подстрок (2 подстроки)
         first = new String[] { weight.substring(0, index), weight.substring(index + 1) };
         weightDouble = Double.parseDouble(first[0]); // Парсим первую подстроку в double
-        if (first[1].equals("pounds")) weightDouble = weightDouble * 0.45359237; // Если фунты, то переводим в килограммы
+        // Если фунты, то переводим в килограммы
+        if (first[1].equals("pounds")) weightDouble = weightDouble * 0.45359237;
 
-        // Поиск индекса пробела во второй строке
-        for (int i = 0; i < height.length(); i++) {
-            if (height.charAt(i) == ' ') {
-                index = i;
-                break;
-            }
-        }
-
+        index = height.indexOf(' ');        // Поиск индекса пробела во второй строке
         // Разделение строки на массив подстрок (2 подстроки)
         second = new String[] { height.substring(0, index), height.substring(index + 1) };
         heightDouble = Double.parseDouble(second[0]); // Парсим первую подстроку в double
-        if (second[1].equals("inches")) heightDouble = heightDouble * 0.0254; // Если дюймы, то переводим в метры
+        // Если дюймы, то переводим в метры
+        if (second[1].equals("inches")) heightDouble = heightDouble * 0.0254;
 
-        BMI = weightDouble / (heightDouble * heightDouble); // Вычисление индекса массы тела
-        BMI = Math.round(BMI * 10.0) / 10.0; // Округление до десятых
+        BMI = weightDouble / (heightDouble * heightDouble);     // Вычисление индекса массы тела
+        BMI = Math.round(BMI * 10.0) / 10.0;                    // Округление до десятых
 
         // Возвращаем соответствующую строку
         if (BMI < 18.5) return BMI + " Underweight";
@@ -209,14 +195,14 @@ public class Module4 {
         int count = 0;
         int temp;
         while (num > 0) {
-            if (num < 10) break; // Выход из цикла при < 10
+            if (num < 10) break;            // Выход из цикла при < 10
             temp = num;
             num = 1;
-            while (temp > 0) { // Разложение числа на цифры
-                num = num * (temp % 10); // Умножение
+            while (temp > 0) {              // Разложение числа на цифры
+                num = num * (temp % 10);    // Умножение
                 temp = temp / 10;
             }
-            count++; // Счётчик умножения
+            count++;                        // Счётчик умножения
         }
         return count;
     }
@@ -240,22 +226,71 @@ public class Module4 {
         return result;
     }
 
-    // Задача 8 (переделать)
+    // Задача 8
     public static boolean doesRhyme(String str1, String str2) {
-        // Индексы с которых будет происходить проверка
-        int index1 = str1.length() - 4;
-        int index2 = str2.length() - 4;
-        int counter = 0; // Счётчик совпадений
-
         // Все строки в нижний регистр символов
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();
 
-        for (int i = 0; i < 4; i++) { // Считаем количество совпадений
-            if (str1.charAt(index1 + i) == str2.charAt(index2 + i)) counter++;
+        // Находим последние слова строк
+        String word1, word2;
+        int index = str1.lastIndexOf(' ');      // Индекс последнего пробела в первой строке
+        word1 = str1.substring(index);              // Последнее слово первой строки
+        index = str2.lastIndexOf(' ');          // Индекс последнего пробела во второй строке
+        word2 = str2.substring(index);              // Последнее слово второй строки
+
+        // Считаем количество гласных
+        int numOfVowelsWord1 = 0, numOfVowelsWord2 = 0;
+        // Считаем количество гласных в первом слове
+        for (int i = 0; i < word1.length(); i++) {
+            char nowSym = word1.charAt(i);
+            if (nowSym == 'a' || nowSym == 'e' || nowSym == 'i' ||
+                nowSym == 'o' || nowSym == 'u' || nowSym == 'y') numOfVowelsWord1 += 1;
+        }
+        // Считаем количество гласных во втором слове
+        for (int i = 0; i < word2.length(); i++) {
+            char nowSym = word2.charAt(i);
+            if (nowSym == 'a' || nowSym == 'e' || nowSym == 'i' ||
+                nowSym == 'o' || nowSym == 'u' || nowSym == 'y') numOfVowelsWord2 += 1;
         }
 
-        return (counter >= 2); // Возвращаем значение в зависимости от количества совпадений
+        // Выбиваем false, если количество гласных отличается, в противном случае инициализируем массивы гласных
+        char[] arrSymWord1, arrSymWord2;
+        if (numOfVowelsWord1 != numOfVowelsWord2) return false;
+        else {
+            arrSymWord1 = new char[numOfVowelsWord1];
+            arrSymWord2 = new char[numOfVowelsWord2];
+        }
+
+        // Получаем массив гласных из первого слова
+        int k = 0;
+        for (int i = 0; i < word1.length(); i++) {
+            char nowSym = word1.charAt(i);
+            if (nowSym == 'a' || nowSym == 'e' || nowSym == 'i' || nowSym == 'o' || nowSym == 'u' || nowSym == 'y') {
+                arrSymWord1[k] = nowSym;
+                k++;
+            }
+        }
+        // Получаем массив гласных из второго слова
+        k = 0;
+        for (int i = 0; i < word2.length(); i++) {
+            char nowSym = word2.charAt(i);
+            if (nowSym == 'a' || nowSym == 'e' || nowSym == 'i' || nowSym == 'o' || nowSym == 'u' || nowSym == 'y') {
+                arrSymWord2[k] = nowSym;
+                k++;
+            }
+        }
+
+        // Создаём флаг
+        boolean flag = true;
+        for (int i = 0; i < numOfVowelsWord1; i++) {
+            // Если гласные на соответствующих местах не совпадают, то "обнуляем" флаг и возвращаем его
+            if (arrSymWord1[i] != arrSymWord2[i]) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;        // Возвращаем флаг
     }
 
     // Задача 9
