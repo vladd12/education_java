@@ -508,5 +508,4 @@ public class Module5 {
         // Выводим результат
         return result;
     }
-
 }
