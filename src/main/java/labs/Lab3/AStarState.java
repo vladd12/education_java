@@ -66,8 +66,7 @@ public class AStarState {
     }
 
     /**
-     * This method moves the waypoint at the specified location from the
-     * open list to the closed list.
+     * This method moves the waypoint at the specified location from the open list to the closed list.
      **/
     public void closeWaypoint(Location loc) {
         closeWaypoints.put(loc, openWaypoints.get(loc));
@@ -75,8 +74,7 @@ public class AStarState {
     }
 
     /**
-     * Returns true if the collection of closed waypoints contains a waypoint
-     * for the specified location.
+     * Returns true if the collection of closed waypoints contains a waypoint for the specified location.
      **/
     public boolean isLocationClosed(Location loc) {
         return closeWaypoints.containsKey(loc);
