@@ -49,34 +49,32 @@ public class Crawler {
 
             // Получение страницы и её обработка
             String str;
-            if (input != null) {
-                while ((str = input.readLine()) != null) {
-                    // System.out.println(str); // Для отладки
-                    if (temp.getDepth() < max_depth) {
-                        while(str.length() > 0) {
-                            String newURL;
-                            if (str.contains(BEFORE_URL + "\"" + HTTP)) {
-                                newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
-                                newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
-                            }
-                            else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {
-                                newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
-                                newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
-                            }
-                            else break;
+            while ((str = input.readLine()) != null) {
+                // System.out.println(str); // Для отладки
+                if (temp.getDepth() < max_depth) {
+                    while(str.length() > 0) {
+                        String newURL;
+                        if (str.contains(BEFORE_URL + "\"" + HTTP)) {
+                            newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                            newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                        }
+                        else if (str.contains(BEFORE_URL + "\"" + HTTP_S)) {
+                            newURL = str.substring(str.indexOf(BEFORE_URL + "\"" + HTTP_S) + BEFORE_URL.length() + 1); // Обрезаем адрес слева
+                            newURL = newURL.substring(0, newURL.indexOf("\"")); // Обрезаем адрес справа
+                        }
+                        else break;
 
-                            // Меняем строку
-                            str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
+                        // Меняем строку
+                        str = str.substring(str.indexOf(newURL) + newURL.length() + 1);
 
-                            // Нашли новую ссылку
-                            URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
-                            if (!URLPool.getCheckedItems().contains(foundURL)) {
-                                URLPool.put(foundURL); // Добавили её в пул
-                            }
+                        // Нашли новую ссылку
+                        URLDepthPair foundURL = new URLDepthPair(newURL, temp.getDepth() + 1);
+                        if (!URLPool.getCheckedItems().contains(foundURL)) {
+                            URLPool.put(foundURL); // Добавили её в пул
                         }
                     }
-                    else break;
                 }
+                else break;
             }
 
             // Закрываем потоки
