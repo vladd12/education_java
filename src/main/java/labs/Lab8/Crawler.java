@@ -13,7 +13,7 @@ public class Crawler {
     public static final String HTTP_S = "https://";
     public static final String BEFORE_URL = "a href=";
     public static final int MAXDepth = 4;
-    public static final int MAXThreads = 16;
+    public static final int MAXThreads = 32;
     public static FIFO URLPool;
 
     /**
