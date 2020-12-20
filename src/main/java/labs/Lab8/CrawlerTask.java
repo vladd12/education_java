@@ -32,11 +32,10 @@ public class CrawlerTask implements Runnable {
         }
 
         // В ходе цикла каждая строка, если до этого её не было в пуле
+        assert links != null;
         for (String link : links) {
             URLDepthPair newPair = new URLDepthPair(link, temp.getDepth() + 1);
-            if (!pool.getCheckedItems().contains(link)) {
-                pool.put(newPair);
-            }
+            if (!pool.getCheckedItems().contains(link)) pool.put(newPair);
         }
     }
 }
