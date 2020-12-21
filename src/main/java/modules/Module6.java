@@ -266,7 +266,7 @@ public class Module6 {
     }
 
     // Функция с необязательным параметром
-    public static String stripUrlParams(String input, String[] paramsToStrip ) {
+    public static String stripUrlParams(String input, String[] paramsToStrip) {
 
         // Если input не является ссылкой
         String https = input.substring(0, 8);
@@ -279,15 +279,15 @@ public class Module6 {
         int delimiterIndex = input.indexOf('?');        // Индекс разделителя ссылки и параметров
         if (delimiterIndex == -1) return input;         // Если не найден, возвращаем input
         else {
-            URL = input.substring(0, delimiterIndex + 1);   // Задаём строку для ссылки из input
+            URL = input.substring(0, delimiterIndex + 1);      // Задаём строку для ссылки из input
             params[0] = input.substring(delimiterIndex + 1);   // Задаём строку для параметров из input
             arrParams = params[0].split("&");            // Создаём массив строк-параметров из строки параметров
         }
-        HashMap<String, String> List = new HashMap<>();     // Список для хранения данных
+        HashMap<String, String> List = new HashMap<>();        // Список для хранения данных
 
         // Формируем список формата <Имя параметра, значение параметра>
         for (int i = 0; i < arrParams.length; i++) {
-            int index = arrParams[i].indexOf('=');          // Указываем индекс символа присвоения значения
+            int index = arrParams[i].indexOf('=');             // Указываем индекс символа присвоения значения
 
             // Если параметр не принимает значение, то он удаляется
             if (index != -1) {
