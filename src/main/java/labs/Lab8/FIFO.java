@@ -14,10 +14,10 @@ public class FIFO {
 
     /**
      * Конструктор класса
-     * @param maxSize максимальное количество элементов в буфере
+     * @param maxDepth максимальная глубина
      */
-    public FIFO(int maxSize) {
-        this.maxDepth = maxSize;
+    public FIFO(int maxDepth) {
+        this.maxDepth = maxDepth;
         this.items = new LinkedList<>();
         this.checkedItems = new LinkedList<>();
         this.waitingThreads = 0;

@@ -13,7 +13,7 @@ public class Crawler {
     public static final String HTTP_S = "https://";
     public static final String BEFORE_URL = "a href=";
     public static final int MAXDepth = 4;
-    public static final int MAXThreads = 32;
+    public static final int MAXThreads = 128;
     public static FIFO URLPool;
 
     /**
@@ -31,8 +31,8 @@ public class Crawler {
         in.close();     // закрываем поток ввода
 
         // Проверяем значения переменных, выбрасываем исключения если не подходит по условию
-        if (depth > MAXDepth) throw new IllegalArgumentException("Depth must be <" + MAXDepth);
-        if (numThreads > MAXThreads) throw new IllegalArgumentException("Num of threads must be < " + MAXThreads);
+        if (depth > MAXDepth) throw new IllegalArgumentException("Depth must be =< " + MAXDepth);
+        if (numThreads > MAXThreads) throw new IllegalArgumentException("Num of threads must be =< " + MAXThreads);
         if (depth <= 0) throw new IllegalArgumentException("Incorrect input data: depth must be > 0");
         if (numThreads <= 0) throw new IllegalArgumentException("Incorrect input data: num of threads must be > 0");
 

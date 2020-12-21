@@ -29,7 +29,7 @@ public class FIFO {
     public boolean put(URLDepthPair obj) {
         boolean flagAdded = false;
         if (items.size() < maxSize) {
-            items.addLast(obj); // Объект добавляется в конец списка
+            items.addLast(obj);         // Объект добавляется в конец списка
             flagAdded = true;
         }
         return flagAdded;

@@ -9,7 +9,7 @@ public class Crawler {
     public static final String HTTP = "http://";
     public static final String HTTP_S = "https://";
     public static final String BEFORE_URL = "a href=";
-    public static final FIFO URLPool = new FIFO(100);
+    public static final FIFO URLPool = new FIFO(1000);
 
     /**
      * Точка входа программы

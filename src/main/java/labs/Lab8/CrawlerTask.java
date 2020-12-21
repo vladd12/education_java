@@ -26,7 +26,7 @@ public class CrawlerTask implements Runnable {
         URLDepthPair temp = pool.get();         // Получаем элемент URLDepthPair из пула
         ArrayList<String> links = null;         // Создаём список строк
         try {
-            links = Crawler.calculate(temp);    // В это список попадают наденные ссылки
+            links = Crawler.calculate(temp);    // В этот список попадают наденные ссылки
         } catch (IOException e) {
             e.printStackTrace();
         }
