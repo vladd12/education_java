@@ -348,8 +348,8 @@ public class Module6 {
         String[] arrWords = input.split(" ");   // Массив слов из входной строки
 
         // Цикл для удаления из слов знаков препинания и прочих символов
-        for (int i = 0; i < arrWords.length; i++) {      // Для каждого слова из массива
-            String temp = "";              // Временная переменная
+        for (int i = 0; i < arrWords.length; i++) {         // Для каждого слова из массива
+            String temp = "";                               // Временная переменная
             // Цикл проходит по каждому символу слова
             for (int j = 0; j < arrWords[i].length(); j++) {
                 // Если символ является буквой, то он добавляется к временной строке
@@ -405,7 +405,7 @@ public class Module6 {
         int max = Integer.MAX_VALUE;                        // Максимально возможное число для int
         for (int i = 3; i < max; i++) {                     // Ищем число по индексу в числах до max
             for (int j = 0; j < vec.size() - 1; j++) {      // Через два цикла ищем совпадения при сложении
-                for (int k = j+1; k < vec.size(); k++) {
+                for (int k = j + 1; k < vec.size(); k++) {
                     if (vec.get(j)+vec.get(k)==i) count++;  // Если из прошлых чисел можно создать третье увелич. счётчик
                     if (count > 1) break;                   // Если вариантов создания больше одного
                 }
@@ -625,7 +625,7 @@ public class Module6 {
             String firstHalf = input.substring(0, indexMiddle), secondHalf = input.substring(indexMiddle);
 
             // Если они эквивалентны, то строка или потомок - палиндром
-            if (firstHalf.equals(secondHalf)) return true;
+            if (firstHalf.equals(new StringBuilder(secondHalf).reverse().toString())) return true;
             // В другом случае
             else {
                 // Создаём вектор для хранения двузначных чисел
